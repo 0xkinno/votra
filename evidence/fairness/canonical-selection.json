@@ -1,0 +1,8 @@
+{
+  "status": "not-claimed",
+  "reason": "The deployed one-shot fixed-slot coordinator admits unused random gaps; exact encrypted rejection selection is documented but not yet deployed.",
+  "referenceOracle": "evidence/fairness/covenant-weighted.json",
+  "requiredInvariant": "P(i) = CW_i / sum(CW_i)",
+  "zeroWinnerObserved": true,
+  "noFabrication": true
+}

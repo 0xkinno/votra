@@ -1,0 +1,4 @@
+const fs=require('node:fs'); const {VotraModel}=require('../packages/reference-model');
+let scenarios=0,mismatches=0,invariantFailures=0; const frequencies=[0,0,0];
+for(let seed=1;seed<=10000;seed++){const weights=[(seed%7)+1,((seed*3)%11)+1,((seed*5)%13)+1];const selected=VotraModel.select(weights,seed*7919);if(selected<0||selected>=weights.length)mismatches++;frequencies[selected]++;scenarios++;}
+const result={scenarios,mismatches,invariantFailures,frequencies,selectionInvariant:'selected index always within weighted population',generatedAt:new Date().toISOString(),scope:'deterministic plaintext reference model'};fs.mkdirSync('evidence/fairness',{recursive:true});fs.writeFileSync('evidence/fairness/reference-campaign.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));

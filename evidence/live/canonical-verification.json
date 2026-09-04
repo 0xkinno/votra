@@ -1,0 +1,13 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "status": "verified",
+  "contracts": {
+    "pool": {"address": "0xf6222981e6E727bb85e54B08E37B606598130165", "url": "https://sepolia.etherscan.io/address/0xf6222981e6E727bb85e54B08E37B606598130165#code"},
+    "draw": {"address": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896", "url": "https://sepolia.etherscan.io/address/0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896#code"},
+    "asset": {"address": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B", "url": "https://sepolia.etherscan.io/address/0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B#code"},
+    "reserve": {"address": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD", "url": "https://sepolia.etherscan.io/address/0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD#code"}
+  },
+  "verifiedBy": "hardhat verify with ETHERSCAN_API_KEY",
+  "verifiedAt": "2026-09-04"
+}

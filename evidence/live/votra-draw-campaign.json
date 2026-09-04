@@ -1,0 +1,109 @@
+{
+  "network": "sepolia",
+  "participant": "0xebED4aB048EADd5518b28F245CD7321d82FBC406",
+  "funder": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+  "contracts": {
+    "pool": "0x620f2d68759De834cAf64DCDd7D91F189159BC60",
+    "draw": "0xBF8350bF8704C026bdFC4a5E7410E30C132eC93C",
+    "asset": "0x7C0D210a02864383E85D5C1fCC4d33A104721E0d",
+    "reserve": "0x65706f36648Fa1fd3CB943De8eB7923D2c42589E"
+  },
+  "steps": [
+    {
+      "label": "fund fresh participant",
+      "hash": "0xac15e0e0d147079e9dbfd590083a80f3741751e6f44b89d4a2686709992c841f",
+      "blockNumber": 11626424,
+      "gasUsed": "21000"
+    },
+    {
+      "label": "set encrypted commitment floor",
+      "hash": "0xafebe80ddc641ea81fee32ff947deca1f2bb407ce502503d9ec4b3400931c519",
+      "blockNumber": 11626429,
+      "gasUsed": "578553"
+    },
+    {
+      "label": "deposit encrypted balance",
+      "hash": "0x3ede3c9b0ed8b4ea64f1eef2052242023637fa11dd9fea3e4e3a96db4c31aaf1",
+      "blockNumber": 11626432,
+      "gasUsed": "660213"
+    },
+    {
+      "label": "mint confidential prize reserve funding",
+      "hash": "0xe7c4bc83d7d2678b7b5cc4ce27461fc88a1421a5da0c4cdb8e214d2f6a27b657",
+      "blockNumber": 11626435,
+      "gasUsed": "313277"
+    },
+    {
+      "label": "fund confidential prize reserve",
+      "hash": "0x1cf5b5c9f9a00175e3db487582669a237be0bbb76084b1fcd776fe4c9037aa51",
+      "blockNumber": 11626436,
+      "gasUsed": "782299"
+    },
+    {
+      "label": "enter draw",
+      "hash": "0xd97a944dd0554111f6c6931d310421410794d94975740a00a77f54dad0dc7b4b",
+      "blockNumber": 11626438,
+      "gasUsed": "90058"
+    },
+    {
+      "label": "open encrypted draw",
+      "hash": "0x5f2b8cd4099f310fde36ca521fdaf98fc265bb715762acc197b7432a0a291720",
+      "blockNumber": 11626439,
+      "gasUsed": "146995"
+    },
+    {
+      "label": "compute encrypted winner bit",
+      "hash": "0xc6d9a688c0969328ceefa9e46629506accebac8b9e147f261bc2a1ddb664868f",
+      "blockNumber": 11626440,
+      "gasUsed": "218674"
+    },
+    {
+      "label": "settle participant confidential prize",
+      "hash": "0x869cfeb326886f0f6cddf942ff63a2e5664276ba31cd20ac463e3672c9c642b3",
+      "blockNumber": 11626442,
+      "gasUsed": "324860"
+    },
+    {
+      "label": "claim confidential prize",
+      "hash": "0x933cc704b9d83cb15a50a099585e91fc5813e0d102dfded672f46aee90fbbf95",
+      "blockNumber": 11626443,
+      "gasUsed": "413364"
+    }
+  ],
+  "confidentiality": [
+    {
+      "claim": "authorized saver decrypts weight",
+      "outcome": "0"
+    },
+    {
+      "claim": "authorized saver decrypts winner bit",
+      "outcome": "allowed",
+      "value": false
+    }
+  ],
+  "startedAt": "2026-09-03T11:56:27.496Z",
+  "finishedAt": "2026-09-03T12:00:02.504Z",
+  "diagnostics": {
+    "node": "v24.14.1",
+    "sdk": "0.4.4",
+    "network": "sepolia",
+    "relayerBase": "https://relayer.testnet.zama.org",
+    "stages": [
+      {
+        "name": "initializeCLIApi attempt 1",
+        "outcome": "ok",
+        "elapsedMs": 14257
+      },
+      {
+        "name": "encrypt commitment input attempt 1",
+        "outcome": "ok",
+        "elapsedMs": 32017
+      },
+      {
+        "name": "encrypt deposit input attempt 1",
+        "outcome": "ok",
+        "elapsedMs": 24865
+      }
+    ]
+  }
+}

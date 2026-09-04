@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-09-04T13:55:42.265Z",
+  "executablePath": "C:/Users/hp/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe",
+  "baseURL": "http://127.0.0.1:4173/",
+  "screenshots": [
+    "01-goal-set.png",
+    "02-compliant-state.png",
+    "03-breach-state.png",
+    "04-proof-receipt.png",
+    "desktop-landing.png",
+    "mobile-landing.png",
+    "report.json"
+  ],
+  "checks": [
+    {
+      "name": "desktop title",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "desktop no horizontal overflow",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "breach pauses weight",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "recovery resumes compliance",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "mobile no horizontal overflow",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "mobile hero visible",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "proof route title",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "proof evidence links",
+      "pass": true,
+      "details": ""
+    }
+  ]
+}

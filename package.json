@@ -1,0 +1,63 @@
+{
+  "name": "votra",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Private commitment-weighted prize savings",
+  "scripts": {
+    "test": "node tests/run.js && node tests/counterexample.js",
+    "build": "vite build",
+    "dev": "vite",
+    "visual": "node scripts/visual-check.cjs",
+    "compile": "hardhat compile",
+    "test:fhe": "hardhat test",
+    "test:hcu": "hardhat test test/VotraCommitmentPool.js --grep HCU",
+    "deploy:sepolia": "hardhat run scripts/deploy-sepolia.js --network sepolia",
+    "deploy:exact": "hardhat run scripts/deploy-exact-sepolia.js --network sepolia",
+    "verify:live": "hardhat run scripts/verify-live.js --network sepolia",
+    "verify:source": "hardhat verify --network sepolia",
+    "fairness": "node scripts/fairness-campaign.js",
+    "proof:artifacts": "node scripts/generate-proof-artifacts.js",
+    "proof:final": "node scripts/final-evidence.js",
+    "test:draw:exact": "hardhat test test/VotraExactDraw.js",
+    "fairness:exact": "node scripts/exact-selection-50k.js",
+    "capture:chain": "node scripts/capture-chain-pages.cjs",
+    "live:campaign": "hardhat run scripts/live-campaign.js --network sepolia",
+    "live:multi": "hardhat run scripts/multi-live-campaign.js --network sepolia",
+    "diagnostic:relayer": "hardhat run scripts/relayer-diagnostic.js --network sepolia"
+    ,"attack:receipts": "hardhat run --no-compile scripts/adversarial-receipts.js --network sepolia"
+    ,"crosscheck:history": "node scripts/history-crosscheck.js"
+    ,"attack:local-receipts": "hardhat run scripts/adversarial-local-receipts.js"
+    ,"release:gate": "node scripts/release-gate.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.1.1",
+    "playwright": "^1.62.1",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "@fhevm/hardhat-plugin": "^0.4.2",
+    "@fhevm/mock-utils": "^0.4.2",
+    "@fhevm/solidity": "^0.11.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.3",
+    "@nomicfoundation/hardhat-network-helpers": "^1.1.0",
+    "@openzeppelin/confidential-contracts": "^0.5.3",
+    "@openzeppelin/contracts": "^5.6.1",
+    "@reown/appkit": "^1.8.23",
+    "@reown/appkit-adapter-ethers": "^1.8.23",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.5",
+    "@zama-fhe/relayer-sdk": "^0.4.1",
+    "chai": "^4.5.0",
+    "dotenv": "^16.4.7",
+    "encrypted-types": "^0.0.4",
+    "ethers": "^6.17.0",
+    "hardhat": "^2.29.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

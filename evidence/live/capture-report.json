@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-09-02T19:42:42.980Z",
+  "executablePath": "C:/Users/hp/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe",
+  "pages": [
+    {
+      "name": "season4-brief",
+      "url": "https://forms.zama.org/developer-program-mainnet-season4-bounty-track",
+      "httpStatus": 200,
+      "title": "Zama Developer Program Mainnet Season 4 - Bounty Track",
+      "screenshot": "season4-brief.png",
+      "elapsedMs": 7095,
+      "pass": true
+    },
+    {
+      "name": "pool-etherscan",
+      "url": "https://sepolia.etherscan.io/address/0x01D566D52814b924D58306627731B1494A6f96e8#code",
+      "httpStatus": 403,
+      "title": "Just a moment...",
+      "screenshot": "pool-etherscan.png",
+      "elapsedMs": 4029,
+      "pass": false
+    },
+    {
+      "name": "draw-etherscan",
+      "url": "https://sepolia.etherscan.io/address/0x2D7612D2518C5e9FF38858ee951ad45cdDf49F45#code",
+      "httpStatus": 403,
+      "title": "Just a moment...",
+      "screenshot": "draw-etherscan.png",
+      "elapsedMs": 5070,
+      "pass": false
+    },
+    {
+      "name": "reserve-etherscan",
+      "url": "https://sepolia.etherscan.io/address/0x1f039137Fa9C67BF5b6ba415A7c146F811fD12f5#code",
+      "httpStatus": 403,
+      "title": "Just a moment...",
+      "screenshot": "reserve-etherscan.png",
+      "elapsedMs": 3719,
+      "pass": false
+    },
+    {
+      "name": "asset-etherscan",
+      "url": "https://sepolia.etherscan.io/address/0x7427c89Ce75eD4f06e96149402e39b08773Ba4e6#code",
+      "httpStatus": 403,
+      "title": "Just a moment...",
+      "screenshot": "asset-etherscan.png",
+      "elapsedMs": 4771,
+      "pass": false
+    }
+  ]
+}

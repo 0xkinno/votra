@@ -1,0 +1,42 @@
+{
+  "scenarios": 1000,
+  "failures": 0,
+  "invariant": "historical CW is monotonic; recovery adds only future weight",
+  "samples": [
+    {
+      "seed": 1,
+      "before": 1000,
+      "breached": 1000,
+      "after": 2000,
+      "pass": true
+    },
+    {
+      "seed": 2,
+      "before": 1000,
+      "breached": 1000,
+      "after": 2000,
+      "pass": true
+    },
+    {
+      "seed": 3,
+      "before": 1000,
+      "breached": 1000,
+      "after": 2000,
+      "pass": true
+    },
+    {
+      "seed": 4,
+      "before": 1000,
+      "breached": 1000,
+      "after": 2000,
+      "pass": true
+    },
+    {
+      "seed": 5,
+      "before": 1000,
+      "breached": 1000,
+      "after": 2000,
+      "pass": true
+    }
+  ]
+}

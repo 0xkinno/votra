@@ -1,0 +1,19 @@
+{
+  "scenarioCount": 5,
+  "finalBalances": [
+    50,
+    100,
+    150,
+    150,
+    100
+  ],
+  "weights": [
+    4500,
+    5500,
+    9000,
+    6000,
+    5000
+  ],
+  "distinctWeights": 5,
+  "pass": true
+}

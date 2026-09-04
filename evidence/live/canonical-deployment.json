@@ -1,0 +1,30 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "pool": {
+    "address": "0x4F280b9A7f3Fa180706bb01cff5bF58bd916d35B",
+    "transactionHash": "0x84eeac87ab46168ea4bc14c58d0b9002ea95ab89f2072eb644e72b9dda7daf1e",
+    "blockNumber": 11626908
+  },
+  "draw": {
+    "address": "0x85D0a3f8EAaDB5dC8a25Bc3bc3ac92C25074376e",
+    "transactionHash": "0xb7e1cc0b718160ad8f7c10b904ffde07e084682ecd94bb1ac231075e28788f92",
+    "blockNumber": 11626910
+  },
+  "asset": {
+    "address": "0x47354784E079477eA91aEb7e758C2aB3ee408721",
+    "transactionHash": "0xe253b4063e761d3f7f384a68a8be52970349ce0079ff7889b2a94b2be5b86d77",
+    "blockNumber": 11626913
+  },
+  "reserve": {
+    "address": "0x76949c773f08F27a0e4D46422De4FAF842FA2533",
+    "transactionHash": "0x113bc2fd601ddee4fa790e12046262fa2df0677b0e9b81f543b9067e07477a6e",
+    "blockNumber": 11626914
+  },
+  "wiringTransactionHash": "0x53ac10b604f9e1770c3706c6fe1c24852d133369cb2be52f2b07ef74faa08c78",
+  "reserveWiringTransactionHash": "0x7450ab724b9a2b66380f9be77a61d8e091affe2cc62897633deb4a989c8d5bb1",
+  "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+  "timestamp": "2026-09-03T13:39:24.730Z",
+  "canonical": true,
+  "sourceVerification": "verified on Etherscan for the deployed suite where recorded"
+}

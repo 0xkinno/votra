@@ -1,0 +1,6 @@
+{
+  "operation": "setCommitment",
+  "globalHCU": 152128,
+  "maxHCUDepth": 152032,
+  "network": "fhevm-mock"
+}

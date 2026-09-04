@@ -1,0 +1,13 @@
+{
+  "command": "npm run proof:artifacts",
+  "model": "packages/reference-model/index.js",
+  "contract": "contracts/VotraCommitmentPool.sol",
+  "checks": [
+    "accrue-before-mutation",
+    "forward-only breach",
+    "immediate recovery",
+    "principal accounting"
+  ],
+  "status": "PASS",
+  "failOnMismatch": true
+}

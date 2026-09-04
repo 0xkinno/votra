@@ -1,0 +1,16 @@
+{
+  "chainId": 11155111,
+  "pool": "0xf6222981e6E727bb85e54B08E37B606598130165",
+  "draw": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+  "asset": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B",
+  "reserve": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+  "poolRound": "1",
+  "authorizedDraw": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+  "drawReserve": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+  "reserveAsset": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B",
+  "assetName": "VOTRA Confidential Demo USD",
+  "participantCount": "0",
+  "poolCodeBytes": 5477,
+  "drawCodeBytes": 5040,
+  "readAt": "2026-09-03T20:57:16.000Z"
+}

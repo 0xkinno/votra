@@ -1,0 +1,9 @@
+research/
+dist/
+node_modules/
+artifacts/
+cache_hardhat/
+fhevmTemp/
+.env.local
+.vercel/
+coverage/

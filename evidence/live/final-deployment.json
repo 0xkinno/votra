@@ -1,0 +1,32 @@
+{
+  "canonical": true,
+  "drawAlgorithm": "VotraExactDraw",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+  "timestamp": "2026-09-03T20:33:03.526Z",
+  "pool": {
+    "address": "0xf6222981e6E727bb85e54B08E37B606598130165",
+    "transactionHash": "0xe6b0445c7987295d0d420641651a3145bec8e37990a3f1fe0f385f9485e41af5",
+    "blockNumber": 11628891
+  },
+  "draw": {
+    "address": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+    "transactionHash": "0x4a69e7fd4802b711520b6e577d70a5175e7c274eb56a7caafcc177da076d41b3",
+    "blockNumber": 11628892,
+    "maxTotalWeight": "1048576",
+    "attempts": 32
+  },
+  "asset": {
+    "address": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B",
+    "transactionHash": "0xf4aad429c325ce7ed68054cd65b9f385656d511721638c0b8f44ba5c87868fbf",
+    "blockNumber": 11628895
+  },
+  "reserve": {
+    "address": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+    "transactionHash": "0x8e636f23cb0c41c5c6fe60aecdccd4cd80be62fc11718b198d43d48e3f138e07",
+    "blockNumber": 11628897
+  },
+  "wiringTransactionHash": "0x4cf6d2454fba9e9322d906208c2e643cb1a98e86adc4f1ffa983221b29e8c38f",
+  "reserveWiringTransactionHash": "0xfcb8845565c34ac284291fffa6489bc7bb59fa0f1e4307689915b4ca5be19f52"
+}

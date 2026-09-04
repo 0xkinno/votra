@@ -1,0 +1,7 @@
+{
+  "status":"observed-only",
+  "mockHCU":{"setCommitment":{"global":152128,"depth":152032},"source":"FHEVM hardhat mock","productionClaim":false},
+  "liveGas":{"commitment":null,"deposit":[664197,664225],"withdraw":[679654],"drawOpen":3109553,"winnerBit":[247969,277896,307819],"settlement":[394622,424553,454472],"claim":[388234,413364,413368]},
+  "liveTransactionCount":29,
+  "note":"Null commitment gas reflects resumable campaign skips; no live HCU is claimed."
+}

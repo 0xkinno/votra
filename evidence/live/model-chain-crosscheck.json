@@ -1,0 +1,104 @@
+{
+  "deployment": {
+    "canonical": true,
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "timestamp": "2026-09-04T11:52:12.516Z",
+    "pool": {
+      "address": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "transactionHash": "0xfe0e7831d8641d47ef63f108e1b62862924ff5463d82bc808e9db990bf33c9e6",
+      "blockNumber": 11633268
+    },
+    "draw": {
+      "address": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "transactionHash": "0x15a14121136cf8fee0023a8c973ec4266e0df7f6980666f76aec60547bd67599",
+      "blockNumber": 11633269,
+      "maxTotalWeight": "1048576",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x111eb3571784decd795e478F897Ed8a6a2423692",
+      "transactionHash": "0xcd3107fcd73468fc739cc598506326e10b1ac14a6d0ae111925aaa9919bcf081",
+      "blockNumber": 11633271
+    },
+    "reserve": {
+      "address": "0x1AaEf1571E544AC0Fcc734894486fb765ff65acC",
+      "transactionHash": "0x383c330d58ec3ca082895331a187803576eab7b803bbb347ab348bd933945744",
+      "blockNumber": 11633272
+    },
+    "wiringTransactionHash": "0x80c998f2c7102a07feed8b50337b3a6a677d3cabffeec7f12a6cb183fb9c5f41",
+    "reserveWiringTransactionHash": "0x293e934d3b74ab727b5093e4e90932a7a65b998abfe45c11360cf9c4de6f166e"
+  },
+  "source": "evidence/history-sensitivity/live-campaign.json",
+  "referenceModel": {
+    "A": [
+      "compliant",
+      "breach",
+      "recovery"
+    ],
+    "B": [
+      "breach",
+      "recovery",
+      "compliant"
+    ],
+    "C": [
+      "compliant",
+      "compliant",
+      "compliant"
+    ],
+    "finalBalances": [
+      150,
+      150,
+      150
+    ],
+    "assertion": "equal final balances do not imply equal CW"
+  },
+  "derivedCW": {
+    "A": 136800,
+    "B": 39600,
+    "C": 131400
+  },
+  "finalBalances": {
+    "A": 150,
+    "B": 150,
+    "C": 150
+  },
+  "winnerDecryptions": [
+    {
+      "participant": "A",
+      "authorized": true,
+      "winner": false
+    },
+    {
+      "participant": "B",
+      "authorized": true,
+      "winner": false
+    },
+    {
+      "participant": "C",
+      "authorized": true,
+      "winner": false
+    }
+  ],
+  "semanticDivergenceCount": 0,
+  "checks": [
+    {
+      "property": "equal final balances",
+      "result": "A, B, and C all finish at 150"
+    },
+    {
+      "property": "history affects CW",
+      "result": "A/B/C derived weights differ"
+    },
+    {
+      "property": "encrypted draw receipts",
+      "result": "present"
+    },
+    {
+      "property": "authorized decryption",
+      "result": "present"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "generatedAt": "2026-09-03T14:08:01.384Z",
+  "attacks": [
+    {
+      "id": 1,
+      "attack": "replay deposit",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 2,
+      "attack": "replay withdrawal",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 3,
+      "attack": "replay encrypted input",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 4,
+      "attack": "stale ciphertext",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 5,
+      "attack": "duplicate settlement",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 6,
+      "attack": "duplicate winner computation",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 7,
+      "attack": "unauthorized draw call",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 8,
+      "attack": "unauthorized reserve call",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 9,
+      "attack": "unauthorized claim",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 10,
+      "attack": "principal theft attempt",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 11,
+      "attack": "reserve theft attempt",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 12,
+      "attack": "false recovery",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 13,
+      "attack": "retroactive recovery",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 14,
+      "attack": "retroactive CW restoration",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 15,
+      "attack": "timestamp boundary manipulation",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 16,
+      "attack": "round boundary manipulation",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 17,
+      "attack": "draw-before-freeze",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 18,
+      "attack": "draw-after-invalid-state",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 19,
+      "attack": "malformed encrypted input",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    },
+    {
+      "id": 20,
+      "attack": "model/contract semantic divergence",
+      "expected": "rejected or invariant preserved",
+      "observed": "local regression evidence recorded",
+      "broken": false,
+      "fix": "contract guard or model invariant",
+      "regression": "npm test"
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,132 @@
+{
+  "deployment": {
+    "canonical": true,
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "timestamp": "2026-09-04T11:52:12.516Z",
+    "pool": {
+      "address": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "transactionHash": "0xfe0e7831d8641d47ef63f108e1b62862924ff5463d82bc808e9db990bf33c9e6",
+      "blockNumber": 11633268
+    },
+    "draw": {
+      "address": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "transactionHash": "0x15a14121136cf8fee0023a8c973ec4266e0df7f6980666f76aec60547bd67599",
+      "blockNumber": 11633269,
+      "maxTotalWeight": "1048576",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x111eb3571784decd795e478F897Ed8a6a2423692",
+      "transactionHash": "0xcd3107fcd73468fc739cc598506326e10b1ac14a6d0ae111925aaa9919bcf081",
+      "blockNumber": 11633271
+    },
+    "reserve": {
+      "address": "0x1AaEf1571E544AC0Fcc734894486fb765ff65acC",
+      "transactionHash": "0x383c330d58ec3ca082895331a187803576eab7b803bbb347ab348bd933945744",
+      "blockNumber": 11633272
+    },
+    "wiringTransactionHash": "0x80c998f2c7102a07feed8b50337b3a6a677d3cabffeec7f12a6cb183fb9c5f41",
+    "reserveWiringTransactionHash": "0x293e934d3b74ab727b5093e4e90932a7a65b998abfe45c11360cf9c4de6f166e"
+  },
+  "generatedAt": "2026-09-04T13:30:24.583Z",
+  "network": "sepolia",
+  "method": "raw transactions with explicit gas limits; ethers status-0 exceptions normalized to their mined receipts",
+  "summary": {
+    "attempted": 8,
+    "receiptBacked": 8,
+    "passed": 8,
+    "failed": 0
+  },
+  "rows": [
+    {
+      "attack": "repeated draw open",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0xb209075664c54312423e4ff2c4ec2c8c275242fe228a7324b544a9a66ce03154",
+      "block": 11633742,
+      "gasUsed": "23576",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "duplicate settlement",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0x691815831c4621aa3cded61c57c9ec83f0d3c45a558139651758e1aef2e17a32",
+      "block": 11633743,
+      "gasUsed": "28074",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "draw entry after open",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0x074632551eaefcd00005ef2cf26f3ef05cf40664149c65e86fb2480f56fa5667",
+      "block": 11633744,
+      "gasUsed": "23534",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "reserve replacement after lock",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0xc15be97ff944e9b1d335ad570d38ae07c145af20d04c729a03aacf69eaaf1f87",
+      "block": 11633746,
+      "gasUsed": "24047",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "draw authorization replacement after lock",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0x74b6c48fd3d26aed6b01d8dd03a56298c996a280b47698cf110ac0b50cd187ff",
+      "block": 11633747,
+      "gasUsed": "24067",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "unauthorized pool draw grant",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0xbe339adc47ee4b31cf786ecfe9543bfaf51f25cb3bcb0ea7ce5b7a311e2f0fcf",
+      "block": 11633748,
+      "gasUsed": "24496",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "unauthorized reserve credit",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0x569006fd54bb41c5223f8aafeedc9919f3a64c125c1e42a6cb646f2f388a1fde",
+      "block": 11633749,
+      "gasUsed": "22750",
+      "result": "pass",
+      "receiptBacked": true
+    },
+    {
+      "attack": "replayed claim",
+      "expected": "revert",
+      "actual": "mined receipt status 0",
+      "tx": "0x5f6237fc600277d77171a2d590e951f6d7efbfedbf834b32c22e79484145ff33",
+      "block": 11633750,
+      "gasUsed": "23854",
+      "result": "pass",
+      "receiptBacked": true
+    }
+  ],
+  "separatelyProvenRows": {
+    "encryptedInputReplay": "covered by encrypted-input authorization and commitment-freeze regressions",
+    "staleCiphertext": "covered by FHE input-proof validation regressions",
+    "falseRecovery": "covered by encrypted covenant evaluation and reference-model parity",
+    "retroactiveCWRestoration": "covered by the 10,000-history forward-only campaign and live model-chain cross-check"
+  },
+  "note": "This artifact contains only independently submitted deployed guard attacks. Each pass is a mined Sepolia status-0 receipt."
+}

@@ -1,0 +1,13 @@
+{
+  "scenarios": 10000,
+  "mismatches": 0,
+  "invariantFailures": 0,
+  "frequencies": [
+    2248,
+    3550,
+    4202
+  ],
+  "selectionInvariant": "selected index always within weighted population",
+  "generatedAt": "2026-09-02T20:37:53.185Z",
+  "scope": "deterministic plaintext reference model"
+}

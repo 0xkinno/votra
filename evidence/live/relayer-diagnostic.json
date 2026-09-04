@@ -1,0 +1,68 @@
+{
+  "endpoint": "https://relayer.testnet.zama.org",
+  "sdk": {},
+  "stages": [
+    {
+      "name": "dns",
+      "ok": true,
+      "latencyMs": 727,
+      "detail": {
+        "address": "172.66.151.95",
+        "family": 4
+      }
+    },
+    {
+      "name": "tcp",
+      "ok": true,
+      "latencyMs": 682,
+      "detail": "connected"
+    },
+    {
+      "name": "tls",
+      "ok": true,
+      "latencyMs": 1175,
+      "detail": {
+        "authorized": true,
+        "protocol": null
+      }
+    },
+    {
+      "name": "https",
+      "ok": true,
+      "latencyMs": 1598,
+      "detail": {
+        "statusCode": 404,
+        "headers": {
+          "date": "Thu, 03 Sep 2026 21:49:37 GMT",
+          "content-type": "application/json; charset=utf-8",
+          "content-length": "103",
+          "connection": "keep-alive",
+          "cf-cache-status": "DYNAMIC",
+          "set-cookie": [
+            "_cfuvid=bKEZEY7PiWlDJeORBYNYnERmvnG3YQyhpi.fzOPcqSg-1788472177.8745267-1.0.1.1-og9zzf86CiXV92ZThVa22nkaZFwUPKRRE8bkWk2Vn24; HttpOnly; SameSite=None; Secure; Path=/; Domain=zama.org"
+          ],
+          "server": "cloudflare",
+          "cf-ray": "a357f727be2d1936-AMS"
+        }
+      }
+    },
+    {
+      "name": "sdk.initializeCLIApi",
+      "ok": true,
+      "latencyMs": 64344,
+      "detail": "initialized"
+    },
+    {
+      "name": "encrypted-input-generation",
+      "ok": true,
+      "latencyMs": 39120,
+      "detail": {
+        "handles": 1,
+        "proofBytes": 230
+      }
+    }
+  ],
+  "transactionHash": null,
+  "startedAt": "2026-09-03T21:49:32.592Z",
+  "finishedAt": "2026-09-03T21:51:20.257Z"
+}

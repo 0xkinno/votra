@@ -1,0 +1,6 @@
+{
+  "seed": 1,
+  "scenarios": 10000,
+  "failures": 0,
+  "invariant": "CW monotonic; breach preserves history; recovery adds only future weight"
+}

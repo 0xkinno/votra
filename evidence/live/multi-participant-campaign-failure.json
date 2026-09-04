@@ -1,0 +1,5 @@
+{
+  "failedAt": "2026-09-03T20:35:51.976Z",
+  "message": "other side closed",
+  "stack": "SocketError: other side closed\n    at TLSSocket.onSocketEnd (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\undici\\lib\\client.js:1118:22)\n    at TLSSocket.emit (node:events:520:35)\n    at endReadableNT (node:internal/streams/readable:1729:12)\n    at processTicksAndRejections (node:internal/process/task_queues:90:21)"
+}

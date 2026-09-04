@@ -1,0 +1,19 @@
+{
+  "failures": [
+    {
+      "artifact": "evidence/archive/failures/votra-draw-campaign-failure.json",
+      "cause": "relayer INPUT_PROOF fetch/connect timeout before transaction submission",
+      "status": "archived"
+    },
+    {
+      "artifact": "evidence/live/votra-draw-campaign.json",
+      "cause": "historical receipt from pre-userDecryptEbool script; winner decryption type mismatch",
+      "status": "historical, not a success claim"
+    },
+    {
+      "artifact": "evidence/live/multi-participant-campaign-failure.json",
+      "cause": "official relayer TLS/socket closed during encrypted-input generation; no exact-draw transaction was submitted",
+      "status": "live blocker preserved"
+    }
+  ]
+}

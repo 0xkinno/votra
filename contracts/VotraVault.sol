@@ -1,0 +1,3 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+contract VotraVault { error InvalidAmount(); error InsufficientPrincipal(); mapping(address=>uint256) public principal; uint256 public totalPrincipal; event Deposit(address indexed saver,uint256 indexed round); event Withdrawal(address indexed saver,uint256 indexed round); function deposit(uint256 round) external payable {if(msg.value==0)revert InvalidAmount();principal[msg.sender]+=msg.value;totalPrincipal+=msg.value;emit Deposit(msg.sender,round);} function withdraw(uint256 amount,uint256 round) external {if(amount==0||amount>principal[msg.sender])revert InsufficientPrincipal();principal[msg.sender]-=amount;totalPrincipal-=amount;payable(msg.sender).transfer(amount);emit Withdrawal(msg.sender,round);} }

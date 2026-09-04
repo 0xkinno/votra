@@ -1,0 +1,35 @@
+{
+  "properties": [
+    [
+      "commitment",
+      "ENCRYPTED"
+    ],
+    [
+      "balance",
+      "ENCRYPTED"
+    ],
+    [
+      "covenant",
+      "DERIVED FROM ENCRYPTED STATE"
+    ],
+    [
+      "CW",
+      "ENCRYPTED"
+    ],
+    [
+      "winner bit",
+      "LEGITIMATELY REVEALED TO AUTHORIZED USER"
+    ],
+    [
+      "round state",
+      "PUBLIC"
+    ]
+  ],
+  "attempts": [
+    "infer commitment from events",
+    "infer breach from public state",
+    "infer CW from timing",
+    "infer ranking from public data"
+  ],
+  "result": "No plaintext financial value is emitted by the contracts; timing, gas, wallet identity, and participation remain observable."
+}

@@ -1,0 +1,351 @@
+{
+  "seed": 424242,
+  "cases": [
+    {
+      "name": "A-long-then-breach",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ],
+        [
+          "withdraw",
+          100,
+          30
+        ]
+      ],
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100,
+            null
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            30
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 4500
+        }
+      ],
+      "final": {
+        "balance": 50,
+        "commitment": 100,
+        "compliant": false,
+        "CW": 4500
+      }
+    },
+    {
+      "name": "B-breach-recover",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          50,
+          0
+        ],
+        [
+          "deposit",
+          100,
+          10
+        ],
+        [
+          "withdraw",
+          50,
+          20
+        ]
+      ],
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100,
+            null
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            50,
+            0
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            10
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            50,
+            20
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 1500
+        }
+      ],
+      "final": {
+        "balance": 100,
+        "commitment": 100,
+        "compliant": true,
+        "CW": 5500
+      }
+    },
+    {
+      "name": "C-steady",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ]
+      ],
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100,
+            null
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        }
+      ],
+      "final": {
+        "balance": 150,
+        "commitment": 100,
+        "compliant": true,
+        "CW": 9000
+      }
+    },
+    {
+      "name": "D-cycles",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ],
+        [
+          "withdraw",
+          100,
+          10
+        ],
+        [
+          "deposit",
+          100,
+          20
+        ],
+        [
+          "withdraw",
+          100,
+          30
+        ],
+        [
+          "deposit",
+          100,
+          40
+        ]
+      ],
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100,
+            null
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            10
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 1500
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            20
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 1500
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            30
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 3000
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            40
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 3000
+        }
+      ],
+      "final": {
+        "balance": 150,
+        "commitment": 100,
+        "compliant": true,
+        "CW": 6000
+      }
+    },
+    {
+      "name": "E-same-final-different-history",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          100,
+          0
+        ],
+        [
+          "withdraw",
+          1,
+          15
+        ],
+        [
+          "deposit",
+          1,
+          25
+        ]
+      ],
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100,
+            null
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            0
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            1,
+            15
+          ],
+          "balance": 99,
+          "compliant": false,
+          "weight": 1500
+        },
+        {
+          "event": [
+            "deposit",
+            1,
+            25
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 1500
+        }
+      ],
+      "final": {
+        "balance": 100,
+        "commitment": 100,
+        "compliant": true,
+        "CW": 5000
+      }
+    }
+  ],
+  "claim": "identical final states can have different history-sensitive CW"
+}

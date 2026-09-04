@@ -1,0 +1,313 @@
+{
+  "network": "sepolia",
+  "campaignType": "history-sensitive-fresh-deployment",
+  "deployment": {
+    "canonical": true,
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "timestamp": "2026-09-04T11:52:12.516Z",
+    "pool": {
+      "address": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "transactionHash": "0xfe0e7831d8641d47ef63f108e1b62862924ff5463d82bc808e9db990bf33c9e6",
+      "blockNumber": 11633268
+    },
+    "draw": {
+      "address": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "transactionHash": "0x15a14121136cf8fee0023a8c973ec4266e0df7f6980666f76aec60547bd67599",
+      "blockNumber": 11633269,
+      "maxTotalWeight": "1048576",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x111eb3571784decd795e478F897Ed8a6a2423692",
+      "transactionHash": "0xcd3107fcd73468fc739cc598506326e10b1ac14a6d0ae111925aaa9919bcf081",
+      "blockNumber": 11633271
+    },
+    "reserve": {
+      "address": "0x1AaEf1571E544AC0Fcc734894486fb765ff65acC",
+      "transactionHash": "0x383c330d58ec3ca082895331a187803576eab7b803bbb347ab348bd933945744",
+      "blockNumber": 11633272
+    },
+    "wiringTransactionHash": "0x80c998f2c7102a07feed8b50337b3a6a677d3cabffeec7f12a6cb183fb9c5f41",
+    "reserveWiringTransactionHash": "0x293e934d3b74ab727b5093e4e90932a7a65b998abfe45c11360cf9c4de6f166e"
+  },
+  "participants": [
+    {
+      "id": "A",
+      "address": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "privateState": "not included in public artifact"
+    },
+    {
+      "id": "B",
+      "address": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "privateState": "not included in public artifact"
+    },
+    {
+      "id": "C",
+      "address": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "privateState": "not included in public artifact"
+    }
+  ],
+  "referenceModel": {
+    "A": [
+      "compliant",
+      "breach",
+      "recovery"
+    ],
+    "B": [
+      "breach",
+      "recovery",
+      "compliant"
+    ],
+    "C": [
+      "compliant",
+      "compliant",
+      "compliant"
+    ],
+    "finalBalances": [
+      150,
+      150,
+      150
+    ],
+    "assertion": "equal final balances do not imply equal CW"
+  },
+  "steps": [
+    {
+      "label": "participant A encrypted commitment",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "setCommitment",
+      "hash": "0x1090299d447dac2d178e344e7449a54e811ca67034e8c7b3cbb800e8d8897795",
+      "blockNumber": 11633295,
+      "gasUsed": "578565",
+      "timestamp": 1788523008
+    },
+    {
+      "label": "participant B encrypted commitment",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "setCommitment",
+      "hash": "0x1cbb38b151eb03530fc76b2e75b2f9d492c872e6a14af6376415c645220da229",
+      "blockNumber": 11633297,
+      "gasUsed": "578561",
+      "timestamp": 1788523056
+    },
+    {
+      "label": "participant C encrypted commitment",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "setCommitment",
+      "hash": "0xd9a59321e6b0c2d904be0b237b588a683558db9f168cd8cd973f2a7819077208",
+      "blockNumber": 11633301,
+      "gasUsed": "578553",
+      "timestamp": 1788523104
+    },
+    {
+      "label": "participant A encrypted deposit",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "deposit",
+      "hash": "0xb929a09a828abb5e13a650d17a73dda977a3f90528e3ff449025f14ee104b380",
+      "blockNumber": 11633305,
+      "gasUsed": "660213",
+      "timestamp": 1788523152
+    },
+    {
+      "label": "participant B encrypted deposit",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "deposit",
+      "hash": "0x8052834678f64bbcfd3b81e9e4cbaf88db7fceeca65009c2a0bf680bf795eecd",
+      "blockNumber": 11633309,
+      "gasUsed": "660197",
+      "timestamp": 1788523200
+    },
+    {
+      "label": "participant C encrypted deposit",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "deposit",
+      "hash": "0xc3551dfdeb52dc4ff3624e635a0d9eade2e0b3fa70fe6b7d4b7a82459a80cd44",
+      "blockNumber": 11633313,
+      "gasUsed": "660189",
+      "timestamp": 1788523248
+    },
+    {
+      "label": "participant A breach withdrawal",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "withdraw",
+      "hash": "0x35a948ce8dc18990879fc75ec0de3b2da8c027ebdd1d3911114539326d66b228",
+      "blockNumber": 11633319,
+      "gasUsed": "679646",
+      "timestamp": 1788523320
+    },
+    {
+      "label": "participant A recovery deposit",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "deposit",
+      "hash": "0xfd1839400339fb8a9f5bf5aaf63bd1e031d140b896cb21a70a2db519c9dceb2b",
+      "blockNumber": 11633324,
+      "gasUsed": "664225",
+      "timestamp": 1788523380
+    },
+    {
+      "label": "participant B recovery deposit",
+      "contract": "0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21",
+      "function": "deposit",
+      "hash": "0xf4cb1def0f9b46ae91c7d0355f1b3f4c6120edd6a0572dd9b8e3423ebf559b6d",
+      "blockNumber": 11633364,
+      "gasUsed": "664213",
+      "timestamp": 1788523860
+    },
+    {
+      "label": "mint confidential prize reserve funding",
+      "contract": "0x111eb3571784decd795e478F897Ed8a6a2423692",
+      "function": "mintDemo",
+      "hash": "0xdefe3d011dbf528ba89b361823768c3c8a1abfadb8e9918f335170fdfff5028f",
+      "blockNumber": 11633365,
+      "gasUsed": "313281",
+      "timestamp": 1788523872
+    },
+    {
+      "label": "fund confidential prize reserve",
+      "contract": "0x111eb3571784decd795e478F897Ed8a6a2423692",
+      "function": "confidentialTransferAndCall",
+      "hash": "0x7ae6959c35e0569857cefe8fdd1ac917a714eb8f045ddd2058103727dcca8855",
+      "blockNumber": 11633376,
+      "gasUsed": "782295",
+      "timestamp": 1788524004
+    },
+    {
+      "label": "participant A enters draw",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "enter",
+      "hash": "0x5188f1864931e17f5dc0b42d79445751085844b26bb6a1846b3be187d309f30d",
+      "blockNumber": 11633377,
+      "gasUsed": "90074",
+      "timestamp": 1788524016
+    },
+    {
+      "label": "participant B enters draw",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "enter",
+      "hash": "0xf4f06192999ec4c501d013652e71adb548b1e95d7cd542f4e6504a829ca4ddeb",
+      "blockNumber": 11633378,
+      "gasUsed": "72974",
+      "timestamp": 1788524028
+    },
+    {
+      "label": "participant C enters draw",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "enter",
+      "hash": "0x4b59198c65a49ea41b32e7663d25edad5e678bd097096f95707f867a75acb68c",
+      "blockNumber": 11633380,
+      "gasUsed": "72974",
+      "timestamp": 1788524052
+    },
+    {
+      "label": "open encrypted multi-participant draw",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "open",
+      "hash": "0x54d062aa1bc5f767079559dfb3cb8578f1e6b09f1bb8a00ba4560e8d52a0e47a",
+      "blockNumber": 11633386,
+      "gasUsed": "3109553",
+      "timestamp": 1788524124
+    },
+    {
+      "label": "participant A encrypted winner computation",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "winnerBit",
+      "hash": "0x634686d648a75fcb364e4cd6b74b259e3e6faa6231796d823d139a304b19734f",
+      "blockNumber": 11633387,
+      "gasUsed": "247969",
+      "timestamp": 1788524136
+    },
+    {
+      "label": "participant A confidential settlement",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "settleParticipant",
+      "hash": "0xf07a7141c76e666fa9650efabfabdd3301847cc225ee140ecbdcf76de94487ee",
+      "blockNumber": 11633388,
+      "gasUsed": "394622",
+      "timestamp": 1788524148
+    },
+    {
+      "label": "participant A confidential claim",
+      "contract": "0x1AaEf1571E544AC0Fcc734894486fb765ff65acC",
+      "function": "claim",
+      "hash": "0x3eff520fa46ff269b82af4d7296dbfb426898a2079d54a1e2bd8b5e6b43ce170",
+      "blockNumber": 11633390,
+      "gasUsed": "388238",
+      "timestamp": 1788524172
+    },
+    {
+      "label": "participant B encrypted winner computation",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "winnerBit",
+      "hash": "0x2e483b9d334012bcfcb65a82c7eb6d012546e5692b1abd5fe573e5bee414582e",
+      "blockNumber": 11633392,
+      "gasUsed": "277896",
+      "timestamp": 1788524196
+    },
+    {
+      "label": "participant B confidential settlement",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "settleParticipant",
+      "hash": "0x62a590d6a2a7dd81a2893da9184838189f226b17c8bac8912aa57dd1de4dacda",
+      "blockNumber": 11633394,
+      "gasUsed": "424553",
+      "timestamp": 1788524220
+    },
+    {
+      "label": "participant B confidential claim",
+      "contract": "0x1AaEf1571E544AC0Fcc734894486fb765ff65acC",
+      "function": "claim",
+      "hash": "0xe1cd6db593ca51abbb48215f54711af64598a5fbc1774c757c5ba1da18c7c419",
+      "blockNumber": 11633395,
+      "gasUsed": "413368",
+      "timestamp": 1788524232
+    },
+    {
+      "label": "participant C encrypted winner computation",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "winnerBit",
+      "hash": "0x115bcde401c21e5bc767a4fb74e3b3dde3939db8877dd898bd2aeb27464a9e35",
+      "blockNumber": 11633396,
+      "gasUsed": "307819",
+      "timestamp": 1788524244
+    },
+    {
+      "label": "participant C confidential settlement",
+      "contract": "0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E",
+      "function": "settleParticipant",
+      "hash": "0xe0761e691a808eabb042ccb5c70726789666c8e287864b218a6d2f63dad918c8",
+      "blockNumber": 11633398,
+      "gasUsed": "454472",
+      "timestamp": 1788524268
+    },
+    {
+      "label": "participant C confidential claim",
+      "contract": "0x1AaEf1571E544AC0Fcc734894486fb765ff65acC",
+      "function": "claim",
+      "hash": "0x8e606fee2cea9b04c51fe30e4d2b1c8921b67f9faf9856d20a93e158c00f6664",
+      "blockNumber": 11633399,
+      "gasUsed": "413364",
+      "timestamp": 1788524280
+    }
+  ],
+  "decryptions": [
+    {
+      "participant": "A",
+      "authorized": true,
+      "winner": false
+    },
+    {
+      "participant": "B",
+      "authorized": true,
+      "winner": false
+    },
+    {
+      "participant": "C",
+      "authorized": true,
+      "winner": false
+    }
+  ],
+  "startedAt": "2026-09-04T11:56:09.172Z",
+  "finishedAt": "2026-09-04T12:18:00.181Z"
+}

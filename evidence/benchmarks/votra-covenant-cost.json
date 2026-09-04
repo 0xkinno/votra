@@ -1,0 +1,19 @@
+{
+  "scope": "mock FHEVM plus live receipt samples",
+  "operations": [
+    "set commitment",
+    "encrypted balance update",
+    "compliance transition",
+    "weight accrual",
+    "encrypted winner computation"
+  ],
+  "mockHCU": {
+    "setCommitment": 152128
+  },
+  "liveGasSamples": {
+    "setCommitment": 578561,
+    "deposit": 660221,
+    "winnerComputation": 218678
+  },
+  "limitation": "No live coprocessor HCU claim; live values are transaction gas receipts."
+}

@@ -1,0 +1,5 @@
+{
+  "status": "passed",
+  "checks": ["forward-only breach", "immediate recovery", "commitment freeze", "over-withdrawal", "time regression", "principal conservation"],
+  "fhevm": "pending"
+}

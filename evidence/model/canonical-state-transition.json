@@ -1,0 +1,19 @@
+{
+  "formula": "CW_i = integral(B_i(t) * C_i(t) dt)",
+  "state": [
+    "balance",
+    "commitment",
+    "covenant",
+    "TWAB",
+    "committedWeight",
+    "round",
+    "drawEligibility"
+  ],
+  "rules": [
+    "breach stops future accrual",
+    "breach preserves historical committedWeight",
+    "recovery resumes future accrual",
+    "recovery never restores lost weight",
+    "selection uses committedWeight derived from encrypted balance-time"
+  ]
+}

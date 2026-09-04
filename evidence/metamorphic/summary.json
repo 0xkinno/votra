@@ -1,0 +1,36 @@
+{
+  "seed": 1,
+  "scenarios": 10000,
+  "failures": 0,
+  "transformations": [
+    "irrelevant same-time deposit/withdraw preserves CW",
+    "extended compliant interval does not decrease CW"
+  ],
+  "samples": [
+    {
+      "seed": 1,
+      "base": 7500,
+      "irrelevantEvent": 7500
+    },
+    {
+      "seed": 2,
+      "base": 7500,
+      "irrelevantEvent": 7500
+    },
+    {
+      "seed": 3,
+      "base": 7500,
+      "irrelevantEvent": 7500
+    },
+    {
+      "seed": 4,
+      "base": 7500,
+      "irrelevantEvent": 7500
+    },
+    {
+      "seed": 5,
+      "base": 7500,
+      "irrelevantEvent": 7500
+    }
+  ]
+}

@@ -1,0 +1,668 @@
+{
+  "generatedAt": "2026-09-02T20:37:53.163Z",
+  "scenarios": [
+    {
+      "name": "A-same-final-different-history",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ],
+        [
+          "withdraw",
+          100,
+          10
+        ],
+        [
+          "deposit",
+          100,
+          20
+        ]
+      ],
+      "final": {
+        "balance": 150,
+        "commitment": 100,
+        "compliant": true,
+        "committedWeight": 3000
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            10
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 1500
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            20
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 1500
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "B-early-breach-late-recovery",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ],
+        [
+          "withdraw",
+          100,
+          2
+        ],
+        [
+          "deposit",
+          100,
+          20
+        ]
+      ],
+      "final": {
+        "balance": 150,
+        "commitment": 100,
+        "compliant": true,
+        "committedWeight": 1800
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            2
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 300
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            20
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 300
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "C-late-breach-no-recovery",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ],
+        [
+          "withdraw",
+          100,
+          20
+        ]
+      ],
+      "final": {
+        "balance": 50,
+        "commitment": 100,
+        "compliant": false,
+        "committedWeight": 3000
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            20
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 3000
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "D-multiple-cycles",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          150,
+          0
+        ],
+        [
+          "withdraw",
+          100,
+          5
+        ],
+        [
+          "deposit",
+          100,
+          10
+        ],
+        [
+          "withdraw",
+          100,
+          15
+        ],
+        [
+          "deposit",
+          100,
+          20
+        ]
+      ],
+      "final": {
+        "balance": 150,
+        "commitment": 100,
+        "compliant": true,
+        "committedWeight": 3000
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            150,
+            0
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            5
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 750
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            10
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 750
+        },
+        {
+          "event": [
+            "withdraw",
+            100,
+            15
+          ],
+          "balance": 50,
+          "compliant": false,
+          "weight": 1500
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            20
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 1500
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "E-exact-equality",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          100,
+          0
+        ],
+        [
+          "withdraw",
+          1,
+          10
+        ],
+        [
+          "deposit",
+          1,
+          20
+        ]
+      ],
+      "final": {
+        "balance": 100,
+        "commitment": 100,
+        "compliant": true,
+        "committedWeight": 2000
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            0
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            1,
+            10
+          ],
+          "balance": 99,
+          "compliant": false,
+          "weight": 1000
+        },
+        {
+          "event": [
+            "deposit",
+            1,
+            20
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 1000
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "F-threshold-boundary",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          99,
+          0
+        ],
+        [
+          "deposit",
+          1,
+          1
+        ],
+        [
+          "withdraw",
+          1,
+          2
+        ],
+        [
+          "deposit",
+          1,
+          3
+        ]
+      ],
+      "final": {
+        "balance": 100,
+        "commitment": 100,
+        "compliant": true,
+        "committedWeight": 2800
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            99,
+            0
+          ],
+          "balance": 99,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            1,
+            1
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            1,
+            2
+          ],
+          "balance": 99,
+          "compliant": false,
+          "weight": 100
+        },
+        {
+          "event": [
+            "deposit",
+            1,
+            3
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 100
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "G-zero-balance",
+      "events": [
+        [
+          "commit",
+          0
+        ],
+        [
+          "deposit",
+          1,
+          0
+        ],
+        [
+          "withdraw",
+          1,
+          1
+        ]
+      ],
+      "final": {
+        "balance": 0,
+        "commitment": 0,
+        "compliant": true,
+        "committedWeight": 1
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            0
+          ],
+          "balance": 0,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            1,
+            0
+          ],
+          "balance": 1,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            1,
+            1
+          ],
+          "balance": 0,
+          "compliant": true,
+          "weight": 1
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "H-repeated-compliant-deposits",
+      "events": [
+        [
+          "commit",
+          100
+        ],
+        [
+          "deposit",
+          100,
+          0
+        ],
+        [
+          "deposit",
+          50,
+          5
+        ],
+        [
+          "deposit",
+          50,
+          10
+        ]
+      ],
+      "final": {
+        "balance": 200,
+        "commitment": 100,
+        "compliant": true,
+        "committedWeight": 5250
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            100
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            100,
+            0
+          ],
+          "balance": 100,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            50,
+            5
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 500
+        },
+        {
+          "event": [
+            "deposit",
+            50,
+            10
+          ],
+          "balance": 200,
+          "compliant": true,
+          "weight": 1250
+        }
+      ],
+      "invariant": true
+    },
+    {
+      "name": "I-repeated-compliant-withdrawals",
+      "events": [
+        [
+          "commit",
+          50
+        ],
+        [
+          "deposit",
+          200,
+          0
+        ],
+        [
+          "withdraw",
+          25,
+          5
+        ],
+        [
+          "withdraw",
+          25,
+          10
+        ]
+      ],
+      "final": {
+        "balance": 150,
+        "commitment": 50,
+        "compliant": true,
+        "committedWeight": 4875
+      },
+      "trace": [
+        {
+          "event": [
+            "commit",
+            50
+          ],
+          "balance": 0,
+          "compliant": false,
+          "weight": 0
+        },
+        {
+          "event": [
+            "deposit",
+            200,
+            0
+          ],
+          "balance": 200,
+          "compliant": true,
+          "weight": 0
+        },
+        {
+          "event": [
+            "withdraw",
+            25,
+            5
+          ],
+          "balance": 175,
+          "compliant": true,
+          "weight": 1000
+        },
+        {
+          "event": [
+            "withdraw",
+            25,
+            10
+          ],
+          "balance": 150,
+          "compliant": true,
+          "weight": 1875
+        }
+      ],
+      "invariant": true
+    }
+  ]
+}

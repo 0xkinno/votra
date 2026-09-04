@@ -1,0 +1,3 @@
+const assert=require('node:assert/strict'); const {VotraModel}=require('../packages/reference-model');
+const alice=new VotraModel(); const bob=new VotraModel(); alice.setCommitment(100); bob.setCommitment(100); alice.deposit(200,0); bob.deposit(200,0); alice.accrue(10); bob.accrue(10); alice.withdraw(150,10); bob.accrue(20); alice.deposit(150,20); bob.accrue(30); alice.accrue(30);
+assert.equal(alice.balance,bob.balance); assert.notEqual(alice.weight,bob.weight); assert.equal(alice.weight,4000); assert.equal(bob.weight,6000); console.log('PASS final-multiplier counterexample: Alice 4000 != Bob 6000');

@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "probe": "unauthorized user decrypts another saver weight handle",
+  "result": "REFUSED",
+  "environment": "FHEVM mock",
+  "note": "The live relayer/KMS proof flow requires a relayer endpoint and user session; no fabricated live proof is recorded."
+}

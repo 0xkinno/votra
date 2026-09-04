@@ -1,0 +1,11 @@
+{
+  "failedAt": "2026-09-03T10:35:10.431Z",
+  "error": {
+    "message": "Fetch POST failed.\n\nurl: https://relayer.testnet.zama.org/v2/input-proof\nmethod: POST\noperation: INPUT_PROOF\nretryCount: 0\n\nDetails: fetch failed\nVersion: @zama-fhe/relayer-sdk@0.4.4",
+    "stack": "RelayerV2FetchError: Fetch POST failed.\n\nurl: https://relayer.testnet.zama.org/v2/input-proof\nmethod: POST\noperation: INPUT_PROOF\nretryCount: 0\n\nDetails: fetch failed\nVersion: @zama-fhe/relayer-sdk@0.4.4\n    at RelayerV2AsyncRequest._throwFetchError (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:8086:15)\n    at RelayerV2AsyncRequest._fetchPost (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:7633:22)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at RelayerV2AsyncRequest._runPostLoop (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:7033:30)\n    at RelayerV2AsyncRequest.run (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:6922:26)\n    at RelayerV2Provider.fetchPostInputProof (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:8141:24)\n    at RelayerV2Provider.fetchPostInputProofWithZKProof (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:4972:24)\n    at requestCiphertextWithZKProofVerification (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:3294:27)\n    at Object.encrypt (C:\\Users\\hp\\Downloads\\VOTRA\\node_modules\\@zama-fhe\\relayer-sdk\\lib\\node.cjs:3395:24)\n    at stage (C:\\Users\\hp\\Downloads\\VOTRA\\scripts\\live-campaign.js:18:87)",
+    "cause": {
+      "name": "TypeError",
+      "message": "fetch failed"
+    }
+  }
+}

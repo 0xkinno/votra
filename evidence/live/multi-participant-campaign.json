@@ -1,0 +1,277 @@
+{
+  "network": "sepolia",
+  "deployment": {
+    "canonical": true,
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "timestamp": "2026-09-03T20:33:03.526Z",
+    "pool": {
+      "address": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "transactionHash": "0xe6b0445c7987295d0d420641651a3145bec8e37990a3f1fe0f385f9485e41af5",
+      "blockNumber": 11628891
+    },
+    "draw": {
+      "address": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "transactionHash": "0x4a69e7fd4802b711520b6e577d70a5175e7c274eb56a7caafcc177da076d41b3",
+      "blockNumber": 11628892,
+      "maxTotalWeight": "1048576",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B",
+      "transactionHash": "0xf4aad429c325ce7ed68054cd65b9f385656d511721638c0b8f44ba5c87868fbf",
+      "blockNumber": 11628895
+    },
+    "reserve": {
+      "address": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+      "transactionHash": "0x8e636f23cb0c41c5c6fe60aecdccd4cd80be62fc11718b198d43d48e3f138e07",
+      "blockNumber": 11628897
+    },
+    "wiringTransactionHash": "0x4cf6d2454fba9e9322d906208c2e643cb1a98e86adc4f1ffa983221b29e8c38f",
+    "reserveWiringTransactionHash": "0xfcb8845565c34ac284291fffa6489bc7bb59fa0f1e4307689915b4ca5be19f52"
+  },
+  "participants": [
+    {
+      "id": "A",
+      "address": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "privateState": "not included in public artifact"
+    },
+    {
+      "id": "B",
+      "address": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "privateState": "not included in public artifact"
+    },
+    {
+      "id": "C",
+      "address": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "privateState": "not included in public artifact"
+    }
+  ],
+  "steps": [
+    {
+      "label": "participant A encrypted commitment",
+      "skipped": true,
+      "reason": "already committed on resumable deployment"
+    },
+    {
+      "label": "participant B encrypted commitment",
+      "skipped": true,
+      "reason": "already committed on resumable deployment"
+    },
+    {
+      "label": "participant C encrypted commitment",
+      "skipped": true,
+      "reason": "already committed on resumable deployment"
+    },
+    {
+      "label": "participant A encrypted deposit",
+      "contract": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "function": "deposit",
+      "hash": "0x252a9f06bb536af83dd0613efd34bc07a0c10637c934c9cce87087291bae6a71",
+      "blockNumber": 11629372,
+      "gasUsed": "664197",
+      "timestamp": 1788473544
+    },
+    {
+      "label": "participant B encrypted deposit",
+      "contract": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "function": "deposit",
+      "hash": "0x108a43c3509d02763880e43c046d899f92189180b7b3a251e9a84a1d9fc8ec2f",
+      "blockNumber": 11629376,
+      "gasUsed": "664225",
+      "timestamp": 1788473592
+    },
+    {
+      "label": "participant C encrypted deposit",
+      "contract": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "function": "deposit",
+      "hash": "0x4ebc43e7451ca4359a721cd9a143585d07c3ba31b151aa3dd9829af439a15b3c",
+      "blockNumber": 11629379,
+      "gasUsed": "664225",
+      "timestamp": 1788473628
+    },
+    {
+      "label": "participant B recovery deposit",
+      "contract": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "function": "deposit",
+      "hash": "0xda12e4b78b437b0eb63eec218f6f2ee7f44b19cce00fd03a84b02f46fef048a9",
+      "blockNumber": 11629384,
+      "gasUsed": "664225",
+      "timestamp": 1788473688
+    },
+    {
+      "label": "participant A breach withdrawal",
+      "contract": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "function": "withdraw",
+      "hash": "0xfd9cc429b439b3b985ec60f0c7ab0211eca03ba4f5f63ca5210ba88beb5a1dc4",
+      "blockNumber": 11629388,
+      "gasUsed": "679654",
+      "timestamp": 1788473736
+    },
+    {
+      "label": "participant A recovery deposit",
+      "contract": "0xf6222981e6E727bb85e54B08E37B606598130165",
+      "function": "deposit",
+      "hash": "0xfdf8a1e0427a7f393594b5e41cc1708cb5351c2c83c77141e029d4e07aba2ba9",
+      "blockNumber": 11629393,
+      "gasUsed": "664225",
+      "timestamp": 1788473796
+    },
+    {
+      "label": "mint confidential prize reserve funding",
+      "contract": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B",
+      "function": "mintDemo",
+      "hash": "0x94d15afbbe520015a9842955b4cd11569d8f03cb28a780f640001a7853348db9",
+      "blockNumber": 11629395,
+      "gasUsed": "313281",
+      "timestamp": 1788473832
+    },
+    {
+      "label": "fund confidential prize reserve",
+      "contract": "0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B",
+      "function": "confidentialTransferAndCall",
+      "hash": "0x65eb7d6174c3c5409bb880491849d8bda36998a2735f77189d8fded5599a667f",
+      "blockNumber": 11629396,
+      "gasUsed": "782295",
+      "timestamp": 1788473844
+    },
+    {
+      "label": "participant A enters draw",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "enter",
+      "hash": "0xf7db75e98310b647460986f08d5bad0d325370f6fb61c997d73479020090ddb2",
+      "blockNumber": 11629398,
+      "gasUsed": "90074",
+      "timestamp": 1788473868
+    },
+    {
+      "label": "participant B enters draw",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "enter",
+      "hash": "0x0ac4ee3a897f54dc21809b19280efa21dd48d0720dcbc78760bc48da90fb6f8a",
+      "blockNumber": 11629399,
+      "gasUsed": "72974",
+      "timestamp": 1788473880
+    },
+    {
+      "label": "participant C enters draw",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "enter",
+      "hash": "0x12047f61204010bbbedd3f512fae1930e886aae46e1ff589ee01df24a7aec223",
+      "blockNumber": 11629400,
+      "gasUsed": "72974",
+      "timestamp": 1788473892
+    },
+    {
+      "label": "open encrypted multi-participant draw",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "open",
+      "hash": "0xaf351f5d7f20e6c2270126d75fec5e92aa116f4d09e569ce630960a8ab23b7c9",
+      "blockNumber": 11629402,
+      "gasUsed": "3109553",
+      "timestamp": 1788473916
+    },
+    {
+      "label": "participant A encrypted winner computation",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "winnerBit",
+      "hash": "0x07433c273600a447b63e24dbf28c9618f183b0e6cca4d5744f1dbf22c6e8c72b",
+      "blockNumber": 11629403,
+      "gasUsed": "247969",
+      "timestamp": 1788473928
+    },
+    {
+      "label": "participant A confidential settlement",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "settleParticipant",
+      "hash": "0x8537802a1dd85950289e82ceef6d0ba9f1b64b4175caf0522400a16b00c547bd",
+      "blockNumber": 11629404,
+      "gasUsed": "394622",
+      "timestamp": 1788473940
+    },
+    {
+      "label": "participant A confidential claim",
+      "contract": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+      "function": "claim",
+      "hash": "0xd4e0754dd3b9fb050560bbfa462b678376cf940a42656c747ce523cf6316e087",
+      "blockNumber": 11629406,
+      "gasUsed": "388234",
+      "timestamp": 1788473964
+    },
+    {
+      "label": "participant B encrypted winner computation",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "winnerBit",
+      "hash": "0x1350a63c41f957ccb81cd1d04c1d5ccd0d0b075e35ea0aa17a8eb2efae147a05",
+      "blockNumber": 11629407,
+      "gasUsed": "277896",
+      "timestamp": 1788473976
+    },
+    {
+      "label": "participant B confidential settlement",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "settleParticipant",
+      "hash": "0xf83b51cee397d23531acc6f53521803522f26a863e6411e6fa99e9bd25f787ad",
+      "blockNumber": 11629409,
+      "gasUsed": "424553",
+      "timestamp": 1788474000
+    },
+    {
+      "label": "participant B confidential claim",
+      "contract": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+      "function": "claim",
+      "hash": "0x2acce732c1aca9f28ee74b5edfb67b8a3eaedb50740c5bb780ffc18d37401507",
+      "blockNumber": 11629410,
+      "gasUsed": "413364",
+      "timestamp": 1788474012
+    },
+    {
+      "label": "participant C encrypted winner computation",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "winnerBit",
+      "hash": "0x0b1bb94ef21bcdb7b4bb26739eecb4b1419388cc3342255d3e73c0826befe9b8",
+      "blockNumber": 11629612,
+      "gasUsed": "307819",
+      "timestamp": 1788476532
+    },
+    {
+      "label": "participant C confidential settlement",
+      "contract": "0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896",
+      "function": "settleParticipant",
+      "hash": "0x50c158fb78508947e5d92dc340a5a07b36e14ccf220c669a61a189475bd1e35a",
+      "blockNumber": 11629613,
+      "gasUsed": "454472",
+      "timestamp": 1788476544
+    },
+    {
+      "label": "participant C confidential claim",
+      "contract": "0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD",
+      "function": "claim",
+      "hash": "0x2754fc2dc6f204f903456afefec7ac0ced95ca851aae752e93bc5f02717a09a8",
+      "blockNumber": 11629614,
+      "gasUsed": "413368",
+      "timestamp": 1788476556
+    }
+  ],
+  "decryptions": [
+    {
+      "participant": "A",
+      "authorized": true,
+      "winner": false
+    },
+    {
+      "participant": "B",
+      "authorized": true,
+      "winner": false
+    },
+    {
+      "participant": "C",
+      "authorized": true,
+      "winner": true
+    }
+  ],
+  "startedAt": "2026-09-03T22:10:08.415Z",
+  "finishedAt": "2026-09-03T23:02:36.679Z"
+}

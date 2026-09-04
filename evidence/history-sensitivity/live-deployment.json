@@ -1,0 +1,10 @@
+{
+  "network":"sepolia","chainId":11155111,"deployment":"evidence/deployments/votra-history.json","sourceVerification":"confirmed with Hardhat/Etherscan on 2026-09-04",
+  "verifiedContracts":{
+    "pool":"https://sepolia.etherscan.io/address/0x46aE01FB556581e8d2C1D3393D17aff35c9e2c21#code",
+    "draw":"https://sepolia.etherscan.io/address/0xf12C8fd855553Bac0De548b35Bf3054aCD0b294E#code",
+    "asset":"https://sepolia.etherscan.io/address/0x111eb3571784decd795e478F897Ed8a6a2423692#code",
+    "reserve":"https://sepolia.etherscan.io/address/0x1AaEf1571E544AC0Fcc734894486fb765ff65acC#code"
+  },
+  "campaign":"evidence/history-sensitivity/live-campaign.json"
+}

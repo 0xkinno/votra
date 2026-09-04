@@ -1,0 +1,9 @@
+{
+  "status":"appkit-initialized-deterministic-qa-passed",
+  "viewports":["1440x1000","1280x800","390x844","430x932"],
+  "states":["anonymous","connected","wrong-network","awaiting-wallet","rejected","submitted","confirming","confirmed","failed"],
+  "appkit":"initialized without page errors; project ID loaded from .env.local via Vite define",
+  "realWalletSigning":"not executed: no automatable extension/test wallet profile was available",
+  "implemented":"Reown AppKit is the sole primary wallet modal. Injected EIP-1193 is only a fallback if AppKit initialization fails.",
+  "screenshots":[]
+}
