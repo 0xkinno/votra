@@ -55,23 +55,8 @@ class AppKitWalletService {
     await appkit.disconnect();
     this.emit();
   }
+  async openAccount() { await appkit.open({ view: 'Account' }); }
+  getWalletProvider() { return appkit.getWalletProvider(); }
 }
 
 export const walletService = new AppKitWalletService();
-const button = document.getElementById('connect');
-walletService.subscribe((wallet) => {
-  if (!button) return;
-  button.textContent = wallet.status === 'connected'
-    ? `${wallet.account.slice(0, 6)}...${wallet.account.slice(-4)}`
-    : wallet.status === 'wrong-network' ? 'Switch to Sepolia' : 'Connect wallet';
-});
-button?.addEventListener('click', async () => {
-  try {
-    if (walletService.state().status === 'wrong-network') await walletService.requestSepolia();
-    else if (walletService.state().status === 'connected') await appkit.open({ view: 'Account' });
-    else await walletService.connect();
-  } catch (error) {
-    const status = document.getElementById('statusText');
-    if (status) status.textContent = error.message;
-  }
-});

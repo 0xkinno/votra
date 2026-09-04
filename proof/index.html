@@ -3,30 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>VOTRA Proof Record</title>
-  <style>
-    :root{--paper:#f3f0e8;--ink:#1d211f;--muted:#686d66;--line:#cfcec6;--green:#1f6b52;--accent:#d94f2b}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1040px;margin:auto;padding:56px 28px 90px}header{border-bottom:1px solid var(--line);padding-bottom:44px}.label{font-size:11px;font-weight:700;color:var(--green);letter-spacing:.14em;text-transform:uppercase}h1{font:500 58px/1.02 Georgia,serif;letter-spacing:0;margin:14px 0 18px;max-width:800px}h2{font:500 29px Georgia,serif;letter-spacing:0;margin:0 0 13px}.lead{font-size:19px;color:var(--muted);max-width:720px}.formula{margin-top:30px;border-left:3px solid var(--green);padding:16px 22px;font:24px Georgia,serif;background:#e6ebe5}.grid{display:grid;grid-template-columns:180px 1fr;gap:26px;border-bottom:1px solid var(--line);padding:38px 0}.grid p{margin:0;color:var(--muted)}a{color:var(--green);text-underline-offset:3px}.numbers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:18px}.numbers div{background:var(--paper);padding:18px}.numbers strong{display:block;font:25px Georgia,serif}.numbers span{font-size:11px;color:var(--muted)}ul{margin:12px 0 0;padding-left:18px}code{font-size:13px}.pass{color:var(--green);font-weight:700}.boundary{color:var(--accent)}@media(max-width:700px){h1{font-size:42px}.grid{grid-template-columns:1fr;gap:8px}.numbers{grid-template-columns:1fr}}
-  </style>
+  <title>VOTRA | Proof Ledger</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-<main>
-  <header>
-    <div class="label">VOTRA / Technical Verification Record</div>
-    <h1>Private financial state enforces an economic rule.</h1>
-    <p class="lead">A private commitment gates balance-time accrual. The chain computes the consequence without publishing the balance, commitment, covenant state, or accumulated weight.</p>
-    <div class="formula">CW<sub>i</sub> = integral(B<sub>i</sub>(t) * C<sub>i</sub>(t) dt)</div>
-  </header>
-
-  <section class="grid"><div class="label">Discovery</div><div><h2>Privacy alone is not enforcement.</h2><p>VOTRA turns the encrypted relationship between balance and commitment into forward-only prize weight.</p></div></section>
-  <section class="grid"><div class="label">Invariant</div><div><h2>Breach stops future accrual, never earned history.</h2><p>Recovery resumes only future accrual. The <a href="../evidence/invariants/forward-only-randomized.json">10,000-history campaign</a> records zero invariant failures.</p></div></section>
-  <section class="grid"><div class="label">Counterexample</div><div><h2>Same final balance. Different private history. Different CW.</h2><div class="numbers"><div><strong>136800</strong><span>A / breach then recovery</span></div><div><strong>39600</strong><span>B / late recovery</span></div><div><strong>131400</strong><span>C / continuous compliance</span></div></div><p style="margin-top:16px">A, B, and C all finish at balance 150. Inspect the <a href="../evidence/history-sensitivity/live-campaign.json">live campaign</a> and <a href="../evidence/live/model-chain-crosscheck.json">zero-divergence model-chain cross-check</a>.</p></div></section>
-  <section class="grid"><div class="label">Attack</div><div><h2>Deployed guards were attacked directly.</h2><p><a href="../evidence/adversarial/executable-receipts.json">Eight independent Sepolia transactions</a> tested repeated opening, duplicate settlement, post-open entry, locked configuration, unauthorized pool/reserve access, and claim replay. <span class="pass">8/8 mined with the expected status 0.</span></p></div></section>
-  <section class="grid"><div class="label">Fix</div><div><h2>Exact encrypted selection replaced fixed slots.</h2><p>Bounded rejection sampling selects uniformly over the encrypted total-weight interval. See the <a href="../docs/DRAW_SELECTION.md">mathematical design</a>.</p></div></section>
-  <section class="grid"><div class="label">Randomized</div><div><h2>Exactness and history semantics are reproducible.</h2><ul><li><a href="../evidence/fairness/exact-selection-50k.json">50,007 exact-selection scenarios</a>: zero mismatches and zero illegal winners.</li><li><a href="../evidence/fairness/covenant-weighted.json">12,000 covenant-weighted scenarios</a>: zero mismatches and invariant failures.</li><li><a href="../evidence/metamorphic/summary.json">Metamorphic campaign</a>: transformations checked against expected history relationships.</li></ul></div></section>
-  <section class="grid"><div class="label">Live Campaign</div><div><h2>Positive winner, settlement, and claim on Sepolia.</h2><p>The <a href="../evidence/live/canonical-campaign.json">canonical campaign</a> records encrypted commitments, deposits, covenant transitions, exact draw, authorized winner-bit decryption, confidential reserve funding, settlement, and claim. Contract source links are in the <a href="../evidence/live/canonical-verification.json">verification manifest</a>.</p></div></section>
-  <section class="grid"><div class="label">Cost</div><div><h2>Observed metrics are classified by source.</h2><p><a href="../evidence/benchmarks/final-cost-summary.json">Live gas, transaction counts, and mock HCU</a> are reported separately; mock HCU is never presented as live coprocessor cost.</p></div></section>
-  <section class="grid"><div class="label">Privacy</div><div><h2>The encrypted boundary is explicit.</h2><p>The <a href="../evidence/privacy/leakage-campaign.json">leakage campaign</a> distinguishes encrypted financial state from public wallet, timing, transaction-count, and settlement metadata.</p></div></section>
-  <section class="grid"><div class="label">Boundaries</div><div><h2>Claims stop where evidence stops.</h2><p class="boundary">Public-chain metadata is observable. A finite rejection budget has a theoretical exhausted state. Browser extension approval remains controlled by the user's wallet. Neither is described as hidden or mathematically impossible.</p></div></section>
-</main>
+  <div id="app"></div>
+  <script type="module" src="/app.js"></script>
 </body>
 </html>

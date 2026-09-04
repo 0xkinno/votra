@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-09-04T15:47:04.535Z",
+  "verification": {
+    "runner": "scripts/visual-check.cjs",
+    "baseUrl": "http://127.0.0.1:4174/",
+    "result": "passed",
+    "checks": 34,
+    "viewports": ["1440x1000", "1280x800", "390x844", "430x932"],
+    "rawJsonAccidentalRoutes": 0
+  },
+  "shell": "shared VOTRA route shell",
+  "routes": [
+    {"route":"/","purpose":"Landing and How it works explanation","source":"app.js","status":"active","tested":true},
+    {"route":"/commitment","purpose":"Real encrypted commitment and covenant actions","source":"app.js","status":"active","tested":true},
+    {"route":"/draw","purpose":"Real ExactDraw entry, opening and claim actions","source":"app.js","status":"active","tested":true},
+    {"route":"/proof","purpose":"Human-readable proof index","source":"app.js","status":"active","tested":true},
+    {"route":"/proof/discovery","purpose":"Discovery/model artifact","source":"app.js + evidence/model/canonical-state-transition.json","status":"active","tested":true},
+    {"route":"/proof/history","purpose":"Equal-final-balance history experiment","source":"app.js + evidence/history-sensitivity/live-campaign.json","status":"active","tested":true},
+    {"route":"/proof/invariants","purpose":"Forward-only randomized invariant","source":"app.js + evidence/invariants/forward-only-randomized.json","status":"active","tested":true},
+    {"route":"/proof/fairness","purpose":"Exact-selection fairness","source":"app.js + evidence/fairness/exact-selection-50k.json","status":"active","tested":true},
+    {"route":"/proof/adversarial","purpose":"Mined deployed attack receipts","source":"app.js + evidence/adversarial/executable-receipts.json","status":"active","tested":true},
+    {"route":"/proof/privacy","purpose":"Privacy leakage evidence","source":"app.js + evidence/privacy/leakage-campaign.json","status":"active","tested":true},
+    {"route":"/proof/live","purpose":"Canonical positive-winner lifecycle","source":"app.js + evidence/live/canonical-campaign.json","status":"active","tested":true},
+    {"route":"/proof/benchmarks","purpose":"Operation cost classification","source":"app.js + evidence/benchmarks/final-cost-summary.json","status":"active","tested":true},
+    {"route":"/proof/contracts","purpose":"Canonical verified contracts","source":"app.js + evidence/live/canonical-verification.json","status":"active","tested":true},
+    {"route":"/security","purpose":"Security summary","source":"app.js + SECURITY.md","status":"active","tested":true},
+    {"route":"/privacy","purpose":"Privacy summary","source":"app.js + PRIVACY.md","status":"active","tested":true}
+  ]
+}
