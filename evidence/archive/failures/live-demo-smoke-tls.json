@@ -1,0 +1,14 @@
+{
+  "artifact": "live-demo-new-wallet smoke attempt #1",
+  "failedAt": "2026-09-05T13:20:00Z",
+  "failure": "TLS transport closed during encrypted deposit-input generation (SocketError: other side closed / Client network socket disconnected before secure TLS connection was established).",
+  "network": "sepolia",
+  "deployment": "votra-live-demo-deployment.json",
+  "newWallet": "0xFF490AB9b2776D74C435456FF424fe8732728d6f",
+  "completedSteps": [
+    "fund brand-new wallet (status 1)",
+    "set commitment encrypted floor 100 (status 1)"
+  ],
+  "remaining": "deposit -> breach -> recovery -> CW checkpoint -> yield -> entry -> open -> winner -> settlement -> claim",
+  "action": "Relaunched with a fresh random wallet on the same identical live-demo bytecode after the Zama relayer recovered."
+}

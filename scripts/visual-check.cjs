@@ -81,6 +81,8 @@ fs.mkdirSync(uiDir, { recursive: true });
     '/proof/privacy',
     '/proof/live',
     '/proof/benchmarks',
+    '/proof/yield',
+    '/proof/yield-model',
     '/proof/contracts',
     '/security',
     '/privacy'

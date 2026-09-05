@@ -42,6 +42,16 @@ The two economic quantities remain separate: **yield funds the prize; private co
 
 ---
 
+**Interactive demo round.** Wallet actions in the deployed app (commitment, deposit,
+breach, recovery, entry, claim) execute against a fresh identical live-demo instance so
+the recorded canonical round stays frozen as evidence. The interactive deployment is
+[`evidence/deployments/votra-live-ui-deployment.json`](evidence/deployments/votra-live-ui-deployment.json);
+the brand-new-wallet full lifecycle smoke is
+[`evidence/live/live-demo-new-wallet.json`](evidence/live/live-demo-new-wallet.json).
+The canonical contracts and campaign above remain the primary proof.
+
+---
+
 <table>
 <tr>
 <td align="center" width="50%">

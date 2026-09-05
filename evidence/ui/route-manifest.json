@@ -1,14 +1,15 @@
 {
-  "generatedAt": "2026-09-05T04:20:00.000Z",
+  "generatedAt": "2026-09-05T13:16:05.235Z",
   "verification": {
     "runner": "scripts/visual-check.cjs",
-    "baseUrl": "http://127.0.0.1:4174/",
+    "baseUrl": "http://127.0.0.1:4173/",
     "result": "passed",
-    "checks": 34,
+    "checks": 43,
     "viewports": ["1440x1000", "1280x800", "390x844", "430x932"],
     "rawJsonAccidentalRoutes": 0
   },
   "shell": "shared VOTRA route shell",
+  "interactiveRounds": "fresh identical live-demo deployment for /commitment and /draw; canonical proof round remains frozen under /proof and /proof/contracts",
   "routes": [
     {"route":"/","purpose":"Landing and How it works explanation","source":"app.js","status":"active","tested":true},
     {"route":"/commitment","purpose":"Real encrypted commitment and covenant actions","source":"app.js","status":"active","tested":true},

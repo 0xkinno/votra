@@ -1,0 +1,252 @@
+{
+  "status": "pass",
+  "purpose": "Brand-new wallet full interactive flow on the identical live-demo bytecode, leaving the judge-facing UI round untouched.",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployment": {
+    "canonical": false,
+    "promotionRule": "Promote only after canonical-yield-campaign.json passes the yield release gate.",
+    "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "deployedAt": "2026-09-05T11:28:25.684Z",
+    "pool": {
+      "address": "0xE6c41d10B0CDD489445E6095183a162B25f0E9aB",
+      "transactionHash": "0x0bad8e7d9ba5c7f608ddc597913887968df4fd6686418c329770f05ea6652c65",
+      "blockNumber": 11640053,
+      "bytecodeHash": "0x7a4dd6421aa4d0be353f02f3fec3f8d35d2a619d2181a14f48ac3f875e73fde6",
+      "codeBytes": 5477,
+      "sourceVerification": "pending"
+    },
+    "draw": {
+      "address": "0x6d8c0Bd1C014f99Be21C7BB1926454c94C6043A0",
+      "transactionHash": "0xc46e050f826870341540754e5c1dc96230d5bd955697230abf92b4efa793c772",
+      "blockNumber": 11640055,
+      "bytecodeHash": "0xe48b4e687c58b3f525542ade0b35cb58519531527a385af584a2c7df3932ce60",
+      "codeBytes": 5040,
+      "sourceVerification": "pending",
+      "maxTotalWeight": "1048576",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x0B2B20f56E18993eDCd84aF5bE411B97676F43C4",
+      "transactionHash": "0x35290c4e28ab2840df370b64d424b063c3e3f23b8565b2b133f9db02683456e3",
+      "blockNumber": 11640056,
+      "bytecodeHash": "0xe097e692f41dc3d4847562d45460a9a081134bd69612ff04dd42266ca5dbd36a",
+      "codeBytes": 7795,
+      "sourceVerification": "pending"
+    },
+    "yieldAdapter": {
+      "address": "0xfaB4BF7fB590F92c9534f3C3c6a3BEAd050de3cE",
+      "transactionHash": "0xe3af17aae18754beee306e6824b4547b1de2706677c059eca07fa41370ae31bc",
+      "blockNumber": 11640059,
+      "bytecodeHash": "0xb25b1dc36c857703529ab17ef6889989d189d5270e1d2b7ad5c3cff23d19efbf",
+      "codeBytes": 1963,
+      "sourceVerification": "pending"
+    },
+    "reserve": {
+      "address": "0x92b77Ec34bDf18d36F6a39B72e341Fb3108dA696",
+      "transactionHash": "0xc83c81eb786f2020570044b5715147284a465245d938966f7f922ddcec43955c",
+      "blockNumber": 11640057,
+      "bytecodeHash": "0x5dd940906de56f8cc819fbc4ececc8d5e66639eae8bab1ad4d2d270e571902da",
+      "codeBytes": 2805,
+      "sourceVerification": "pending"
+    },
+    "wiring": {
+      "authorizedDraw": {
+        "transactionHash": "0xe4a0105fec6a2747cd743c11b43a3d3d2a3267f126974557ae74547bdbd85e40",
+        "blockNumber": 11640060
+      },
+      "reserve": {
+        "transactionHash": "0xbee8d36e8a48e019c57c2a518dcdf776bdf2ed15742429be67eee17a29d87871",
+        "blockNumber": 11640061
+      }
+    }
+  },
+  "newWallet": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+  "steps": [
+    {
+      "step": "fund brand-new wallet",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "function": "native transfer",
+      "txHash": "0xc20fd2684fdfb98ec3a30a8f0e899da9fb1cedbabcca3a44cee9d10fd8641374",
+      "block": 11640505,
+      "timestamp": 1788613236,
+      "status": 1,
+      "gasUsed": "21000"
+    },
+    {
+      "step": "set commitment (encrypted floor 100)",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0xE6c41d10B0CDD489445E6095183a162B25f0E9aB",
+      "function": "setCommitment",
+      "txHash": "0x7922ba67dfe22acb60d76168b3cb8f59f3c789eab47eea3ae2f3336ad76e2646",
+      "block": 11640508,
+      "timestamp": 1788613284,
+      "status": 1,
+      "gasUsed": "578549"
+    },
+    {
+      "step": "deposit (encrypted 150)",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0xE6c41d10B0CDD489445E6095183a162B25f0E9aB",
+      "function": "deposit",
+      "txHash": "0x809bd5255b6adb4e1a29dfedac130a60414f5e619e8885c61e61a09b7373a37d",
+      "block": 11640513,
+      "timestamp": 1788613344,
+      "status": 1,
+      "gasUsed": "660197"
+    },
+    {
+      "step": "breach (encrypted withdrawal 60)",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0xE6c41d10B0CDD489445E6095183a162B25f0E9aB",
+      "function": "withdraw",
+      "txHash": "0xd07bc43d2315bea837ae8360cfe3e474204ba74b4aee8d9719f7f67df304ee62",
+      "block": 11640519,
+      "timestamp": 1788613416,
+      "status": 1,
+      "gasUsed": "679658"
+    },
+    {
+      "step": "recovery (encrypted deposit 60)",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0xE6c41d10B0CDD489445E6095183a162B25f0E9aB",
+      "function": "deposit",
+      "txHash": "0xce8aec4ef965335296815dcb0ba6e3a5a3c82c83d92068323ede29160cd0afc9",
+      "block": 11640523,
+      "timestamp": 1788613464,
+      "status": 1,
+      "gasUsed": "664225"
+    },
+    {
+      "step": "CW checkpoint (encrypted 0 touch)",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0xE6c41d10B0CDD489445E6095183a162B25f0E9aB",
+      "function": "deposit",
+      "txHash": "0x7f9aba8478a868d15052b403514bc182c5cfd6ad05f4d3bd4d5e81e4a007db96",
+      "block": 11640529,
+      "timestamp": 1788613548,
+      "status": 1,
+      "gasUsed": "664225"
+    },
+    {
+      "step": "account principal (testnet accounting)",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xfaB4BF7fB590F92c9534f3C3c6a3BEAd050de3cE",
+      "function": "depositPrincipal",
+      "txHash": "0xcc6712745475e67adc5d7936eeea4c1a7a525e7f5a67b7119a71fb4b2650a78f",
+      "block": 11640532,
+      "timestamp": 1788613584,
+      "status": 1,
+      "gasUsed": "45214"
+    },
+    {
+      "step": "realize deterministic testnet yield",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xfaB4BF7fB590F92c9534f3C3c6a3BEAd050de3cE",
+      "function": "accrueYield",
+      "txHash": "0x1f337ebc1a6437bc45ecdbc503ae289c14a7cc3d5ea881a872e7b954106756fd",
+      "block": 11640534,
+      "timestamp": 1788613608,
+      "status": 1,
+      "gasUsed": "45118"
+    },
+    {
+      "step": "harvest realized yield to prize reserve",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xfaB4BF7fB590F92c9534f3C3c6a3BEAd050de3cE",
+      "function": "harvestYield",
+      "txHash": "0x721458e173941d4c2027713be8a5d1ca1c8f992bd8fae220e0f20f965df17c8a",
+      "block": 11640535,
+      "timestamp": 1788613620,
+      "status": 1,
+      "gasUsed": "1033172"
+    },
+    {
+      "step": "draw entry",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0x6d8c0Bd1C014f99Be21C7BB1926454c94C6043A0",
+      "function": "enter",
+      "txHash": "0xc89b7bb5d6df0938ba01b1c265ca17e801f740cf7fdb9b5b880cd92cffb0ed6b",
+      "block": 11640536,
+      "timestamp": 1788613632,
+      "status": 1,
+      "gasUsed": "90074"
+    },
+    {
+      "step": "open exact encrypted draw",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x6d8c0Bd1C014f99Be21C7BB1926454c94C6043A0",
+      "function": "open",
+      "txHash": "0x1f38ccc408bd3c61caf9fb6ea3d2129cfadb1ecbddfbec807f0c9645a6710939",
+      "block": 11640538,
+      "timestamp": 1788613656,
+      "status": 1,
+      "gasUsed": "3009858"
+    },
+    {
+      "step": "winner-bit decryption probe",
+      "status": "failed",
+      "error": "User address 0x39Ef721a201f79aDda3Cf476a513F23AB051b39c is not authorized to user decrypt handle 0x45f96692267604ab0d4b223efdf0e610c17b834024ff0000000000aa36a70000!"
+    },
+    {
+      "step": "encrypted winner computation",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0x6d8c0Bd1C014f99Be21C7BB1926454c94C6043A0",
+      "function": "winnerBit",
+      "txHash": "0x34e8443a5fa4bb8c706a377b07bd109c77a5805380b160b376748c86410adbb6",
+      "block": 11640539,
+      "timestamp": 1788613668,
+      "status": 1,
+      "gasUsed": "247965"
+    },
+    {
+      "step": "confidential settlement",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x6d8c0Bd1C014f99Be21C7BB1926454c94C6043A0",
+      "function": "settleParticipant",
+      "txHash": "0x9abd34af71936b7f74fc0523a8937c3e7f775da433264eaa9cf79ea9976b9ad7",
+      "block": 11640540,
+      "timestamp": 1788613680,
+      "status": 1,
+      "gasUsed": "394622"
+    },
+    {
+      "step": "confidential claim",
+      "signer": "0x39Ef721a201f79aDda3Cf476a513F23AB051b39c",
+      "contract": "0x92b77Ec34bDf18d36F6a39B72e341Fb3108dA696",
+      "function": "claim",
+      "txHash": "0x48b621417e70f7a957b1d584c00e30a53fde6a381b857adcd58082cfb47a63ad",
+      "block": 11640542,
+      "timestamp": 1788613704,
+      "status": 1,
+      "gasUsed": "413364"
+    }
+  ],
+  "startedAt": "2026-09-05T13:00:26.871Z",
+  "privateReadback": {
+    "finalBalance": "150",
+    "commitment": "100",
+    "cw": "23400",
+    "breachCycles": "1"
+  },
+  "economicState": {
+    "finalBalance": "150",
+    "committedWeight": "23400",
+    "breachCycles": "1",
+    "winner": false,
+    "winnerBySettlementCredit": true,
+    "prizeCredit": "1000",
+    "harvestedYield": "1000",
+    "prizeReserveFunding": "1000"
+  },
+  "notes": [
+    "Every lifecycle transaction mined with status 1 on Sepolia: funding, encrypted commitment, encrypted deposit, breach, recovery, CW checkpoint, yield realization and harvest, draw entry, exact draw opening, encrypted winner computation, confidential settlement, and confidential claim.",
+    "The winnerBit decryption probe on the raw staticCall handle was not ACL-authorized for this wallet, so it recorded false. The on-chain winner computation and confidential settlement still prove the result: this participant received the full 1000 realized-yield prize credit and claimed it."
+  ],
+  "finishedAt": "2026-09-05T13:08:27.296Z"
+}

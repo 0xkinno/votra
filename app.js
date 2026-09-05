@@ -9,6 +9,14 @@ const addresses = {
   adapter: typeof __VOTRA_ADAPTER__ !== 'undefined' ? __VOTRA_ADAPTER__ : '0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D'
 };
 
+const live = {
+  pool: typeof __VOTRA_LIVE_POOL__ !== 'undefined' ? __VOTRA_LIVE_POOL__ : '0x4dDb678313823206352655a844C7663E89830008',
+  draw: typeof __VOTRA_LIVE_DRAW__ !== 'undefined' ? __VOTRA_LIVE_DRAW__ : '0xa761a1d265dF11626D7E8DaB6701783ca454Bdfd',
+  asset: typeof __VOTRA_LIVE_ASSET__ !== 'undefined' ? __VOTRA_LIVE_ASSET__ : '0xE95093C079936BD7a92690AC097fce66596b3Ff6',
+  reserve: typeof __VOTRA_LIVE_RESERVE__ !== 'undefined' ? __VOTRA_LIVE_RESERVE__ : '0x60EA61c17044Cfc11f1594a3CAC01DBd2e6Ad7DE',
+  adapter: typeof __VOTRA_LIVE_ADAPTER__ !== 'undefined' ? __VOTRA_LIVE_ADAPTER__ : '0x27897B1C0392C6Fe340f0b544C228e7FdA90ccce'
+};
+
 const github = 'https://github.com/0xkinno/votra';
 const canonical = '/evidence/live/canonical-yield-campaign.json';
 const history = '/evidence/history-sensitivity/live-campaign.json';
@@ -164,7 +172,7 @@ function renderTx() {
   const el = document.querySelector('#txState');
   if (el) {
     const isError = /FAILED|REJECTED/i.test(state.tx);
-    const isPending = /PENDING|SUBMITTING|CONFIRMING|SIGN IN/i.test(state.tx);
+    const isPending = /ENCRYPT|PENDING|SUBMITTING|CONFIRMING|SIGN IN/i.test(state.tx);
     el.className = `status-badge ${isError ? 'error' : isPending ? 'pending' : 'ready'}`;
     el.innerHTML = `
       <span class="network-dot" style="background:${isError ? 'var(--accent-red)' : isPending ? 'var(--accent-orange)' : 'var(--accent-green)'}"></span>
@@ -247,16 +255,17 @@ async function protocolAction(kind) {
     const user = await signer.getAddress();
     if (kind === 'commitment' || kind === 'deposit' || kind === 'breach' || kind === 'recovery') {
       const value = kind === 'commitment' ? Number(document.querySelector('#goal')?.value || 100) : kind === 'deposit' ? 150 : 60;
-      const [handle, proof] = await encrypted(value, addresses.pool, user);
-      const pool = new Contract(addresses.pool, poolAbi, signer);
+      setTx(kind === 'commitment' ? 'set commitment' : kind, 'ENCRYPTING VIA ZAMA RELAYER (10-20 SECONDS)');
+      const [handle, proof] = await encrypted(value, live.pool, user);
+      const pool = new Contract(live.pool, poolAbi, signer);
       const fn = kind === 'commitment' ? 'setCommitment' : kind === 'breach' ? 'withdraw' : 'deposit';
       await send(kind, () => pool[fn](handle, proof));
       return;
     }
-    const draw = new Contract(addresses.draw, drawAbi, signer);
+    const draw = new Contract(live.draw, drawAbi, signer);
     if (kind === 'enter') await send('draw entry', () => draw.enter());
     if (kind === 'open') await send('encrypted draw opening', () => draw.open());
-    if (kind === 'claim') await send('confidential claim', () => new Contract(addresses.reserve, reserveAbi, signer).claim(1));
+    if (kind === 'claim') await send('confidential claim', () => new Contract(live.reserve, reserveAbi, signer).claim(1));
     if (kind === 'enter' || kind === 'open' || kind === 'claim') hydrateDraw();
   } catch (error) {
     const rejected = error?.code === 4001 || error?.code === 'ACTION_REJECTED';
@@ -411,8 +420,8 @@ function home() {
             </div>
           </div>
           <div class="receipt-row">
-            <span>CANONICAL POOL CONTRACT</span>
-            <strong><a href="https://sepolia.etherscan.io/address/${addresses.pool}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${addresses.pool} ${icons.external}</a></strong>
+            <span>LIVE DEMO POOL CONTRACT</span>
+            <strong><a href="https://sepolia.etherscan.io/address/${live.pool}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${live.pool} ${icons.external}</a></strong>
           </div>
           <div class="receipt-row">
             <span>METRIC STATUS</span>
@@ -605,7 +614,7 @@ function commitmentPage() {
         <div>
           <div class="eyebrow eyebrow-green">YOUR COMMITMENT</div>
           <h1>Private covenant controls</h1>
-          <p class="lede">Set a private commitment floor, deposit funds, and manage covenant compliance through encrypted Sepolia transactions.</p>
+          <p class="lede">Set a private commitment floor, deposit funds, and manage covenant compliance through encrypted Sepolia transactions. This interactive demo runs on a dedicated live-demo deployment &mdash; the frozen canonical proof stays separate under Proof.</p>
         </div>
         <div class="status-badge ready" id="txState">
           <span class="network-dot"></span>
@@ -670,8 +679,8 @@ function commitmentPage() {
           <strong id="txMetric">Receipt-derived</strong>
         </div>
         <div class="receipt-row">
-          <span>POOL CONTRACT</span>
-          <strong><a href="https://sepolia.etherscan.io/address/${addresses.pool}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${addresses.pool} ${icons.external}</a></strong>
+          <span>LIVE DEMO POOL CONTRACT</span>
+          <strong><a href="https://sepolia.etherscan.io/address/${live.pool}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${live.pool} ${icons.external}</a></strong>
         </div>
         <div class="receipt-row">
           <span>ENCRYPTION ENGINE</span>
@@ -689,7 +698,7 @@ function drawPage() {
         <div>
           <div class="eyebrow eyebrow-green">EXACT DRAW</div>
           <h1>Exact encrypted selection room</h1>
-          <p class="lede">Round controls reflect live Sepolia state.</p>
+          <p class="lede">Round controls reflect live Sepolia state. This is the live-demo interactive round &mdash; the recorded canonical positive-winner round stays frozen and is documented under Proof.</p>
         </div>
         <div class="status-badge ready" id="txState">
           <span class="network-dot"></span>
@@ -701,7 +710,7 @@ function drawPage() {
         <!-- Draw Status Card -->
         <div class="product-card with-corner-marks">
           ${cornerMarks()}
-          <div class="eyebrow eyebrow-green">ROUND #1 STATUS</div>
+          <div class="eyebrow eyebrow-green">LIVE DEMO ROUND #1 STATUS</div>
           <h3 style="font-size:24px; margin: 8px 0 16px;">ExactDraw Lifecycle</h3>
 
           <div class="receipt-card" style="margin-top:0;">
@@ -762,8 +771,12 @@ function drawPage() {
       <div class="receipt-card with-corner-marks">
         ${cornerMarks()}
         <div class="receipt-row">
-          <span>CANONICAL DRAW CONTRACT</span>
-          <strong><a href="https://sepolia.etherscan.io/address/${addresses.draw}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${addresses.draw} ${icons.external}</a></strong>
+          <span>LIVE DEMO DRAW CONTRACT</span>
+          <strong><a href="https://sepolia.etherscan.io/address/${live.draw}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${live.draw} ${icons.external}</a></strong>
+        </div>
+        <div class="receipt-row">
+          <span>CANONICAL ROUND</span>
+          <strong><a href="/proof/live" style="color:var(--surface-forest); text-decoration:underline;">${addresses.draw} &rarr; View recorded proof</a></strong>
         </div>
         <div class="receipt-row">
           <span>TX STATE</span>
@@ -797,8 +810,8 @@ async function hydrateDraw() {
 
   try {
     const provider = rpcProvider();
-    const draw = new Contract(addresses.draw, drawAbi, provider);
-    const reserve = new Contract(addresses.reserve, reserveAbi, provider);
+    const draw = new Contract(live.draw, drawAbi, provider);
+    const reserve = new Contract(live.reserve, reserveAbi, provider);
     const [opened, exhausted, participantCountRaw] = await Promise.all([
       draw.opened(),
       draw.exhausted(),
@@ -848,7 +861,7 @@ async function hydrateDraw() {
     setButton(claimBtn, connected && opened && !claimed, !connected ? 'CONNECT WALLET TO CLAIM' : (!opened ? 'DRAW NOT OPENED YET' : (claimed ? 'PRIZE CLAIMED — ROUND 1' : 'CLAIM CONFIDENTIAL PRIZE')));
 
     if (hint) {
-      hint.textContent = 'Round #1 state read directly from ' + addresses.draw.slice(0, 6) + '...' + addresses.draw.slice(-4) + ' on Sepolia at ' + new Date().toISOString().slice(11, 19) + ' UTC.';
+      hint.textContent = 'Live demo round #1 read directly from ' + live.draw.slice(0, 6) + '...' + live.draw.slice(-4) + ' on Sepolia at ' + new Date().toISOString().slice(11, 19) + ' UTC. Canonical proof round remains frozen on a separate deployment.';
     }
   } catch (error) {
     stage.textContent = 'STATE UNREADABLE';

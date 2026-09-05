@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T17:32:01.858Z",
+  "generatedAt": "2026-09-05T13:16:05.235Z",
   "executablePath": "C:/Users/hp/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe",
   "baseURL": "http://127.0.0.1:4173/",
   "viewports": [
@@ -14,6 +14,8 @@
     "02-compliant-state.png",
     "03-breach-state.png",
     "04-proof-receipt.png",
+    "bugfix-draw.png",
+    "bugfix-home.png",
     "check-commitment.png",
     "check-draw.png",
     "check-home.png",
@@ -22,7 +24,9 @@
     "final-home.png",
     "mobile-landing.png",
     "narrow-history.png",
+    "prod-proof-live-yield.png",
     "proof-index.png",
+    "proof-live-yield.png",
     "report.json",
     "tablet-landing.png",
     "view-commitment.png",
@@ -186,6 +190,26 @@
     },
     {
       "name": "/proof/benchmarks no raw JSON",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "/proof/yield loads",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "/proof/yield no raw JSON",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "/proof/yield-model loads",
+      "pass": true,
+      "details": ""
+    },
+    {
+      "name": "/proof/yield-model no raw JSON",
       "pass": true,
       "details": ""
     },
