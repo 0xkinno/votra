@@ -2,16 +2,15 @@
 
 ```mermaid
 flowchart LR
-  U[Saver wallet] --> C[Encrypted commitment input]
-  U --> V[VotraVault]
-  V --> W[VotraWeight]
-  C --> W
-  W --> D[VotraDraw]
-  R[VotraPrizeReserve] --> D
-  D --> P[Private winner / prize claim]
-  W --> E[Proof receipt + encrypted evidence]
+  U[Saver wallet] --> P[VotraCommitmentPool]
+  U --> A[VotraConfidentialAsset]
+  P --> D[VotraExactDraw]
+  Y[VotraYieldAdapter] --> R[VotraPrizeReserve]
+  R --> D
+  D --> W[Private winner / prize claim]
+  P --> E[Encrypted proof receipt and evidence]
 ```
 
-`VotraVault` owns principal accounting and advances weight before every balance mutation. `VotraCommitment` freezes one encrypted floor per round. `VotraWeight` stores the encrypted accumulator and compliance state. `VotraDraw` performs exact weighted selection after a measured randomness boundary. `VotraPrizeReserve` is funded separately so prizes cannot consume principal.
+`VotraCommitmentPool` owns the encrypted balance, commitment floor, covenant state and CW accumulator. `VotraConfidentialAsset` is the ERC-7984 confidential balance and transfer layer. `VotraExactDraw` sums encrypted commitment weights and performs bounded exact rejection sampling over `[0, maxTotalWeight)`. `VotraYieldAdapter` keeps principal separate from realized yield and is the only path that funds the prize reserve. `VotraPrizeReserve` receives realized yield and settles the encrypted winner without touching participant principal.
 
-The first runnable build uses the reference model and a browser demonstrator; FHEVM adapters are intentionally isolated until current Zama APIs and HCU costs are verified.
+The canonical stack deployed on Sepolia is Pool, ExactDraw, ConfidentialAsset, YieldAdapter, and PrizeReserve. The adapter is explicitly a **TESTNET YIELD ADAPTER / NOT LIVE MARKET YIELD**; no external market strategy is claimed.

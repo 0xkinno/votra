@@ -1,6 +1,6 @@
 # Frontend Integration Audit
 
-This audit records the functional surface after the routing pass. Contract addresses and economic semantics are unchanged.
+This audit records the functional surface after the routing pass. Canonical addresses now point to the fresh five-contract yield stack; the yield adapter and yield-funded reserve are part of the documented live campaign.
 
 | UI location | Action | Current behavior | Real backend function | Route / destination | Status |
 |---|---|---|---|---|---|

@@ -20,7 +20,7 @@ This document records the architectural and interface audit of the existing VOTR
   - Interactive console for entering rounds, triggering `VotraExactDraw.sol` (`enter`, `open`, `settleParticipant`), and claiming prizes via `VotraPrizeReserve.sol` (`claim`).
   - Canonical draw state metrics, privacy status indicators, and proof verification links.
 - **`/proof` (Evidence & Verifiability Index)**:
-  - High-level evidence dashboard indexing 8 core empirical artifacts:
+  - High-level evidence dashboard indexing 10 core empirical artifacts:
     1. `fairness`: Exact selection fairness (`/evidence/fairness/exact-selection-50k.json`)
     2. `history`: History-sensitive campaign (`/evidence/history-sensitivity/live-campaign.json`)
     3. `adversarial`: Deployed adversarial receipts (`/evidence/adversarial/executable-receipts.json`)
@@ -29,6 +29,8 @@ This document records the architectural and interface audit of the existing VOTR
     6. `invariants`: Forward-only invariant tests (`/evidence/invariants/forward-only-randomized.json`)
     7. `privacy`: Privacy leakage analysis (`/evidence/privacy/leakage-campaign.json`)
     8. `benchmarks`: Operation costs & gas/HCU metrics (`/evidence/benchmarks/final-cost-summary.json`)
+    9. `yield`: Yield provenance and principal separation (`/evidence/yield/principal-separation.json`)
+    10. `yield-model`: Full economic model (`/evidence/yield/economic-model.json`)
 - **`/proof/contracts`**: Canonical deployed & verified contract addresses (`VotraCommitmentPool`, `VotraExactDraw`, `VotraConfidentialAsset`, `VotraYieldAdapter`, `VotraPrizeReserve`) on Ethereum Sepolia with direct Etherscan and GitHub links.
 - **`/proof/:key`**: Dynamic rendered views of specific verification artifacts (including tabular historical CW tables, model-chain cross-checks, and mined status-0 adversarial guard receipts).
 - **`/security`**: Canonical security boundary specification and deployed attack receipt links.
@@ -54,6 +56,11 @@ This document records the architectural and interface audit of the existing VOTR
   - `open()`
   - `winnerBit(uint256 participantId)`
   - `settleParticipant(uint256 participantId)`
+- **`VotraYieldAdapter`** (`0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D`):
+  - `depositPrincipal(uint256)`
+  - `withdrawPrincipal(uint256)`
+  - `accrueYield(uint256)`
+  - `harvestYield(uint64, uint256)`
 - **`VotraPrizeReserve`** (`0x916510A064c08Ff05de32C54b2be99eB674ad352`):
   - `claim(uint256 roundId)`
 - **`VotraConfidentialAsset`** (`0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e`):

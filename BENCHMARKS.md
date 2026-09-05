@@ -14,4 +14,22 @@ The deterministic fairness campaign runs 10,000 mixed-weight scenarios with zero
 
 ## Live / Deployed
 
-Sepolia deployment and bytecode readback are recorded under `evidence/deployments/`. Production HCU, gas, relayer latency, and funded confidential draw settlement require a live relayer session and are not fabricated here.
+The canonical yield campaign is live on Sepolia. Per-operation gas is captured
+from mined receipts in `evidence/live/canonical-yield-campaign.json`:
+
+| Operation | Live Sepolia gas |
+|---|---:|
+| `setCommitment` | ~578,541 |
+| `deposit` | ~660,213 |
+| `withdraw` (breach) | ~679,654 |
+| `depositPrincipal` | ~45,214 |
+| `accrueYield` | ~45,118 |
+| `harvestYield` | ~1,033,172 |
+| `winnerBit` | captured in campaign receipts |
+| `settleParticipant` / `claim` | captured in campaign receipts |
+
+Local FHEVM HCU remains a mock measurement and is never presented as live HCU.
+Deployment manifests, bytecode hashes, and source verification are recorded
+under `evidence/deployments/votra-yield-canonical.json`,
+`evidence/live/final-yield-deployment.json`, and
+`evidence/live/canonical-yield-verification.json`.
