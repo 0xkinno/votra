@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
       __VOTRA_ASSET__: JSON.stringify(env.VOTRA_ASSET_ADDRESS || '0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e'),
       __VOTRA_RESERVE__: JSON.stringify(env.VOTRA_RESERVE_ADDRESS || '0x916510A064c08Ff05de32C54b2be99eB674ad352'),
       __VOTRA_ADAPTER__: JSON.stringify(env.VOTRA_YIELD_ADAPTER_ADDRESS || '0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D'),
-      __VOTRA_RPC__: JSON.stringify(env.VOTRA_RPC_URL || 'https://eth-sepolia.public.blastapi.io')
+      __VOTRA_RPC__: JSON.stringify(env.VOTRA_RPC_URL || 'https://ethereum-sepolia-rpc.publicnode.com')
     },
     plugins: [
       {

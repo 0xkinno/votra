@@ -204,7 +204,7 @@ async function send(label, action) {
 
 function rpcProvider() {
   if (!readProvider) {
-    const rpc = typeof __VOTRA_RPC__ !== 'undefined' ? __VOTRA_RPC__ : 'https://eth-sepolia.public.blastapi.io';
+    const rpc = typeof __VOTRA_RPC__ !== 'undefined' ? __VOTRA_RPC__ : 'https://ethereum-sepolia-rpc.publicnode.com';
     readProvider = new JsonRpcProvider(rpc);
   }
   return readProvider;
