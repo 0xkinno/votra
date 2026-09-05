@@ -14,13 +14,15 @@
   <img src="evidence/screenshots/desktop-landing.png" alt="VOTRA application" width="100%" />
 </p>
 
-VOTRA is a confidential prize-savings protocol built around one idea: **private financial state can be hidden without making it economically irrelevant**.
+VOTRA is a confidential prize-savings protocol where **realized yield funds the prize, while a saver’s private financial commitment determines how much winning weight they earn**.
 
 A saver chooses a private financial commitment. VOTRA evaluates that commitment against an encrypted balance and turns only compliant balance-time into prize weight. The resulting history remains confidential while the protocol enforces its consequences onchain.
 
 The result is a PoolTogether-style prize-savings experience with a deeper primitive underneath it:
 
 > **Private financial state becomes a private rule that the public chain can still enforce.**
+
+The two economic quantities remain separate: **yield funds the prize; private commitment-qualified history determines the chance.**
 
 ---
 
@@ -31,11 +33,12 @@ The result is a PoolTogether-style prize-savings experience with a deeper primit
 | Live app | [votra-phi.vercel.app](https://votra-phi.vercel.app) |
 | GitHub | [github.com/0xkinno/votra](https://github.com/0xkinno/votra) |
 | Proof | [Live technical proof](https://votra-phi.vercel.app/proof/) |
-| Pool | [`0xf6222981e6E727bb85e54B08E37B606598130165`](https://sepolia.etherscan.io/address/0xf6222981e6E727bb85e54B08E37B606598130165#code) |
-| ExactDraw | [`0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896`](https://sepolia.etherscan.io/address/0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896#code) |
-| Confidential Asset | [`0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B`](https://sepolia.etherscan.io/address/0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B#code) |
-| Prize Reserve | [`0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD`](https://sepolia.etherscan.io/address/0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD#code) |
-| Canonical campaign | [`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json) |
+| Pool | [`0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c`](https://sepolia.etherscan.io/address/0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c#code) |
+| ExactDraw | [`0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0`](https://sepolia.etherscan.io/address/0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0#code) |
+| Confidential Asset | [`0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e`](https://sepolia.etherscan.io/address/0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e#code) |
+| Yield Adapter | [`0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D`](https://sepolia.etherscan.io/address/0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D#code) |
+| Prize Reserve | [`0x916510A064c08Ff05de32C54b2be99eB674ad352`](https://sepolia.etherscan.io/address/0x916510A064c08Ff05de32C54b2be99eB674ad352#code) |
+| Canonical yield campaign | [`evidence/live/canonical-yield-campaign.json`](evidence/live/canonical-yield-campaign.json) |
 
 ---
 
@@ -212,6 +215,41 @@ It also asks:
 
 ---
 
+# The Economic Engine
+
+VOTRA separates two questions that are often collapsed:
+
+**Where does the prize come from?**
+
+Realized yield. Participant principal is never treated as prize yield.
+
+**Who has earned how much chance?**
+
+Private commitment-qualified balance-time. The draw uses `CW`, not final balance.
+
+The accounting paths are deliberately independent:
+
+```text
+REALIZED YIELD
+    ↓
+PRIZE RESERVE
+
+PRIVATE BALANCE + PRIVATE COMMITMENT
+    ↓
+COMMITMENT-WEIGHTED TWAB
+    ↓
+WINNING PROBABILITY
+
+    ↓
+EXACT ENCRYPTED DRAW
+    ↓
+CONFIDENTIAL PRIZE
+```
+
+A participant can have a private history that changes probability without changing final balance. The prize is funded from realized yield, while principal remains a separate conserved quantity.
+
+---
+
 # Architecture
 
 ```mermaid
@@ -226,6 +264,8 @@ flowchart LR
 
     W --> D[VotraExactDraw]
 
+    Y[Yield Source] --> YA[VotraYieldAdapter]
+    YA --> R[VotraPrizeReserve]
     R[VotraPrizeReserve] --> D
 
     D --> X[Encrypted Winner Computation]
@@ -247,10 +287,11 @@ flowchart LR
 | `VotraCommitmentPool` | Private commitment, covenant state and CW accrual |
 | `VotraExactDraw` | Exact encrypted weighted winner selection |
 | `VotraPrizeReserve` | Separate confidential prize funding and settlement |
+| `VotraYieldAdapter` | Deterministic testnet yield accounting and yield-only reserve funding |
 | Reference model | Deterministic semantic oracle |
 | Zama FHEVM | Encrypted computation and controlled decryption |
 
-The prize reserve is deliberately separated from participant principal so prize settlement does not become an implicit path to savings withdrawal.
+The prize reserve is deliberately separated from participant principal so prize settlement does not become an implicit path to savings withdrawal. The included adapter is explicitly a **TESTNET YIELD ADAPTER / NOT LIVE MARKET YIELD**.
 
 ---
 
@@ -284,6 +325,8 @@ sequenceDiagram
     D->>R: Confidential settlement
     R-->>U: Private claim
 ```
+
+Economic provenance is explicit: `principal → yield source → realized yield → prize reserve`, while `deposit + private commitment → compliant balance-time → CW`. Those streams meet only at the encrypted draw.
 
 ---
 
@@ -346,6 +389,9 @@ VOTRA treats verification as part of the protocol, not as an appendix.
 | Canonical Sepolia deployment | Live |
 | Canonical source verification | Complete |
 | Relayer smoke test | Passing |
+| Principal / yield separation | 10,000 deterministic accounting scenarios, 0 failures (testnet adapter model) |
+| Yield-backed live campaign | Live proven on Sepolia through deterministic testnet adapter; yield-only reserve funding, positive winner, settlement and claim |
+| Principal never becomes prize funding | Live proven; principal remained at 450 while 1000 harvested realized yield funded the reserve |
 
 ---
 
@@ -387,19 +433,23 @@ It became a design input, the draw was replaced with an exact bounded-rejection 
 
 # Live Proof
 
-The canonical Sepolia stack consists of four verified contracts:
+The canonical Sepolia stack consists of five verified contracts:
 
 | Contract | Sepolia address |
 |---|---|
-| `VotraCommitmentPool` | [`0xf6222981e6E727bb85e54B08E37B606598130165`](https://sepolia.etherscan.io/address/0xf6222981e6E727bb85e54B08E37B606598130165#code) |
-| `VotraExactDraw` | [`0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896`](https://sepolia.etherscan.io/address/0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896#code) |
-| `VotraConfidentialAsset` | [`0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B`](https://sepolia.etherscan.io/address/0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B#code) |
-| `VotraPrizeReserve` | [`0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD`](https://sepolia.etherscan.io/address/0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD#code) |
+| `VotraCommitmentPool` | [`0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c`](https://sepolia.etherscan.io/address/0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c#code) |
+| `VotraExactDraw` | [`0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0`](https://sepolia.etherscan.io/address/0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0#code) |
+| `VotraConfidentialAsset` | [`0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e`](https://sepolia.etherscan.io/address/0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e#code) |
+| `VotraYieldAdapter` | [`0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D`](https://sepolia.etherscan.io/address/0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D#code) |
+| `VotraPrizeReserve` | [`0x916510A064c08Ff05de32C54b2be99eB674ad352`](https://sepolia.etherscan.io/address/0x916510A064c08Ff05de32C54b2be99eB674ad352#code) |
 
 The canonical encrypted campaign includes:
 
 ```text
 3 funded participants
+-> principal accounted separately
+-> deterministic testnet yield realized
+-> harvested yield funds the confidential reserve
 → encrypted commitments
 → encrypted deposits
 → breach / recovery transitions
@@ -410,7 +460,13 @@ The canonical encrypted campaign includes:
 → confidential claims
 ```
 
-The complete generated record is [`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json).
+The complete generated record is [evidence/live/canonical-yield-campaign.json](evidence/live/canonical-yield-campaign.json).
+
+The live campaign produced equal final balances of `150` for all three participants with distinct private histories and distinct CW values of `34200`, `118800`, and `142200`. Participant C won the positive encrypted draw and received the full `1000` realized-yield prize. Principal remained `450` and was never used as prize funding.
+
+### Prize provenance
+
+The canonical deployment's reserve funding is now proven from realized yield. The accounting boundary is enforced by [VotraYieldAdapter](contracts/VotraYieldAdapter.sol) and the deterministic separation evidence is in [evidence/yield/principal-separation.json](evidence/yield/principal-separation.json). This adapter is explicitly **TESTNET YIELD ADAPTER / NOT LIVE MARKET YIELD**; no external live yield source is claimed. The full economic model is in [evidence/model/full-economic-model.json](evidence/model/full-economic-model.json).
 
 The fresh history-specific campaign is recorded at
 [`evidence/history-sensitivity/live-campaign.json`](evidence/history-sensitivity/live-campaign.json),
@@ -494,7 +550,10 @@ Start with [`EVIDENCE.md`](EVIDENCE.md).
 
 Canonical live campaign:
 
-[`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json)
+[`evidence/live/canonical-yield-campaign.json`](evidence/live/canonical-yield-campaign.json)
+
+Historical reserve-funded campaign (archived evidence, not the primary canonical
+deployment): [`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json)
 
 ---
 
@@ -506,6 +565,7 @@ npm run test:fhe
 npm run fairness:exact
 npm run attack:receipts
 npm run release:gate
+npm run release:yield
 npm run compile
 npm run dev
 ```
@@ -548,7 +608,11 @@ See [`EVIDENCE.md`](EVIDENCE.md) for the generated benchmark artifacts.
 
 # Honest Limitations
 
-The canonical exact encrypted lifecycle is live-proven on Sepolia.
+The canonical exact encrypted lifecycle is live-proven on Sepolia through the
+fresh five-contract stack, including principal / realized-yield separation,
+yield-only reserve funding, a positive encrypted winner, settlement and claim.
+The previous reserve-funded campaign remains archived as historical evidence
+under [`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json).
 
 The protocol proof is complete for the canonical encrypted lifecycle and the
 equal-final-balance history counterexample. Eight deployed authorization and

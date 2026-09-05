@@ -33,10 +33,14 @@ The reference builds use the relayer SDK's built-in `SepoliaConfig`/`web()` tran
 
 Canonical verified source URLs:
 
-- Pool: https://sepolia.etherscan.io/address/0xf6222981e6E727bb85e54B08E37B606598130165#code
-- ExactDraw: https://sepolia.etherscan.io/address/0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896#code
-- Asset: https://sepolia.etherscan.io/address/0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B#code
-- Reserve: https://sepolia.etherscan.io/address/0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD#code
+- Pool: https://sepolia.etherscan.io/address/0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c#code
+- ExactDraw: https://sepolia.etherscan.io/address/0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0#code
+- Asset: https://sepolia.etherscan.io/address/0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e#code
+- YieldAdapter: https://sepolia.etherscan.io/address/0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D#code
+- Reserve: https://sepolia.etherscan.io/address/0x916510A064c08Ff05de32C54b2be99eB674ad352#code
+
+The previous four-contract reserve-funded canonical deployment is historical
+evidence only: evidence/deployments/votra-exact-canonical.json and evidence/live/canonical-campaign.json.
 
 ## Experimental proof artifacts
 
@@ -45,12 +49,15 @@ Canonical verified source URLs:
 - Receipt-backed deployed guard attempts: `evidence/adversarial/executable-receipts.json` (8 independently mined Sepolia status-0 receipts, 8 expected reverts, 0 failures).
 - Final cost classification: `evidence/benchmarks/final-cost-summary.json`.
 - Final machine-enforced release gate: `evidence/release/final-gate.json`.
+- Canonical yield verification: evidence/live/canonical-yield-verification.json
+- Full economic model: evidence/model/full-economic-model.json
+- Yield release gate: evidence/release/yield-gate.json
 
 - Canonical state specification: `evidence/model/canonical-state-transition.json`
 - Covenant adversarial traces: `evidence/adversarial/covenant-corpus.json`
 - Forward-only randomized invariant: `evidence/invariants/forward-only.json` (1,000 scenarios, 0 failures)
 - Covenant-history fairness: `evidence/fairness/covenant-weighted.json` (12,000 scenarios, 0 mismatches, 0 invariant failures)
 
-The canonical live campaign is proven through three funded participants, encrypted commitments and deposits, breach/recovery transitions, encrypted exact-draw opening, authorized winner-bit decryption, a positive winner, confidential reserve funding, settlement, and claims in `evidence/live/canonical-campaign.json`.
+The canonical live yield campaign is proven through three funded participants, encrypted commitments and deposits, breach/recovery transitions, separate principal accounting, deterministic testnet yield realization, yield-only reserve funding, encrypted exact-draw opening, authorized winner-bit decryption, a positive winner, confidential settlement, and claims in evidence/live/canonical-yield-campaign.json. Final balances were equal at 150; CW values were 34200, 118800, and 142200; participant C won and claimed the 1000 realized-yield prize while principal remained 450.
 
 The dedicated history experiment is separate from the positive-winner canonical campaign. It gives A, B, and C equal final balances of `150` but derives distinct commitment-weighted histories of `136800`, `39600`, and `131400`; the source transactions and zero-divergence comparison are preserved in `evidence/history-sensitivity/live-campaign.json` and `evidence/live/model-chain-crosscheck.json`.

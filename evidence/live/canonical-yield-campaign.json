@@ -1,0 +1,465 @@
+{
+  "status": "pass",
+  "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployment": {
+    "canonical": false,
+    "promotionRule": "Promote only after canonical-yield-campaign.json passes the yield release gate.",
+    "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "deployedAt": "2026-09-05T03:05:12.945Z",
+    "pool": {
+      "address": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "transactionHash": "0x75edaad3c2941fa8c46c1449173b0ed86cb991a60df2cb0231aabd37c5dd7ebb",
+      "blockNumber": 11637640,
+      "bytecodeHash": "0x94099a64e0b643624ae0c55ecad256a4056fd96b803610263d2b72da1acd2de9",
+      "codeBytes": 5477,
+      "sourceVerification": "pending"
+    },
+    "draw": {
+      "address": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "transactionHash": "0xef5d081dd310979f88f98eb4b8c3ea166721e37616a4e19ab74b8ef28e4ec6a6",
+      "blockNumber": 11637641,
+      "bytecodeHash": "0xd24b4be87c5b46d4cc5e534755f93f408459f859344aa50dda563cd7caa3dd0b",
+      "codeBytes": 5040,
+      "sourceVerification": "pending",
+      "maxTotalWeight": "1048576",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e",
+      "transactionHash": "0xcb113f4df61a59d34c0a2ff4ea6022e4e38f7132a1d33d2012516a42c3e03b7d",
+      "blockNumber": 11637643,
+      "bytecodeHash": "0xe097e692f41dc3d4847562d45460a9a081134bd69612ff04dd42266ca5dbd36a",
+      "codeBytes": 7795,
+      "sourceVerification": "pending"
+    },
+    "yieldAdapter": {
+      "address": "0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D",
+      "transactionHash": "0xb9b881596764853a990f9e62b0b55e28ca2a077c54557b4ba1f37a4a4bfa53dd",
+      "blockNumber": 11637645,
+      "bytecodeHash": "0x2c3f367319ccacb1646cde79326f8f833cccbc68daf9397b083be3a1c094e67c",
+      "codeBytes": 1963,
+      "sourceVerification": "pending"
+    },
+    "reserve": {
+      "address": "0x916510A064c08Ff05de32C54b2be99eB674ad352",
+      "transactionHash": "0x6c58d50a6ec3df51fabd909d1dcfe5b8d9d671f3397d0c2521b628b500fe3e06",
+      "blockNumber": 11637644,
+      "bytecodeHash": "0x92b8aa739e1722e120f105449b477c7dbd627a291e3d869e0441e82e810b70f6",
+      "codeBytes": 2805,
+      "sourceVerification": "pending"
+    },
+    "wiring": {
+      "authorizedDraw": {
+        "transactionHash": "0xbac3acc32c3b298980b459c0f479e586390cf57e90bb2b40daac283a2717a2b5",
+        "blockNumber": 11637647
+      },
+      "reserve": {
+        "transactionHash": "0x593594344d9f2653bdd38eae186687e149f3531c1ab6d51101b05a1f807f48c6",
+        "blockNumber": 11637648
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "A",
+      "address": "0x44be5240559880f39ba5604D33486Da4d8A48527"
+    },
+    {
+      "id": "B",
+      "address": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597"
+    },
+    {
+      "id": "C",
+      "address": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe"
+    }
+  ],
+  "steps": [
+    {
+      "step": "fund participant 0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "status": "already-funded",
+      "balanceWei": "16621645624678676"
+    },
+    {
+      "step": "fund participant 0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "status": "already-funded",
+      "balanceWei": "25247602102581778"
+    },
+    {
+      "step": "participant A encrypted commitment",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "setCommitment",
+      "txHash": "0x628cd6b7144e9db316d71c5a02b00ab7036b00dabd122ac4beafcbf2eda8674f",
+      "block": 11637668,
+      "timestamp": 1788577776,
+      "status": 1,
+      "gasUsed": "578565"
+    },
+    {
+      "step": "participant B encrypted commitment",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "setCommitment",
+      "txHash": "0x040ae7d955489ed9026350931f7c99b74187c85e863ea4ce531643ff2f62b44f",
+      "block": 11637731,
+      "timestamp": 1788578568,
+      "status": 1,
+      "gasUsed": "578541"
+    },
+    {
+      "step": "participant C encrypted commitment",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "setCommitment",
+      "txHash": "0x8d2aa73d754ea3efa19b13e4f5d4d4daa77631a845e1b4a7b3695506b8edd026",
+      "block": 11637776,
+      "timestamp": 1788579132,
+      "status": 1,
+      "gasUsed": "578529"
+    },
+    {
+      "step": "participant A encrypted deposit",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x00ade36d714cd391a7e2ff0047d18cb584f7e3e89bd54cd511329a9ed31bca94",
+      "block": 11637780,
+      "timestamp": 1788579180,
+      "status": 1,
+      "gasUsed": "660221"
+    },
+    {
+      "step": "participant B encrypted deposit",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x7d2c364033cdd17dc57fac8338b3d09ed58ca2ca92796529d1ad008da4b3b235",
+      "block": 11637784,
+      "timestamp": 1788579228,
+      "status": 1,
+      "gasUsed": "660213"
+    },
+    {
+      "step": "participant C encrypted deposit",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x38d5e85871aea07b8f824b9c1e0650f22664e657b637100369dff22bd5346ad8",
+      "block": 11637787,
+      "timestamp": 1788579264,
+      "status": 1,
+      "gasUsed": "660225"
+    },
+    {
+      "step": "participant A breach",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "withdraw",
+      "txHash": "0xf90d7bfe208df0fe6a73b808dc46550acfc99e3557d53601e81b9b86a26024e9",
+      "block": 11637791,
+      "timestamp": 1788579312,
+      "status": 1,
+      "gasUsed": "679654"
+    },
+    {
+      "step": "participant B recovery",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x7ec2d5f344fc2ed3477c4691d337d504cb97e149237ed72a926f3898e0b8bf03",
+      "block": 11637795,
+      "timestamp": 1788579360,
+      "status": 1,
+      "gasUsed": "664213"
+    },
+    {
+      "step": "participant A recovery",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x7f2b5f6b8c5b7e2a1378a301d82411f7c5a7e3df96068c653c552fc52f6c75cc",
+      "block": 11637850,
+      "timestamp": 1788580020,
+      "status": 1,
+      "gasUsed": "664209"
+    },
+    {
+      "step": "account participant principal",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D",
+      "function": "depositPrincipal",
+      "txHash": "0x7708ba86c732904a738595f3018174b714bbceae0e6fdfcc4bced23f79a1dd5a",
+      "block": 11637851,
+      "timestamp": 1788580032,
+      "status": 1,
+      "gasUsed": "45214"
+    },
+    {
+      "step": "realize deterministic testnet yield",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D",
+      "function": "accrueYield",
+      "txHash": "0xf2eb41893a42120928000a46434aa1200772d2f4c5e5fcf6867a1e40203740b4",
+      "block": 11637852,
+      "timestamp": 1788580044,
+      "status": 1,
+      "gasUsed": "45118"
+    },
+    {
+      "step": "harvest realized yield to prize reserve",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D",
+      "function": "harvestYield",
+      "txHash": "0xb480519f7a658bab38422946a511e5f3cb0778df2d640aee8af4cb445a04fb5b",
+      "block": 11637854,
+      "timestamp": 1788580068,
+      "status": 1,
+      "gasUsed": "1033168"
+    },
+    {
+      "step": "participant A CW checkpoint",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x1b25d68db80dc68a5bfd1bcd6283fcccb7005cbe8fdbfcb51530387484bc28b1",
+      "block": 11637858,
+      "timestamp": 1788580116,
+      "status": 1,
+      "gasUsed": "664213"
+    },
+    {
+      "step": "participant B CW checkpoint",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x6c44d71bf73b7d97e20312173eacdd5fde7453a5e200a090b2cd45072d47bcf4",
+      "block": 11637861,
+      "timestamp": 1788580152,
+      "status": 1,
+      "gasUsed": "664213"
+    },
+    {
+      "step": "participant C CW checkpoint",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+      "function": "deposit",
+      "txHash": "0x63cf1f91c9a2861a7f5612dee447de5f036589adde55b797e2bcb422d4ddc677",
+      "block": 11637866,
+      "timestamp": 1788580212,
+      "status": 1,
+      "gasUsed": "664201"
+    },
+    {
+      "step": "participant A draw entry",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "enter",
+      "txHash": "0x99b603cc680b5f0939c265afb5f89f09973b02e08809f4eb2547e1ea8f75f545",
+      "block": 11637871,
+      "timestamp": 1788580272,
+      "status": 1,
+      "gasUsed": "90074"
+    },
+    {
+      "step": "participant B draw entry",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "enter",
+      "txHash": "0x5d5705b7518d905e8e35bed469dba73ae91e078fa261f134bceeb37e46a6b338",
+      "block": 11637872,
+      "timestamp": 1788580284,
+      "status": 1,
+      "gasUsed": "72974"
+    },
+    {
+      "step": "participant C draw entry",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "enter",
+      "txHash": "0x06cb61f8cfc25e78a2f334ae4952dccc1e870bb7f3cdf146edc597cd8b6c2a17",
+      "block": 11637873,
+      "timestamp": 1788580296,
+      "status": 1,
+      "gasUsed": "72974"
+    },
+    {
+      "step": "open exact encrypted draw",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "open",
+      "txHash": "0x6fc88f25dea32b7bd2cf13632e333291e8ea5dcf917f442bfdea60bd0b7fa0a8",
+      "block": 11637875,
+      "timestamp": 1788580320,
+      "status": 1,
+      "gasUsed": "3109553"
+    },
+    {
+      "step": "participant A encrypted winner computation",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "winnerBit",
+      "txHash": "0x591c01e802df66b7e917f76dd63484eae48f3d275b0b61aba05ce90d0ccfc6e2",
+      "block": 11637876,
+      "timestamp": 1788580332,
+      "status": 1,
+      "gasUsed": "247965"
+    },
+    {
+      "step": "participant B encrypted winner computation",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "winnerBit",
+      "txHash": "0xdc22de0f7f64b062ff7f57232a49dc01545b3437bfbb8ce61a1f6f2a07ad4cd1",
+      "block": 11637877,
+      "timestamp": 1788580344,
+      "status": 1,
+      "gasUsed": "277900"
+    },
+    {
+      "step": "participant C encrypted winner computation",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "winnerBit",
+      "txHash": "0xd1b2b1dfc52b0926751f87eeb3ef396482a6c2c0d9e27650e6f8ddb8c26453c7",
+      "block": 11637878,
+      "timestamp": 1788580356,
+      "status": 1,
+      "gasUsed": "307819"
+    },
+    {
+      "step": "participant A confidential settlement",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "settleParticipant",
+      "txHash": "0x0483a6041061499f621d5364aa3ab466cd253e3ff6d7936f334e53e6f48ac4d6",
+      "block": 11637880,
+      "timestamp": 1788580380,
+      "status": 1,
+      "gasUsed": "394618"
+    },
+    {
+      "step": "participant A confidential claim",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x916510A064c08Ff05de32C54b2be99eB674ad352",
+      "function": "claim",
+      "txHash": "0x2c47283b448ac5bce26e6a71e954867dc6baab8da01afec109e020cdb4cb4dd3",
+      "block": 11637881,
+      "timestamp": 1788580392,
+      "status": 1,
+      "gasUsed": "413364"
+    },
+    {
+      "step": "participant B confidential settlement",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "settleParticipant",
+      "txHash": "0xd84be2a7c276e4b9f3ee6fe696eeeb91c9f7069c9a1796d73654206eec570e86",
+      "block": 11637882,
+      "timestamp": 1788580404,
+      "status": 1,
+      "gasUsed": "424553"
+    },
+    {
+      "step": "participant B confidential claim",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x916510A064c08Ff05de32C54b2be99eB674ad352",
+      "function": "claim",
+      "txHash": "0x9edda759b056ab361736c61c70584e896de25dc02049373cce24a9fe782f1f35",
+      "block": 11637883,
+      "timestamp": 1788580416,
+      "status": 1,
+      "gasUsed": "413364"
+    },
+    {
+      "step": "participant C confidential settlement",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+      "function": "settleParticipant",
+      "txHash": "0x91d2b7c2976c02dca72021c171fe097f02a7e3dba676ceafaba0724053dafea2",
+      "block": 11637884,
+      "timestamp": 1788580428,
+      "status": 1,
+      "gasUsed": "454472"
+    },
+    {
+      "step": "participant C confidential claim",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x916510A064c08Ff05de32C54b2be99eB674ad352",
+      "function": "claim",
+      "txHash": "0x2156b1b6ac09a2811048db0ebe0ac3417938f601e88125245698762e08e4aeb2",
+      "block": 11637887,
+      "timestamp": 1788580476,
+      "status": 1,
+      "gasUsed": "413364"
+    }
+  ],
+  "privateReadback": [
+    {
+      "participant": "A",
+      "finalBalance": "150",
+      "commitment": "100",
+      "cw": "34200",
+      "breachCycles": "1",
+      "compliant": true
+    },
+    {
+      "participant": "B",
+      "finalBalance": "150",
+      "commitment": "100",
+      "cw": "118800",
+      "breachCycles": "0",
+      "compliant": true
+    },
+    {
+      "participant": "C",
+      "finalBalance": "150",
+      "commitment": "100",
+      "cw": "142200",
+      "breachCycles": "0",
+      "compliant": true
+    }
+  ],
+  "economicState": {
+    "principal": "450",
+    "remainingRealizedYield": "0",
+    "harvestedYield": "1000",
+    "prizeReserveFunding": "1000",
+    "finalBalances": [
+      "150",
+      "150",
+      "150"
+    ],
+    "committedWeights": [
+      "34200",
+      "118800",
+      "142200"
+    ],
+    "totalCommittedWeight": "295200",
+    "probabilityNumerators": [
+      "34200",
+      "118800",
+      "142200"
+    ],
+    "probabilityDenominator": "295200",
+    "winners": [
+      false,
+      false,
+      true
+    ],
+    "credits": [
+      "0",
+      "0",
+      "1000"
+    ],
+    "invariantFailures": 0
+  },
+  "startedAt": "2026-09-05T03:08:42.716Z",
+  "finishedAt": "2026-09-05T03:54:38.479Z",
+  "protocolStepCount": 28
+}

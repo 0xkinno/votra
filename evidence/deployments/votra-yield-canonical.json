@@ -1,0 +1,69 @@
+{
+  "canonical": true,
+  "promotionRule": "Promote only after canonical-yield-campaign.json passes the yield release gate.",
+  "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+  "drawAlgorithm": "VotraExactDraw",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+  "deployedAt": "2026-09-05T03:05:12.945Z",
+  "pool": {
+    "address": "0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c",
+    "transactionHash": "0x75edaad3c2941fa8c46c1449173b0ed86cb991a60df2cb0231aabd37c5dd7ebb",
+    "blockNumber": 11637640,
+    "bytecodeHash": "0x94099a64e0b643624ae0c55ecad256a4056fd96b803610263d2b72da1acd2de9",
+    "codeBytes": 5477,
+    "sourceVerification": "verified",
+    "url": "https://sepolia.etherscan.io/address/0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c#code"
+  },
+  "draw": {
+    "address": "0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0",
+    "transactionHash": "0xef5d081dd310979f88f98eb4b8c3ea166721e37616a4e19ab74b8ef28e4ec6a6",
+    "blockNumber": 11637641,
+    "bytecodeHash": "0xd24b4be87c5b46d4cc5e534755f93f408459f859344aa50dda563cd7caa3dd0b",
+    "codeBytes": 5040,
+    "sourceVerification": "verified",
+    "maxTotalWeight": "1048576",
+    "attempts": 32,
+    "url": "https://sepolia.etherscan.io/address/0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0#code"
+  },
+  "asset": {
+    "address": "0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e",
+    "transactionHash": "0xcb113f4df61a59d34c0a2ff4ea6022e4e38f7132a1d33d2012516a42c3e03b7d",
+    "blockNumber": 11637643,
+    "bytecodeHash": "0xe097e692f41dc3d4847562d45460a9a081134bd69612ff04dd42266ca5dbd36a",
+    "codeBytes": 7795,
+    "sourceVerification": "verified",
+    "url": "https://sepolia.etherscan.io/address/0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e#code"
+  },
+  "yieldAdapter": {
+    "address": "0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D",
+    "transactionHash": "0xb9b881596764853a990f9e62b0b55e28ca2a077c54557b4ba1f37a4a4bfa53dd",
+    "blockNumber": 11637645,
+    "bytecodeHash": "0x2c3f367319ccacb1646cde79326f8f833cccbc68daf9397b083be3a1c094e67c",
+    "codeBytes": 1963,
+    "sourceVerification": "verified",
+    "url": "https://sepolia.etherscan.io/address/0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D#code"
+  },
+  "reserve": {
+    "address": "0x916510A064c08Ff05de32C54b2be99eB674ad352",
+    "transactionHash": "0x6c58d50a6ec3df51fabd909d1dcfe5b8d9d671f3397d0c2521b628b500fe3e06",
+    "blockNumber": 11637644,
+    "bytecodeHash": "0x92b8aa739e1722e120f105449b477c7dbd627a291e3d869e0441e82e810b70f6",
+    "codeBytes": 2805,
+    "sourceVerification": "verified",
+    "url": "https://sepolia.etherscan.io/address/0x916510A064c08Ff05de32C54b2be99eB674ad352#code"
+  },
+  "wiring": {
+    "authorizedDraw": {
+      "transactionHash": "0xbac3acc32c3b298980b459c0f479e586390cf57e90bb2b40daac283a2717a2b5",
+      "blockNumber": 11637647
+    },
+    "reserve": {
+      "transactionHash": "0x593594344d9f2653bdd38eae186687e149f3531c1ab6d51101b05a1f807f48c6",
+      "blockNumber": 11637648
+    }
+  },
+  "promotedAt": "2026-09-05T03:54:38.479Z",
+  "verifiedAt": "2026-09-05T04:13:07.286Z"
+}

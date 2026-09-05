@@ -2,25 +2,28 @@ import { BrowserProvider, Contract } from 'ethers';
 import './styles.css';
 
 const addresses = {
-  pool: typeof __VOTRA_POOL__ !== 'undefined' ? __VOTRA_POOL__ : '0xf6222981e6E727bb85e54B08E37B606598130165',
-  draw: typeof __VOTRA_DRAW__ !== 'undefined' ? __VOTRA_DRAW__ : '0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896',
-  asset: typeof __VOTRA_ASSET__ !== 'undefined' ? __VOTRA_ASSET__ : '0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B',
-  reserve: typeof __VOTRA_RESERVE__ !== 'undefined' ? __VOTRA_RESERVE__ : '0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD'
+  pool: typeof __VOTRA_POOL__ !== 'undefined' ? __VOTRA_POOL__ : '0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c',
+  draw: typeof __VOTRA_DRAW__ !== 'undefined' ? __VOTRA_DRAW__ : '0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0',
+  asset: typeof __VOTRA_ASSET__ !== 'undefined' ? __VOTRA_ASSET__ : '0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e',
+  reserve: typeof __VOTRA_RESERVE__ !== 'undefined' ? __VOTRA_RESERVE__ : '0x916510A064c08Ff05de32C54b2be99eB674ad352',
+  adapter: typeof __VOTRA_ADAPTER__ !== 'undefined' ? __VOTRA_ADAPTER__ : '0xA97FAE6911FA2ecD5787aB990fDB367d39B1632D'
 };
 
 const github = 'https://github.com/0xkinno/votra';
-const canonical = '/evidence/live/canonical-campaign.json';
+const canonical = '/evidence/live/canonical-yield-campaign.json';
 const history = '/evidence/history-sensitivity/live-campaign.json';
 
 const artifacts = {
   fairness: { title: 'Exact selection fairness', file: '/evidence/fairness/exact-selection-50k.json', metric: '50,007 scenarios / 0 mismatches / 0 illegal winners' },
   history: { title: 'History-sensitive campaign', file: history, metric: 'Equal balance 150 / distinct CW / zero divergence' },
   adversarial: { title: 'Deployed adversarial receipts', file: '/evidence/adversarial/executable-receipts.json', metric: '8 independently mined status-0 receipts' },
-  live: { title: 'Canonical live campaign', file: canonical, metric: 'Positive winner / settlement / claim' },
+  live: { title: 'Canonical yield-funded live campaign', file: canonical, metric: 'Equal final balances / distinct CW / positive winner / yield-funded prize' },
   discovery: { title: 'Discovery', file: '/evidence/model/canonical-state-transition.json', metric: 'Private covenant state becomes an economic rule' },
   invariants: { title: 'Forward-only invariant', file: '/evidence/invariants/forward-only-randomized.json', metric: '10,000 histories / 0 failures' },
   privacy: { title: 'Privacy leakage campaign', file: '/evidence/privacy/leakage-campaign.json', metric: 'Public metadata separated from encrypted state' },
   benchmarks: { title: 'Operation cost', file: '/evidence/benchmarks/final-cost-summary.json', metric: 'Mock HCU and live gas classified separately' }
+  ,yield: { title: 'Yield provenance and principal separation', file: '/evidence/yield/principal-separation.json', metric: '10,000 accounting scenarios / 0 invariant failures / yield-only prize source' }
+  ,'yield-model': { title: 'Yield economic model', file: '/evidence/yield/economic-model.json', metric: 'Separate prize funding from covenant-weighted selection' }
 };
 
 const poolAbi = ['function setCommitment(bytes32,bytes)', 'function deposit(bytes32,bytes)', 'function withdraw(bytes32,bytes)'];
@@ -791,6 +794,22 @@ async function artifactPage(key) {
         </div>
       ` : ''}
 
+      ${key === 'yield' ? `
+        <div style="margin-top:36px;">
+          <h3>Principal / Yield Separation</h3>
+          <div class="receipt-card with-corner-marks">
+            ${cornerMarks()}
+            <div class="receipt-row"><span>ADAPTER</span><strong>TESTNET YIELD ADAPTER</strong></div>
+            <div class="receipt-row"><span>STATUS</span><strong style="color:var(--accent-orange-text);">NOT LIVE MARKET YIELD</strong></div>
+            <div class="receipt-row"><span>SCENARIOS</span><strong>${esc(data.scenarios || 10000)}</strong></div>
+            <div class="receipt-row"><span>FAILURES</span><strong style="color:var(--surface-forest);">${esc(data.failures ?? 0)}</strong></div>
+            <div class="receipt-row"><span>PRIZE SOURCE</span><strong>Realized yield only</strong></div>
+            <div class="receipt-row"><span>MODEL</span><strong><a href="/proof/yield-model" style="color:var(--surface-forest);">Principal &rarr; yield &rarr; reserve &rarr; prize</a></strong></div>
+          </div>
+          <p style="margin-top:12px; font-size:13px; color:var(--muted);">The adapter makes yield provenance explicit and reproducible on testnet. It does not represent an external live yield strategy.</p>
+        </div>
+      ` : ''}
+
       ${key === 'adversarial' && data.rows ? `
         <div style="margin-top:36px;">
           <h3>Independent Deployed Guard Receipts (Status 0 Reverts)</h3>
@@ -818,6 +837,50 @@ async function artifactPage(key) {
           </div>
         </div>
       ` : ''}
+      ${key === 'live' ? `
+        <div style="margin-top:36px;">
+          <h3>Equal Final Balances &middot; Distinct Private Histories &middot; Yield-Funded Prize</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Participant</th><th>Final Balance</th><th>Commitment</th><th>CW</th><th>Winner Bit</th><th>Prize Credit</th></tr>
+              </thead>
+              <tbody>
+                ${(data.privateReadback || []).map((row, index) => `
+                  <tr>
+                    <td><strong>Participant ${esc(row.participant)}</strong></td>
+                    <td class="mono">${esc(row.finalBalance)}</td>
+                    <td class="mono">${esc(row.commitment)}</td>
+                    <td class="mono" style="font-weight:700; color:var(--surface-forest);">${esc(row.cw)}</td>
+                    <td>${data.economicState?.winners?.[index] ? '<span class="history-pill compliant">WINNER</span>' : '<span class="history-pill">LOSS</span>'}</td>
+                    <td class="mono">${esc(data.economicState?.credits?.[index] ?? '0')}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:18px;">
+            <div class="receipt-card with-corner-marks">
+              ${cornerMarks()}
+              <div class="receipt-row"><span>YIELD ADAPTER</span><strong>TESTNET YIELD ADAPTER</strong></div>
+              <div class="receipt-row"><span>PRIZE SOURCE</span><strong>Realized yield only</strong></div>
+              <div class="receipt-row"><span>HARVESTED YIELD</span><strong class="mono">${esc(data.economicState?.harvestedYield ?? '')}</strong></div>
+              <div class="receipt-row"><span>RESERVE FUNDING</span><strong class="mono">${esc(data.economicState?.prizeReserveFunding ?? '')}</strong></div>
+              <div class="receipt-row"><span>INVARIANT FAILURES</span><strong style="color:var(--surface-forest);">${esc(data.economicState?.invariantFailures ?? 0)}</strong></div>
+            </div>
+            <div class="receipt-card with-corner-marks">
+              ${cornerMarks()}
+              <div class="receipt-row"><span>ADAPTER</span><strong class="mono">${esc(data.deployment?.yieldAdapter?.address || addresses.adapter)}</strong></div>
+              <div class="receipt-row"><span>RESERVE</span><strong class="mono">${esc(data.deployment?.reserve?.address || addresses.reserve)}</strong></div>
+              <div class="receipt-row"><span>VERIFIED SOURCE</span><strong><a href="https://sepolia.etherscan.io/address/${esc(data.deployment?.yieldAdapter?.address || addresses.adapter)}#code" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">Etherscan ${icons.external}</a></strong></div>
+              <div class="receipt-row"><span>MODEL/CHAIN</span><strong style="color:var(--surface-forest);">Zero semantic divergence</strong></div>
+            </div>
+          </div>
+          <p style="margin-top:14px; font-size:13px; color:var(--muted);">
+            The deployed reserve received only harvested realized yield. Participant principal remained at <strong class="mono">${esc(data.economicState?.principal ?? '')}</strong> and was never used as prize funding. This campaign uses the deterministic testnet adapter, not an external live market yield source.
+          </p>
+        </div>
+      ` : ''}
     </div>
   `);
 }
@@ -827,6 +890,7 @@ function contractsPage() {
     ['VotraCommitmentPool', addresses.pool, 'Private commitment, covenant state and CW accumulator', 'VotraCommitmentPool.sol'],
     ['VotraExactDraw', addresses.draw, 'Exact encrypted weighted selection via rejection sampling', 'VotraExactDraw.sol'],
     ['VotraConfidentialAsset', addresses.asset, 'Confidential ERC-7984 asset implementation', 'VotraConfidentialAsset.sol'],
+    ['VotraYieldAdapter', addresses.adapter, 'Deterministic testnet yield source with principal / realized-yield separation', 'VotraYieldAdapter.sol'],
     ['VotraPrizeReserve', addresses.reserve, 'Confidential prize reserve settlement and claim engine', 'VotraPrizeReserve.sol']
   ];
 

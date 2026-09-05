@@ -1,0 +1,5 @@
+{
+  "failedAt": "2026-09-05T02:50:53.393Z",
+  "message": "Total CW 651600 exceeds exact-draw bound 65536",
+  "stack": "Error: Total CW 651600 exceeds exact-draw bound 65536\n    at main (C:\\Users\\hp\\Downloads\\VOTRA\\scripts\\live-yield-campaign.js:112:86)\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)"
+}

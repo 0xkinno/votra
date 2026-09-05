@@ -28,6 +28,10 @@
     ,"crosscheck:history": "node scripts/history-crosscheck.js"
     ,"attack:local-receipts": "hardhat run scripts/adversarial-local-receipts.js"
     ,"release:gate": "node scripts/release-gate.js"
+    ,"yield:evidence": "node scripts/yield-evidence.js"
+    ,"deploy:yield": "hardhat run scripts/deploy-yield-sepolia.js --network sepolia"
+    ,"live:yield": "hardhat run scripts/live-yield-campaign.js --network sepolia"
+    ,"release:yield": "node scripts/yield-release-gate.js"
   },
   "engines": {
     "node": ">=20"

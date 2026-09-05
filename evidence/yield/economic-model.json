@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-09-04T22:02:53.836Z",
+  "flow": [
+    "principal",
+    "yield accrual",
+    "realized yield",
+    "prize reserve",
+    "CW",
+    "exact draw",
+    "prize"
+  ],
+  "separation": {
+    "prizeFunding": "realizedYield",
+    "selectionWeight": "CW",
+    "finalBalanceIsNotSelectionWeight": true
+  },
+  "example": {
+    "principal": 1000,
+    "realizedYield": 125,
+    "harvestedYield": 25,
+    "reserveCredit": 25,
+    "cw": "derived from covenant-qualified balance-time"
+  },
+  "semanticDivergenceCount": 0
+}

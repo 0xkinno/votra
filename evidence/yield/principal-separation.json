@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-09-04T22:02:53.836Z",
+  "source": "VotraYieldAdapter deterministic testnet accounting model",
+  "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+  "scenarios": 10000,
+  "failures": 0,
+  "invariants": {
+    "principalNeverNegative": true,
+    "harvestCannotExceedRealizedYield": true,
+    "harvestDoesNotMutatePrincipal": true,
+    "reserveFundingSource": "realized yield only",
+    "settlementCannotConsumePrincipal": "structural: reserve has no principal withdrawal path",
+    "reserveCannotWithdrawParticipantPrincipal": "structural: adapter reserve is immutable and reserve has no adapter withdrawal authority",
+    "winnerProbabilitySource": "commitment-weighted TWAB only",
+    "prizeSizeSource": "harvested realized yield only"
+  },
+  "sample": [
+    {
+      "seed": 1,
+      "principal": 7920,
+      "accruedYield": 4729,
+      "harvestedYield": 97,
+      "remainingYield": 4632,
+      "currentAssets": 12552,
+      "invariant": true
+    },
+    {
+      "seed": 2,
+      "principal": 15839,
+      "accruedYield": 9458,
+      "harvestedYield": 194,
+      "remainingYield": 9264,
+      "currentAssets": 25103,
+      "invariant": true
+    },
+    {
+      "seed": 3,
+      "principal": 23758,
+      "accruedYield": 4187,
+      "harvestedYield": 291,
+      "remainingYield": 3896,
+      "currentAssets": 27654,
+      "invariant": true
+    },
+    {
+      "seed": 4,
+      "principal": 31677,
+      "accruedYield": 8916,
+      "harvestedYield": 388,
+      "remainingYield": 8528,
+      "currentAssets": 40205,
+      "invariant": true
+    },
+    {
+      "seed": 5,
+      "principal": 39596,
+      "accruedYield": 3645,
+      "harvestedYield": 485,
+      "remainingYield": 3160,
+      "currentAssets": 42756,
+      "invariant": true
+    }
+  ]
+}

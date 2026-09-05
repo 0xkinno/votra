@@ -24,12 +24,12 @@ This document records the architectural and interface audit of the existing VOTR
     1. `fairness`: Exact selection fairness (`/evidence/fairness/exact-selection-50k.json`)
     2. `history`: History-sensitive campaign (`/evidence/history-sensitivity/live-campaign.json`)
     3. `adversarial`: Deployed adversarial receipts (`/evidence/adversarial/executable-receipts.json`)
-    4. `live`: Canonical live campaign (`/evidence/live/canonical-campaign.json`)
+    4. `live`: Canonical yield-funded live campaign (`/evidence/live/canonical-yield-campaign.json`)
     5. `discovery`: Discovery transition model (`/evidence/model/canonical-state-transition.json`)
     6. `invariants`: Forward-only invariant tests (`/evidence/invariants/forward-only-randomized.json`)
     7. `privacy`: Privacy leakage analysis (`/evidence/privacy/leakage-campaign.json`)
     8. `benchmarks`: Operation costs & gas/HCU metrics (`/evidence/benchmarks/final-cost-summary.json`)
-- **`/proof/contracts`**: Canonical deployed & verified contract addresses (`VotraCommitmentPool`, `VotraExactDraw`, `VotraConfidentialAsset`, `VotraPrizeReserve`) on Ethereum Sepolia with direct Etherscan and GitHub links.
+- **`/proof/contracts`**: Canonical deployed & verified contract addresses (`VotraCommitmentPool`, `VotraExactDraw`, `VotraConfidentialAsset`, `VotraYieldAdapter`, `VotraPrizeReserve`) on Ethereum Sepolia with direct Etherscan and GitHub links.
 - **`/proof/:key`**: Dynamic rendered views of specific verification artifacts (including tabular historical CW tables, model-chain cross-checks, and mined status-0 adversarial guard receipts).
 - **`/security`**: Canonical security boundary specification and deployed attack receipt links.
 - **`/privacy`**: Cryptographic privacy boundary specification separating encrypted on-chain state from public chain metadata.
@@ -45,18 +45,18 @@ This document records the architectural and interface audit of the existing VOTR
   - `READY` -> `SIGN IN WALLET` -> `SUBMITTING` -> `PENDING` (with TX hash) -> `CONFIRMING` -> `CONFIRMED` (with Etherscan link) / `USER REJECTED` / `FAILED` (with precise error message).
 
 ## 4. Contract Interaction & ABIs
-- **`VotraCommitmentPool`** (`0xf6222981e6E727bb85e54B08E37B606598130165`):
+- **`VotraCommitmentPool`** (`0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c`):
   - `setCommitment(bytes32 handle, bytes proof)`
   - `deposit(bytes32 handle, bytes proof)`
   - `withdraw(bytes32 handle, bytes proof)`
-- **`VotraExactDraw`** (`0xBCED5BCF27Cb2a7a0DBb3291eCA8D06FeEd0a896`):
+- **`VotraExactDraw`** (`0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0`):
   - `enter()`
   - `open()`
   - `winnerBit(uint256 participantId)`
   - `settleParticipant(uint256 participantId)`
-- **`VotraPrizeReserve`** (`0xa09C12Afd98F1284621299DaBFd6B1105dd7E3FD`):
+- **`VotraPrizeReserve`** (`0x916510A064c08Ff05de32C54b2be99eB674ad352`):
   - `claim(uint256 roundId)`
-- **`VotraConfidentialAsset`** (`0x8015B4a39cCbD4757A107A5F229ef14F24bB7b0B`):
+- **`VotraConfidentialAsset`** (`0x8A17E769bB6Be6b4b29dEf59061cFd8ccb63161e`):
   - `confidentialTransferAndCall(address to, bytes32 handle, bytes proof)`
 
 ## 5. FHEVM Relayer SDK Bindings

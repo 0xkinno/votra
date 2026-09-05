@@ -1,0 +1,282 @@
+{
+  "status": "running",
+  "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployment": {
+    "canonical": false,
+    "promotionRule": "Promote only after canonical-yield-campaign.json passes the yield release gate.",
+    "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+    "drawAlgorithm": "VotraExactDraw",
+    "network": "sepolia",
+    "chainId": 11155111,
+    "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+    "deployedAt": "2026-09-05T01:35:49.223Z",
+    "pool": {
+      "address": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "transactionHash": "0x0efed7ad88acece7d3f51f50577dce1865a73801d3d13334ad2b83b313ccce73",
+      "blockNumber": 11637219,
+      "bytecodeHash": "0x3d4a6507c86dc07b0891746949c7ae4ec0fb2bff43d01729e222116ab1457ff4",
+      "codeBytes": 5477,
+      "sourceVerification": "pending"
+    },
+    "draw": {
+      "address": "0xb57E2F1bEa80F30E96Eb66bBc4574d30506F0fF5",
+      "transactionHash": "0x239e7c86c8ede3787fb0d08fe344b96f3127f6961ddaebe1749a802a39c0faef",
+      "blockNumber": 11637220,
+      "bytecodeHash": "0xe2796f1344fd389fb4603a9b983d395d5c55de435782386ed999772c2e7ad22e",
+      "codeBytes": 5040,
+      "sourceVerification": "pending",
+      "maxTotalWeight": "65536",
+      "attempts": 32
+    },
+    "asset": {
+      "address": "0x1AAFC17a7964455De2c93c75E5773C527ba2426b",
+      "transactionHash": "0xa02b9c008c1478de79a77e072978bfe92a589e30f4da699717f503eb8073566a",
+      "blockNumber": 11637221,
+      "bytecodeHash": "0xe097e692f41dc3d4847562d45460a9a081134bd69612ff04dd42266ca5dbd36a",
+      "codeBytes": 7795,
+      "sourceVerification": "pending"
+    },
+    "yieldAdapter": {
+      "address": "0xf98F5077247e3536bF7e7aa0ea75ABb662EF355a",
+      "transactionHash": "0x676b80fbf1b9a0b2bb6b05e4610b56ccaf850be8294eb6436ab196a8ff923f0e",
+      "blockNumber": 11637224,
+      "bytecodeHash": "0xb9618c6118e44d983e51fe08094088a3bebeb89e02e2ca423de2f6b1f3799a46",
+      "codeBytes": 1963,
+      "sourceVerification": "pending"
+    },
+    "reserve": {
+      "address": "0x80669FdAa46F415A1b92c7d5799C0D781d5F7Ee7",
+      "transactionHash": "0x637498130fa629e00bb5bf93b218e799c99fbc7aa0f53ebc73a68328b950d71d",
+      "blockNumber": 11637222,
+      "bytecodeHash": "0xf3527d39d1b846e43b0837fe12d7d0c2b66312fdff4649af4aa2c25dfba948d8",
+      "codeBytes": 2805,
+      "sourceVerification": "pending"
+    },
+    "wiring": {
+      "authorizedDraw": {
+        "transactionHash": "0xd949e74a82abd0437145cad8f58689f023ca7f039b91380ac60163b53d6f6def",
+        "blockNumber": 11637225
+      },
+      "reserve": {
+        "transactionHash": "0x9c85a6b183296ed971e571d553b43ec57f31eab6f726648b9ced9723406eb85c",
+        "blockNumber": 11637226
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "A",
+      "address": "0x44be5240559880f39ba5604D33486Da4d8A48527"
+    },
+    {
+      "id": "B",
+      "address": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597"
+    },
+    {
+      "id": "C",
+      "address": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe"
+    }
+  ],
+  "steps": [
+    {
+      "step": "fund participant 0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "status": "already-funded",
+      "balanceWei": "19344257865581146"
+    },
+    {
+      "step": "fund participant 0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "status": "already-funded",
+      "balanceWei": "27290836093814953"
+    },
+    {
+      "step": "participant A encrypted commitment",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "setCommitment",
+      "txHash": "0x0e737f751a98dccf28c157e64088529911350f7c94237bb7f06a06904e808855",
+      "block": 11637236,
+      "timestamp": 1788572280,
+      "status": 1,
+      "gasUsed": "578529"
+    },
+    {
+      "step": "participant B encrypted commitment",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "setCommitment",
+      "txHash": "0x26e9be126803bdae79a48c89a55f9085d5bf91ba2d4a07761d843d75b431498e",
+      "block": 11637240,
+      "timestamp": 1788572328,
+      "status": 1,
+      "gasUsed": "578529"
+    },
+    {
+      "step": "fund participant 0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "status": "already-funded",
+      "balanceWei": "18720792784878262"
+    },
+    {
+      "step": "fund participant 0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "status": "already-funded",
+      "balanceWei": "27290836093814953"
+    },
+    {
+      "step": "participant C encrypted commitment",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "setCommitment",
+      "txHash": "0x2e16b1cec5626c61f5a725e270d6d19a912acbad2f42c92ab530dc1d3dee9242",
+      "block": 11637256,
+      "timestamp": 1788572544,
+      "status": 1,
+      "gasUsed": "578553"
+    },
+    {
+      "step": "participant A encrypted deposit",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0x848b62538b16cf89b539ca90ce59ecf0d15458b1e37178ae5792e907987d63af",
+      "block": 11637261,
+      "timestamp": 1788572604,
+      "status": 1,
+      "gasUsed": "660225"
+    },
+    {
+      "step": "participant B encrypted deposit",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0xf41442dfd8932a778284d9abffdbf3f16d00206a5d43fec044ef17c6ba9e1eac",
+      "block": 11637265,
+      "timestamp": 1788572652,
+      "status": 1,
+      "gasUsed": "660213"
+    },
+    {
+      "step": "participant C encrypted deposit",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0xdb34ac8d2a37f8947c69ba2c6855266916ea6919a976ad32652af9311ea7a438",
+      "block": 11637270,
+      "timestamp": 1788572712,
+      "status": 1,
+      "gasUsed": "660225"
+    },
+    {
+      "step": "participant A breach",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "withdraw",
+      "txHash": "0xbe5ed5c43f893afe7f71a40ca5d561d9a434454ff39751999b3034c7907b8b50",
+      "block": 11637274,
+      "timestamp": 1788572772,
+      "status": 1,
+      "gasUsed": "679646"
+    },
+    {
+      "step": "participant B recovery",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0xa589549b93f3f52783efb22aa861e364cd66ab15e5d06af251bef502acdc1508",
+      "block": 11637279,
+      "timestamp": 1788572832,
+      "status": 1,
+      "gasUsed": "664213"
+    },
+    {
+      "step": "participant A recovery",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0x1624fb2d43495ebc67485f49b27749838ce206d5b691f46cce3a2c0e592dfb4f",
+      "block": 11637282,
+      "timestamp": 1788572880,
+      "status": 1,
+      "gasUsed": "664221"
+    },
+    {
+      "step": "account participant principal",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xf98F5077247e3536bF7e7aa0ea75ABb662EF355a",
+      "function": "depositPrincipal",
+      "txHash": "0x5504685b1b25128c71dbecb341f9faf9e0bfa7fef881ca997f87cdcd41b4f04a",
+      "block": 11637283,
+      "timestamp": 1788572892,
+      "status": 1,
+      "gasUsed": "45214"
+    },
+    {
+      "step": "realize deterministic testnet yield",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xf98F5077247e3536bF7e7aa0ea75ABb662EF355a",
+      "function": "accrueYield",
+      "txHash": "0xf353d46e2721450d628b72450cdb6e0a153a94924ae175dbd79c013566e8d2ec",
+      "block": 11637284,
+      "timestamp": 1788572904,
+      "status": 1,
+      "gasUsed": "45118"
+    },
+    {
+      "step": "harvest realized yield to prize reserve",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0xf98F5077247e3536bF7e7aa0ea75ABb662EF355a",
+      "function": "harvestYield",
+      "txHash": "0xdae0232be361f41f2f4c4bb3a61a6f95f90d78f2a471e8071346a2487913bdc8",
+      "block": 11637286,
+      "timestamp": 1788572928,
+      "status": 1,
+      "gasUsed": "1033172"
+    },
+    {
+      "step": "participant A CW checkpoint",
+      "signer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0x790669e764f76862ed1d4a94056600305c61d7a51d3457393a3a1f1e78617a0e",
+      "block": 11637290,
+      "timestamp": 1788572976,
+      "status": 1,
+      "gasUsed": "664225"
+    },
+    {
+      "step": "participant B CW checkpoint",
+      "signer": "0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0xfa7e92a49597e5d07dfee5f40840111f08157aa55e71069f28f1ce51d958f315",
+      "block": 11637294,
+      "timestamp": 1788573024,
+      "status": 1,
+      "gasUsed": "664213"
+    },
+    {
+      "step": "fund participant 0x8b08232B050a643327E6b9e439d0D4Ed41B27597",
+      "status": "already-funded",
+      "balanceWei": "16621645624678676"
+    },
+    {
+      "step": "fund participant 0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "status": "already-funded",
+      "balanceWei": "25967365802290810"
+    },
+    {
+      "step": "participant C CW checkpoint",
+      "signer": "0x24686B3110fce3F00BF8bAAe6aEA3d6DA79d3bfe",
+      "contract": "0x4736a0e9c90F4949Ff4B660BFb578772053bc87C",
+      "function": "deposit",
+      "txHash": "0xdb763a02d51a878a7ed0bb89e70c7d060839342245af9e8e94a8e9971895db26",
+      "block": 11637579,
+      "timestamp": 1788576600,
+      "status": 1,
+      "gasUsed": "664213"
+    }
+  ],
+  "privateReadback": [],
+  "economicState": {},
+  "startedAt": "2026-09-05T01:37:06.832Z"
+}

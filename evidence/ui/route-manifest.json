@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T15:47:04.535Z",
+  "generatedAt": "2026-09-05T04:20:00.000Z",
   "verification": {
     "runner": "scripts/visual-check.cjs",
     "baseUrl": "http://127.0.0.1:4174/",
@@ -20,9 +20,11 @@
     {"route":"/proof/fairness","purpose":"Exact-selection fairness","source":"app.js + evidence/fairness/exact-selection-50k.json","status":"active","tested":true},
     {"route":"/proof/adversarial","purpose":"Mined deployed attack receipts","source":"app.js + evidence/adversarial/executable-receipts.json","status":"active","tested":true},
     {"route":"/proof/privacy","purpose":"Privacy leakage evidence","source":"app.js + evidence/privacy/leakage-campaign.json","status":"active","tested":true},
-    {"route":"/proof/live","purpose":"Canonical positive-winner lifecycle","source":"app.js + evidence/live/canonical-campaign.json","status":"active","tested":true},
+    {"route":"/proof/live","purpose":"Canonical yield-funded positive-winner lifecycle","source":"app.js + evidence/live/canonical-yield-campaign.json","status":"active","tested":true},
     {"route":"/proof/benchmarks","purpose":"Operation cost classification","source":"app.js + evidence/benchmarks/final-cost-summary.json","status":"active","tested":true},
-    {"route":"/proof/contracts","purpose":"Canonical verified contracts","source":"app.js + evidence/live/canonical-verification.json","status":"active","tested":true},
+    {"route":"/proof/yield","purpose":"Testnet yield provenance and principal separation","source":"app.js + evidence/yield/principal-separation.json","status":"active","tested":true},
+    {"route":"/proof/yield-model","purpose":"Principal/yield/CW economic model","source":"app.js + evidence/yield/economic-model.json","status":"active","tested":true},
+    {"route":"/proof/contracts","purpose":"Canonical verified contracts","source":"app.js + evidence/live/canonical-yield-verification.json","status":"active","tested":true},
     {"route":"/security","purpose":"Security summary","source":"app.js + SECURITY.md","status":"active","tested":true},
     {"route":"/privacy","purpose":"Privacy summary","source":"app.js + PRIVACY.md","status":"active","tested":true}
   ]

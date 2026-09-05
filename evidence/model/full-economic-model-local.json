@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-09-04T22:02:53.836Z",
+  "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+  "status": "pass",
+  "scenarios": 10000,
+  "invariantFailures": 0,
+  "state": {
+    "principal": "separate public testnet adapter accounting",
+    "yield": "deterministically realized testnet yield",
+    "reserve": "receives only harvested realized yield",
+    "balance": "encrypted participant balance",
+    "covenant": "encrypted commitment comparison",
+    "cw": "encrypted covenant-qualified balance-time",
+    "probability": "CW_i / sum(CW)",
+    "prize": "harvested yield credited confidentially to the exact-draw winner"
+  },
+  "artifactLinks": {
+    "accounting": "evidence/yield/principal-separation.json",
+    "exactSelection": "evidence/fairness/exact-selection-50k.json",
+    "forwardOnly": "evidence/invariants/forward-only-randomized.json"
+  }
+}
