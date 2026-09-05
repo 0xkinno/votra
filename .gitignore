@@ -7,3 +7,8 @@ fhevmTemp/
 .env.local
 .vercel/
 coverage/
+/public/relayer-sdk-js.js
+/public/relayer-sdk-js.umd.cjs
+/public/tfhe_bg.wasm
+/public/kms_lib_bg.wasm
+/public/workerHelpers.js

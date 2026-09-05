@@ -67,9 +67,12 @@ This document records the architectural and interface audit of the existing VOTR
   - `confidentialTransferAndCall(address to, bytes32 handle, bytes proof)`
 
 ## 5. FHEVM Relayer SDK Bindings
-- Lazy-loaded import from `@zama-fhe/relayer-sdk/web`:
-  - `createInstance({ ...SepoliaConfig, network: 'sepolia', provider })`
+- UMD runtime is served from the Vercel origin (`/relayer-sdk-js.js`, `/tfhe_bg.wasm`, `/kms_lib_bg.wasm`, `/workerHelpers.js`) and copied from `node_modules/@zama-fhe/relayer-sdk/bundle` by `scripts/copy-zama-assets.cjs`.
+- Lazy-loaded import from `@zama-fhe/relayer-sdk/bundle`:
+  - `await initSDK()` MUST complete before `createInstance()` so WASM exports such as `__wbindgen_malloc` exist.
+  - `createInstance({ ...SepoliaConfig, network: window.ethereum || connected EIP-1193 provider })`
   - `fhe.createEncryptedInput(contractAddress, user).add64(value).encrypt()` -> returns `[handles[0], inputProof]`
+- `/draw` reads `opened`, `exhausted`, `participantCount`, `entered` and reserve `claimed` from chain before enabling any action; a single-round draw that is already opened shows `ROUND COMPLETE - ENTRY CLOSED` and disables `enter`/`open` instead of allowing reverts.
 
 ## 6. Redesign Requirements & Non-Negotiables
 - Maintain 100% compatibility with all above action handlers, ABIs, wallet subscribers, and evidence links.

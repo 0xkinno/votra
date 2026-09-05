@@ -1,4 +1,4 @@
-import { BrowserProvider, Contract } from 'ethers';
+import { BrowserProvider, Contract, JsonRpcProvider } from 'ethers';
 import './styles.css';
 
 const addresses = {
@@ -27,13 +27,23 @@ const artifacts = {
 };
 
 const poolAbi = ['function setCommitment(bytes32,bytes)', 'function deposit(bytes32,bytes)', 'function withdraw(bytes32,bytes)'];
-const drawAbi = ['function enter()', 'function open()', 'function winnerBit(uint256)', 'function settleParticipant(uint256)'];
-const reserveAbi = ['function claim(uint256)'];
+const drawAbi = [
+  'function enter()',
+  'function open()',
+  'function winnerBit(uint256)',
+  'function settleParticipant(uint256)',
+  'function opened() view returns (bool)',
+  'function exhausted() view returns (bool)',
+  'function participantCount() view returns (uint256)',
+  'function participants(uint256) view returns (address)',
+  'function entered(address) view returns (bool)',
+  'function settled(uint256) view returns (bool)'
+];
+const reserveAbi = ['function claim(uint256)', 'function claimed(uint256,address) view returns (bool)'];
 const assetAbi = ['function confidentialTransferAndCall(address,bytes32,bytes)'];
 
 const state = {
   wallet: null,
-  fhe: null,
   tx: 'READY',
   txLabel: '',
   hash: '',
@@ -41,6 +51,10 @@ const state = {
   current: null,
   revealBalance: false
 };
+
+let fhePromise = null;
+let fheAccount = undefined;
+let readProvider = null;
 
 // Icons (SVG)
 const icons = {
@@ -188,19 +202,43 @@ async function send(label, action) {
   }
 }
 
-async function encrypted(value, contractAddress, user) {
-  if (!state.fhe) {
-    const raw = state.wallet?.provider;
-    if (!raw) throw Error('Connect a wallet before creating encrypted input.');
-    try {
-      const { createInstance, SepoliaConfig } = await import('@zama-fhe/relayer-sdk/web');
-      state.fhe = await createInstance({ ...SepoliaConfig, network: 'sepolia', provider: raw });
-    } catch (error) {
-      throw Error(`Encrypted input service unavailable: ${error.shortMessage || error.message}`);
-    }
+function rpcProvider() {
+  if (!readProvider) {
+    const rpc = typeof __VOTRA_RPC__ !== 'undefined' ? __VOTRA_RPC__ : 'https://eth-sepolia.public.blastapi.io';
+    readProvider = new JsonRpcProvider(rpc);
   }
-  const input = await state.fhe.createEncryptedInput(contractAddress, user).add64(value).encrypt();
-  return [input.handles[0], input.inputProof];
+  return readProvider;
+}
+
+async function fheInstance() {
+  const raw = state.wallet?.provider;
+  const provider = raw && typeof raw.request === 'function' ? raw : window.ethereum;
+  if (!provider) throw Error('Connect a wallet before creating encrypted input.');
+  if (!fhePromise) {
+    fhePromise = (async () => {
+      if (!window.relayerSDK || typeof window.relayerSDK.initSDK !== 'function') {
+        throw Error('Zama relayer runtime is not loaded. Reload the page to initialize the FHE engine.');
+      }
+      const { initSDK, createInstance, SepoliaConfig } = await import('@zama-fhe/relayer-sdk/bundle');
+      await initSDK(); // WASM must be initialized before createInstance can expose its exports.
+      return createInstance({ ...SepoliaConfig, network: provider });
+    })().catch((error) => {
+      fhePromise = null;
+      throw error;
+    });
+  }
+  return fhePromise;
+}
+
+async function encrypted(value, contractAddress, user) {
+  const fhe = await fheInstance();
+  try {
+    const input = await fhe.createEncryptedInput(contractAddress, user).add64(value).encrypt();
+    return [input.handles[0], input.inputProof];
+  } catch (error) {
+    fhePromise = null; // stale relayer/public-key state; rebuild on the next attempt
+    throw Error(error.shortMessage || error.message || 'Encrypted input creation failed.');
+  }
 }
 
 async function protocolAction(kind) {
@@ -219,6 +257,7 @@ async function protocolAction(kind) {
     if (kind === 'enter') await send('draw entry', () => draw.enter());
     if (kind === 'open') await send('encrypted draw opening', () => draw.open());
     if (kind === 'claim') await send('confidential claim', () => new Contract(addresses.reserve, reserveAbi, signer).claim(1));
+    if (kind === 'enter' || kind === 'open' || kind === 'claim') hydrateDraw();
   } catch (error) {
     const rejected = error?.code === 4001 || error?.code === 'ACTION_REJECTED';
     setTx(kind, rejected ? 'USER REJECTED' : 'FAILED', '', error.shortMessage || error.message);
@@ -650,7 +689,7 @@ function drawPage() {
         <div>
           <div class="eyebrow eyebrow-green">EXACT DRAW</div>
           <h1>Exact encrypted selection room</h1>
-          <p class="lede">Enter the active draw round, trigger verifiable weighted winner selection, and claim your confidential prize.</p>
+          <p class="lede">Round controls reflect live Sepolia state.</p>
         </div>
         <div class="status-badge ready" id="txState">
           <span class="network-dot"></span>
@@ -668,7 +707,23 @@ function drawPage() {
           <div class="receipt-card" style="margin-top:0;">
             <div class="receipt-row">
               <span>ROUND STAGE</span>
-              <strong style="color:var(--surface-forest);" id="drawState">OPEN FOR ENTRY</strong>
+              <strong style="color:var(--surface-forest);" id="drawStage">CHECKING CHAIN STATE...</strong>
+            </div>
+            <div class="receipt-row">
+              <span>PARTICIPANTS ENTERED</span>
+              <strong id="drawParticipants">-</strong>
+            </div>
+            <div class="receipt-row">
+              <span>SETTLEMENT PROGRESS</span>
+              <strong id="drawSettlement">-</strong>
+            </div>
+            <div class="receipt-row">
+              <span>YOUR ENTRY</span>
+              <strong id="drawMyEntry">Connect a wallet to check</strong>
+            </div>
+            <div class="receipt-row">
+              <span>YOUR CLAIM STATE</span>
+              <strong id="drawMyClaim">-</strong>
             </div>
             <div class="receipt-row">
               <span>WEIGHT SCHEME</span>
@@ -686,20 +741,21 @@ function drawPage() {
           ${cornerMarks()}
           <div class="eyebrow eyebrow-green">PARTICIPANT ACTIONS</div>
           <p style="font-size:13px; color:var(--muted); margin-bottom:20px;">
-            Transactions are signed through your connected wallet.
+            Transactions are signed through your connected wallet. Buttons enable only when the action can succeed on-chain.
           </p>
 
           <div style="display:flex; flex-direction:column; gap:12px;">
-            <button class="btn-bracket btn-bracket-primary" id="enter" data-action="enter" type="button">
+            <button class="btn-bracket btn-bracket-primary" id="enter" data-action="enter" type="button" disabled>
               ENTER DRAW (ROUND 1)
             </button>
-            <button class="btn-bracket btn-bracket-mint" id="open" data-action="open" type="button">
+            <button class="btn-bracket btn-bracket-mint" id="open" data-action="open" type="button" disabled>
               OPEN EXACT DRAW
             </button>
-            <button class="btn-pill-action" id="claim" data-action="claim" type="button" style="padding:12px;">
+            <button class="btn-pill-action" id="claim" data-action="claim" type="button" style="padding:12px;" disabled>
               CLAIM CONFIDENTIAL PRIZE
             </button>
           </div>
+          <p id="drawHint" style="margin-top:14px; font-size:12px; color:var(--muted);">Reading round #1 from Sepolia...</p>
         </div>
       </div>
 
@@ -720,6 +776,88 @@ function drawPage() {
       </div>
     </div>
   `);
+}
+
+async function hydrateDraw() {
+  const stage = document.querySelector('#drawStage');
+  if (!stage) return;
+  const hint = document.querySelector('#drawHint');
+  const enterBtn = document.querySelector('#enter');
+  const openBtn = document.querySelector('#open');
+  const claimBtn = document.querySelector('#claim');
+  const participantsEl = document.querySelector('#drawParticipants');
+  const settlementEl = document.querySelector('#drawSettlement');
+  const entryEl = document.querySelector('#drawMyEntry');
+  const claimEl = document.querySelector('#drawMyClaim');
+  const setButton = (el, enabled, label) => {
+    if (!el) return;
+    el.disabled = !enabled;
+    el.textContent = label;
+  };
+
+  try {
+    const provider = rpcProvider();
+    const draw = new Contract(addresses.draw, drawAbi, provider);
+    const reserve = new Contract(addresses.reserve, reserveAbi, provider);
+    const [opened, exhausted, participantCountRaw] = await Promise.all([
+      draw.opened(),
+      draw.exhausted(),
+      draw.participantCount()
+    ]);
+    const user = state.wallet?.account || null;
+    const connected = Boolean(user);
+    const participantCount = Number(participantCountRaw);
+    let entered = false;
+    let claimed = false;
+    if (connected) {
+      [entered, claimed] = await Promise.all([
+        draw.entered(user),
+        reserve.claimed(1, user)
+      ]);
+    }
+
+    let settledCount = 0;
+    if (opened && participantCount > 0) {
+      for (let i = 0; i < participantCount; i++) {
+        try {
+          if (await draw.settled(i)) settledCount += 1;
+        } catch {
+          // an unreadable row should not block the panel
+        }
+      }
+    }
+
+    const complete = opened && participantCount > 0 && settledCount === participantCount;
+    let stageText;
+    if (!opened) {
+      stageText = participantCount === 0 || !entered ? 'OPEN FOR ENTRY' : 'ENTERED — AWAITING OPEN';
+    } else {
+      stageText = complete ? 'ROUND COMPLETE — ENTRY CLOSED' : 'DRAW OPENED — ENTRY CLOSED';
+    }
+    if (exhausted) stageText += ' · ATTEMPTS EXHAUSTED';
+
+    stage.textContent = stageText;
+    stage.style.color = stageText.startsWith('OPEN') || stageText.startsWith('ENTERED') ? 'var(--surface-forest)' : 'var(--accent-orange-text, #b45309)';
+    if (participantsEl) participantsEl.textContent = participantCount > 0 ? String(participantCount) : 'No participants yet';
+    if (settlementEl) settlementEl.textContent = opened ? settledCount + ' / ' + participantCount + ' settled' : 'Not started — draw not opened';
+    if (entryEl) entryEl.textContent = connected ? (entered ? 'ENTERED' : 'NOT ENTERED') : 'Connect a wallet to check';
+    if (claimEl) claimEl.textContent = connected ? (claimed ? 'CLAIMED' : 'NOT CLAIMED') : 'Connect a wallet to check';
+
+    setButton(enterBtn, !opened && !entered && connected, !opened ? (entered ? 'ENTERED — AWAITING OPEN' : 'ENTER DRAW (ROUND 1)') : 'ROUND COMPLETE — ENTRY CLOSED');
+    setButton(openBtn, !opened && participantCount > 0 && connected, opened ? 'DRAW ALREADY OPENED' : (participantCount === 0 ? 'NO PARTICIPANTS TO OPEN' : 'OPEN EXACT DRAW'));
+    setButton(claimBtn, connected && opened && !claimed, !connected ? 'CONNECT WALLET TO CLAIM' : (!opened ? 'DRAW NOT OPENED YET' : (claimed ? 'PRIZE CLAIMED — ROUND 1' : 'CLAIM CONFIDENTIAL PRIZE')));
+
+    if (hint) {
+      hint.textContent = 'Round #1 state read directly from ' + addresses.draw.slice(0, 6) + '...' + addresses.draw.slice(-4) + ' on Sepolia at ' + new Date().toISOString().slice(11, 19) + ' UTC.';
+    }
+  } catch (error) {
+    stage.textContent = 'STATE UNREADABLE';
+    stage.style.color = 'var(--accent-red)';
+    setButton(enterBtn, false, 'CHECK CHAIN STATE');
+    setButton(openBtn, false, 'CHECK CHAIN STATE');
+    setButton(claimBtn, false, 'CHECK CHAIN STATE');
+    if (hint) hint.textContent = 'Could not read on-chain draw state: ' + (error.shortMessage || error.message) + '. Actions are disabled to prevent blind reverts.';
+  }
 }
 
 async function artifactPage(key) {
@@ -1010,6 +1148,7 @@ async function render() {
 
   document.querySelector('#app').innerHTML = html;
   bind();
+  if (path === '/draw') hydrateDraw();
 }
 
 function bind() {
@@ -1050,16 +1189,19 @@ function bind() {
 import('./appkit-entry.js').then(async ({ walletService }) => {
   state.wallet = {
     get connected() { return walletService.state().connected; },
+    get account() { return walletService.state().account; },
     get provider() { return walletService.getWalletProvider?.(); },
     connect: () => walletService.connect(),
     openAccount: () => walletService.openAccount?.()
   };
-  walletService.subscribe(() => {
+  walletService.subscribe((s) => {
+    if (fheAccount !== undefined && fheAccount !== s.account) fhePromise = null;
+    fheAccount = s.account;
     const label = document.querySelector('#walletLabel');
-    const s = walletService.state();
     if (label) {
       label.textContent = s.connected ? `${s.account.slice(0,6)}...${s.account.slice(-4)}` : 'Connect wallet';
     }
+    if (location.pathname.replace(/\/+$/, '') === '/draw') hydrateDraw();
   });
 }).catch(() => {});
 

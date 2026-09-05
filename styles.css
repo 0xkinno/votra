@@ -401,6 +401,13 @@ header {
   background: var(--surface-mint-hover);
 }
 
+.btn-bracket:disabled,
+.btn-pill-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: saturate(0.35);
+}
+
 /* ==========================================================================
    Banner Announcement Strip
    ========================================================================== */
