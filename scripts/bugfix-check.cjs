@@ -31,6 +31,12 @@ function assert(condition, message) {
   const homeBodyText = (await page.locator('body').innerText()) || '';
   assert(homeBodyText.includes('ILLUSTRATIVE'), 'landing balance panels are explicitly labelled illustrative while disconnected');
   assert(homeBodyText.includes('TESTNET DEMO DEPOSIT'), 'landing exposes the wallet-signed testnet demo deposit action');
+  assert((await page.locator('[data-eye-toggle]').count()) >= 2, 'home renders an eye toggle for the hero and console balance displays');
+  const heroBalanceBefore = await page.locator('#heroBalance').textContent();
+  await page.locator('[data-eye-toggle]').first().click();
+  await page.waitForTimeout(500);
+  const heroBalanceAfter = await page.locator('#heroBalance').textContent();
+  assert(heroBalanceBefore !== heroBalanceAfter, 'eye toggle changes the disconnected hero balance display');
   assert((await page.evaluate(() => typeof window.relayerSDK)) === 'object', 'window.relayerSDK global is loaded from the vendored UMD');
   assert((await page.evaluate(() => typeof window.relayerSDK.initSDK)) === 'function', 'window.relayerSDK.initSDK exists');
 
@@ -87,6 +93,7 @@ function assert(condition, message) {
       assert(routeBody.includes('ILLUSTRATIVE'), 'commitment page labels its example state as illustrative while disconnected');
       assert(routeBody.includes('TESTNET DEMO DEPOSIT'), 'commitment page exposes the explicit testnet demo funding action');
       assert(!routeBody.includes('$150'), 'no dollar-denominated hardcoded balance is shown on the commitment page');
+      assert((await p.locator('[data-eye-toggle]').count()) === 1, 'commitment page renders one eye toggle beside the balance');
     }
     const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     assert(!overflow, route + ' has no horizontal overflow');

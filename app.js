@@ -63,9 +63,34 @@ function isActiveHandle(handle) {
   return hex !== ZERO_HANDLE && hex !== '0x';
 }
 
+function normalizeHandle(handle) {
+  return typeof handle === 'string' ? handle : (handle?.[0] || handle?.handle || handle?.toString?.());
+}
+
 function setText(selector, text) {
   const el = document.querySelector(selector);
   if (el) el.textContent = text;
+}
+
+function setBalanceAmounts(value) {
+  setText('#heroBalance', value);
+  setText('#consoleBalanceAmount', value);
+  setText('#commitmentBalanceAmount', value);
+}
+
+function connectedBalanceDisplay() {
+  if (!state.hasBalanceHandle) return '0.00';
+  if (state.balanceRevealLoading) return 'DECRYPTING…';
+  if (!state.revealBalance) return 'ENCRYPTED';
+  return state.plainBalance ?? 'DECRYPTING…';
+}
+
+function invalidateBalanceReveal() {
+  state.plainBalance = null;
+  state.balanceRevealError = '';
+  state.balanceRevealLoading = false;
+  state.hasBalanceHandle = false;
+  state.balanceHandle = null;
 }
 
 const state = {
@@ -75,7 +100,13 @@ const state = {
   hash: '',
   error: '',
   current: null,
-  revealBalance: false
+  revealBalance: false,
+  walletAccount: null,
+  hasBalanceHandle: false,
+  balanceHandle: null,
+  plainBalance: null,
+  balanceRevealError: '',
+  balanceRevealLoading: false
 };
 
 let fhePromise = null;
@@ -267,6 +298,86 @@ async function encrypted(value, contractAddress, user) {
   }
 }
 
+async function revealConnectedBalance() {
+  const user = state.wallet?.account;
+  if (!user || !state.hasBalanceHandle || !state.balanceHandle) return;
+  state.balanceRevealLoading = true;
+  state.balanceRevealError = '';
+  setBalanceAmounts(connectedBalanceDisplay());
+  try {
+    const { signer } = await providerAndSigner();
+    const fhe = await fheInstance();
+    const keypair = fhe.generateKeypair();
+    const startTimestamp = Math.floor(Date.now() / 1000);
+    const durationDays = 1;
+    const eip712 = fhe.createEIP712(keypair.publicKey, [live.pool], startTimestamp, durationDays);
+    const signature = await signer.signTypedData(
+      eip712.domain,
+      { UserDecryptRequestVerification: eip712.types.UserDecryptRequestVerification },
+      eip712.message
+    );
+    const results = await fhe.userDecrypt(
+      [{ handle: state.balanceHandle, contractAddress: live.pool }],
+      keypair.privateKey,
+      keypair.publicKey,
+      signature,
+      [live.pool],
+      user,
+      startTimestamp,
+      durationDays
+    );
+    const raw = results?.[state.balanceHandle] ?? Object.values(results || {})[0];
+    if (raw === undefined || raw === null) throw Error('Relayer returned no plaintext balance.');
+    const numeric = Number(raw);
+    if (!Number.isFinite(numeric)) throw Error('Unexpected decrypted balance value.');
+    state.plainBalance = numeric.toFixed(2);
+    state.balanceRevealError = '';
+  } catch (error) {
+    state.balanceRevealError = error?.shortMessage || error?.message || 'Balance reveal failed.';
+    state.plainBalance = null;
+    state.revealBalance = false;
+  } finally {
+    state.balanceRevealLoading = false;
+    setBalanceAmounts(connectedBalanceDisplay());
+    setText('#heroSubInfo', state.hasBalanceHandle
+      ? (state.plainBalance !== null
+          ? `${state.plainBalance} cETH · authorized user decryption · shown only to this wallet`
+          : (state.balanceRevealError || 'Encrypted vault present on live-demo pool | no plaintext exposed'))
+      : 'No protocol record for this wallet on the live-demo pool');
+    setText('#consoleBalanceNote', state.hasBalanceHandle
+      ? (state.plainBalance !== null
+          ? `${state.plainBalance} cETH · decrypted from this wallet's own encrypted vault`
+          : (state.balanceRevealError || 'Encrypted vault present on live-demo pool | no plaintext exposed'))
+      : 'No protocol record for this wallet on the live-demo pool');
+    setText('#commitmentBalanceNote', state.hasBalanceHandle
+      ? (state.plainBalance !== null
+          ? `${state.plainBalance} cETH · decrypted from this wallet's own encrypted vault`
+          : (state.balanceRevealError || 'Encrypted vault present on live-demo pool | no plaintext exposed'))
+      : 'No protocol record for this wallet on the live-demo pool');
+  }
+}
+
+async function toggleBalanceReveal() {
+  const connected = Boolean(state.wallet?.connected && state.wallet?.account);
+  if (!connected) {
+    state.revealBalance = !state.revealBalance;
+    setText('#heroBalance', state.revealBalance ? '150.00' : '████████');
+    return;
+  }
+  if (!state.hasBalanceHandle) return;
+  state.revealBalance = !state.revealBalance;
+  state.balanceRevealError = '';
+  if (state.revealBalance) {
+    setBalanceAmounts(connectedBalanceDisplay());
+    if (state.plainBalance === null) await revealConnectedBalance();
+    return;
+  }
+  setBalanceAmounts(connectedBalanceDisplay());
+  setText('#heroSubInfo', 'Encrypted vault present on live-demo pool | click the eye to reveal only your own balance');
+  setText('#consoleBalanceNote', 'Encrypted vault present on live-demo pool | click the eye to reveal only your own balance');
+  setText('#commitmentBalanceNote', 'Encrypted vault present on live-demo pool | click the eye to reveal only your own balance');
+}
+
 async function protocolAction(kind) {
   try {
     const { signer } = await providerAndSigner();
@@ -278,13 +389,15 @@ async function protocolAction(kind) {
       const pool = new Contract(live.pool, poolAbi, signer);
       const fn = kind === 'commitment' ? 'setCommitment' : kind === 'breach' ? 'withdraw' : 'deposit';
       await send(kind, () => pool[fn](handle, proof));
+      invalidateBalanceReveal();
+      state.revealBalance = false;
+      hydratePortfolio();
       return;
     }
     const draw = new Contract(live.draw, drawAbi, signer);
     if (kind === 'enter') await send('draw entry', () => draw.enter());
     if (kind === 'open') await send('encrypted draw opening', () => draw.open());
     if (kind === 'claim') await send('confidential claim', () => new Contract(live.reserve, reserveAbi, signer).claim(1));
-    if (kind === 'commitment' || kind === 'deposit' || kind === 'breach' || kind === 'recovery') hydratePortfolio();
     if (kind === 'enter' || kind === 'open' || kind === 'claim') hydrateDraw();
   } catch (error) {
     const rejected = error?.code === 4001 || error?.code === 'ACTION_REJECTED';
@@ -345,7 +458,7 @@ function home() {
               <div class="balance-amount mono" id="heroBalance">
                 ${state.revealBalance ? '150.00' : '████████'}
               </div>
-              <button class="btn-eye-toggle" id="toggleHeroEye" title="Toggle Private Mask" type="button">
+              <button class="btn-eye-toggle" data-eye-toggle title="Reveal or hide your balance" type="button">
                 ${icons.eye}
               </button>
             </div>
@@ -390,8 +503,14 @@ function home() {
           <div class="product-card product-card-mint with-corner-marks">
             ${cornerMarks()}
             <div class="eyebrow eyebrow-green">CONFIDENTIAL BALANCE &middot; <span id="consoleStateTag">ILLUSTRATIVE</span></div>
-            <h3 style="font-size:26px; margin: 8px 0 4px;"><span id="consoleBalanceAmount">150.00</span> <span style="font-size:14px; font-weight:500;">cETH</span></h3>
-            <p style="font-size:13px; margin-bottom: 20px;">Illustrative demo state. Connect a wallet to view only your real encrypted chain state &mdash; balances are never hardcoded for a connected account.</p>
+            <div class="balance-display balance-display-card">
+              <span class="balance-amount balance-amount-card mono" id="consoleBalanceAmount">150.00</span>
+              <span class="balance-unit">cETH</span>
+              <button class="btn-eye-toggle eye-on-light" data-eye-toggle title="Reveal or hide this wallet's balance" type="button">
+                ${icons.eye}
+              </button>
+            </div>
+            <p id="consoleBalanceNote" style="font-size:13px; margin-bottom: 20px;">Illustrative demo state. Connect a wallet to view only your real encrypted chain state &mdash; balances are never hardcoded for a connected account.</p>
 
             <div class="receipt-card" style="background:rgba(255,255,255,0.7); margin-top:0;">
               <div class="receipt-row">
@@ -649,8 +768,14 @@ function commitmentPage() {
         <div class="product-card product-card-mint with-corner-marks">
           ${cornerMarks()}
           <div class="eyebrow eyebrow-green">CONFIDENTIAL BALANCE &middot; <span id="commitmentStateTag">ILLUSTRATIVE</span></div>
-          <h3 style="font-size:26px; margin: 8px 0 4px;"><span id="commitmentBalanceAmount">150.00</span> <span style="font-size:14px; font-weight:500;">cETH</span></h3>
-          <p style="font-size:13px; margin-bottom: 20px;">Illustrative demo state. Connect a wallet to view only your real encrypted chain state &mdash; a connected account never inherits a hardcoded balance.</p>
+          <div class="balance-display balance-display-card">
+            <span class="balance-amount balance-amount-card mono" id="commitmentBalanceAmount">150.00</span>
+            <span class="balance-unit">cETH</span>
+            <button class="btn-eye-toggle eye-on-light" data-eye-toggle title="Reveal or hide this wallet's balance" type="button">
+              ${icons.eye}
+            </button>
+          </div>
+          <p id="commitmentBalanceNote" style="font-size:13px; margin-bottom: 20px;">Illustrative demo state. Connect a wallet to view only your real encrypted chain state &mdash; a connected account never inherits a hardcoded balance.</p>
 
           <div class="receipt-card" style="background:rgba(255,255,255,0.7); margin-top:0;">
             <div class="receipt-row">
@@ -901,6 +1026,9 @@ async function hydrateDraw() {
 async function hydratePortfolio() {
   const connected = Boolean(state.wallet?.connected && state.wallet?.account);
   if (!connected) {
+    state.walletAccount = null;
+    invalidateBalanceReveal();
+    state.revealBalance = false;
     setText('#heroStateTag', 'ILLUSTRATIVE');
     setText('#heroBalance', state.revealBalance ? '150.00' : '████████');
     setText('#heroSubInfo', '150.0000 cETH | illustrative example | connect a wallet to view your encrypted chain state');
@@ -908,11 +1036,13 @@ async function hydratePortfolio() {
     setText('#heroCW', '136,800 unit-sec (ILLUSTRATIVE)');
     setText('#consoleStateTag', 'ILLUSTRATIVE');
     setText('#consoleBalanceAmount', '150.00');
+    setText('#consoleBalanceNote', 'Illustrative demo state. Connect a wallet to view only your real encrypted chain state - balances are never hardcoded for a connected account.');
     setText('#consoleCovenantStatus', '● COMPLIANT (ILLUSTRATIVE)');
     setText('#consoleAccrualStatus', 'ACTIVE (1x RATE) (ILLUSTRATIVE)');
     setText('#consoleDemoNote', 'TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.');
     setText('#commitmentStateTag', 'ILLUSTRATIVE');
     setText('#commitmentBalanceAmount', '150.00');
+    setText('#commitmentBalanceNote', 'Illustrative demo state. Connect a wallet to view only your real encrypted chain state - a connected account never inherits a hardcoded balance.');
     setText('#commitmentCovenantStatus', '● COMPLIANT (ILLUSTRATIVE)');
     setText('#commitmentAccrualStatus', 'ACTIVE (1x RATE) (ILLUSTRATIVE)');
     setText('#commitmentDemoNote', 'TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.');
@@ -920,6 +1050,11 @@ async function hydratePortfolio() {
   }
 
   const user = state.wallet.account;
+  if (state.walletAccount !== user) {
+    state.walletAccount = user;
+    invalidateBalanceReveal();
+    state.revealBalance = false;
+  }
   try {
     const provider = rpcProvider();
     const pool = new Contract(live.pool, poolViewAbi, provider);
@@ -928,12 +1063,16 @@ async function hydratePortfolio() {
       pool.floorOf(user),
       pool.weightOf(user)
     ]);
-    const hasBalance = isActiveHandle(balanceHandle);
+    const balanceHandleValue = normalizeHandle(balanceHandle);
+    const hasBalance = isActiveHandle(balanceHandleValue);
+    state.hasBalanceHandle = hasBalance;
+    state.balanceHandle = hasBalance ? balanceHandleValue : null;
+    if (!hasBalance) state.plainBalance = null;
     const hasFloor = isActiveHandle(floorHandle);
     const hasWeight = isActiveHandle(weightHandle);
 
     const stateTag = 'CONNECTED - CHAIN STATE';
-    const amount = hasBalance ? 'ENCRYPTED' : '0.00';
+    const amount = connectedBalanceDisplay();
     let covenant;
     let accrual;
     if (!hasFloor && !hasBalance) {
@@ -951,24 +1090,31 @@ async function hydratePortfolio() {
     }
 
     const subInfo = hasBalance
-      ? 'Encrypted vault present on live-demo pool | no plaintext exposed'
+      ? (state.plainBalance !== null
+          ? state.plainBalance + ' cETH | decrypted from this wallet own encrypted vault'
+          : (state.balanceRevealError || 'Encrypted vault present on live-demo pool | no plaintext exposed'))
       : 'No protocol record for this wallet on the live-demo pool';
     const cw = hasWeight ? 'ENCRYPTED - ACCUMULATOR PRESENT' : 'NOT STARTED';
+    const balanceNote = hasBalance
+      ? (state.plainBalance !== null
+          ? state.plainBalance + ' cETH | decrypted from this wallet own encrypted vault'
+          : (state.balanceRevealError || 'Encrypted vault present on live-demo pool | no plaintext exposed unless you use the eye to reveal your own balance'))
+      : 'No protocol record for this wallet on the live-demo pool';
 
     setText('#heroStateTag', stateTag);
-    setText('#heroBalance', amount);
+    setBalanceAmounts(amount);
     setText('#heroSubInfo', subInfo);
     setText('#heroCovenantLabel', covenant);
     setText('#heroCW', cw);
 
     setText('#consoleStateTag', stateTag);
-    setText('#consoleBalanceAmount', amount);
+    setText('#consoleBalanceNote', balanceNote);
     setText('#consoleCovenantStatus', covenant);
     setText('#consoleAccrualStatus', accrual);
     setText('#consoleDemoNote', 'Connected: this TESTNET DEMO DEPOSIT is the only way to credit the demo vault, it requires your wallet signature, and it is recorded on Sepolia with a real receipt.');
 
     setText('#commitmentStateTag', stateTag);
-    setText('#commitmentBalanceAmount', amount);
+    setText('#commitmentBalanceNote', balanceNote);
     setText('#commitmentCovenantStatus', covenant);
     setText('#commitmentAccrualStatus', accrual);
     setText('#commitmentDemoNote', 'Connected: this TESTNET DEMO DEPOSIT is the only way to credit the demo vault, it requires your wallet signature, and it is recorded on Sepolia with a real receipt.');
@@ -1295,7 +1441,11 @@ function bind() {
     }
   });
 
-  // Hero eye mask toggle
+  document.querySelectorAll('[data-eye-toggle]').forEach((el) => {
+    el.addEventListener('click', () => toggleBalanceReveal().catch(() => {}));
+  });
+
+  // Hero eye mask toggle (legacy placeholder)
   const toggleEye = document.querySelector('#toggleHeroEye');
   toggleEye?.addEventListener('click', () => {
     state.revealBalance = !state.revealBalance;
