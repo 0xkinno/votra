@@ -4,7 +4,7 @@
 
 - `@zama-fhe/relayer-sdk` `0.4.4` (npm `latest` as of 2026-09-05)
 - Browser runtime: self-hosted UMD + TFHE/KMS WASM + worker assets copied from the installed package into `public/`
-- `@fhevm/hardhat-plugin` `0.4.2` remains the Hardhat-side integration; its peer range conflicts with 0.4.4 only as an npm warning and does not affect the Vite build
+- `@fhevm/hardhat-plugin` `0.4.2` remains the Hardhat-side integration; its peer range conflicts with 0.4.4, so the repo pins `legacy-peer-deps=true` in `.npmrc` for clean installs on Vercel and locally
 - Sepolia chain ID `11155111`
 - Official SDK-bundled Sepolia endpoint: `https://relayer.testnet.zama.org` (from `SepoliaConfig`)
 - The browser MUST call `initSDK()` before `createInstance()`, and MUST pass an EIP-1193 provider (never the literal string `sepolia`) as `network`
