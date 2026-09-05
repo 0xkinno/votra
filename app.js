@@ -35,6 +35,11 @@ const artifacts = {
 };
 
 const poolAbi = ['function setCommitment(bytes32,bytes)', 'function deposit(bytes32,bytes)', 'function withdraw(bytes32,bytes)'];
+const poolViewAbi = [
+  'function balanceOf(address) view returns (bytes32)',
+  'function floorOf(address) view returns (bytes32)',
+  'function weightOf(address) view returns (bytes32)'
+];
 const drawAbi = [
   'function enter()',
   'function open()',
@@ -49,6 +54,19 @@ const drawAbi = [
 ];
 const reserveAbi = ['function claim(uint256)', 'function claimed(uint256,address) view returns (bool)'];
 const assetAbi = ['function confidentialTransferAndCall(address,bytes32,bytes)'];
+
+const ZERO_HANDLE = '0x' + '0'.repeat(64);
+
+function isActiveHandle(handle) {
+  if (!handle) return false;
+  const hex = String(handle);
+  return hex !== ZERO_HANDLE && hex !== '0x';
+}
+
+function setText(selector, text) {
+  const el = document.querySelector(selector);
+  if (el) el.textContent = text;
+}
 
 const state = {
   wallet: null,
@@ -266,6 +284,7 @@ async function protocolAction(kind) {
     if (kind === 'enter') await send('draw entry', () => draw.enter());
     if (kind === 'open') await send('encrypted draw opening', () => draw.open());
     if (kind === 'claim') await send('confidential claim', () => new Contract(live.reserve, reserveAbi, signer).claim(1));
+    if (kind === 'commitment' || kind === 'deposit' || kind === 'breach' || kind === 'recovery') hydratePortfolio();
     if (kind === 'enter' || kind === 'open' || kind === 'claim') hydrateDraw();
   } catch (error) {
     const rejected = error?.code === 4001 || error?.code === 'ACTION_REJECTED';
@@ -319,12 +338,12 @@ function home() {
             ${cornerMarks()}
             <div class="card-top-row">
               <span class="card-label">YOUR ENCRYPTED BALANCE</span>
-              <span class="currency-pill">ETH (cUSD)</span>
+              <span class="cipher-badge" id="heroStateTag">ILLUSTRATIVE</span>
             </div>
 
             <div class="balance-display">
               <div class="balance-amount mono" id="heroBalance">
-                ${state.revealBalance ? '$150.00' : '████████'}
+                ${state.revealBalance ? '150.00' : '████████'}
               </div>
               <button class="btn-eye-toggle" id="toggleHeroEye" title="Toggle Private Mask" type="button">
                 ${icons.eye}
@@ -332,7 +351,7 @@ function home() {
             </div>
 
             <div class="card-sub-info mono">
-              <span>150.0000 cETH</span> &middot; <span>Accruing draw weight</span>
+              <span id="heroSubInfo">150.0000 cETH &middot; illustrative example &middot; connect a wallet to view your encrypted chain state</span>
             </div>
 
             <div class="card-metrics-grid">
@@ -340,12 +359,12 @@ function home() {
                 <span>COVENANT STATE</span>
                 <div class="covenant-pill">
                   <span class="network-dot" style="background:#4ade80; width:5px; height:5px;"></span>
-                  <span>COMPLIANT</span>
+                  <span id="heroCovenantLabel">COMPLIANT (ILLUSTRATIVE)</span>
                 </div>
               </div>
               <div class="metric-item">
                 <span>COMMITMENT-WEIGHTED TIME</span>
-                <strong id="heroCW">136,800 unit-sec</strong>
+                <strong id="heroCW">136,800 unit-sec (ILLUSTRATIVE)</strong>
               </div>
             </div>
 
@@ -370,18 +389,18 @@ function home() {
         <div class="product-grid">
           <div class="product-card product-card-mint with-corner-marks">
             ${cornerMarks()}
-            <div class="eyebrow eyebrow-green">CONFIDENTIAL BALANCE</div>
-            <h3 style="font-size:26px; margin: 8px 0 4px;">$ 150.00 <span style="font-size:14px; font-weight:500;">cETH</span></h3>
-            <p style="font-size:13px; margin-bottom: 20px;">Encrypted balance held inside the confidential vault.</p>
+            <div class="eyebrow eyebrow-green">CONFIDENTIAL BALANCE &middot; <span id="consoleStateTag">ILLUSTRATIVE</span></div>
+            <h3 style="font-size:26px; margin: 8px 0 4px;"><span id="consoleBalanceAmount">150.00</span> <span style="font-size:14px; font-weight:500;">cETH</span></h3>
+            <p style="font-size:13px; margin-bottom: 20px;">Illustrative demo state. Connect a wallet to view only your real encrypted chain state &mdash; balances are never hardcoded for a connected account.</p>
 
             <div class="receipt-card" style="background:rgba(255,255,255,0.7); margin-top:0;">
               <div class="receipt-row">
                 <span>COVENANT STATUS</span>
-                <strong style="color:var(--surface-forest);">● COMPLIANT</strong>
+                <strong style="color:var(--surface-forest);" id="consoleCovenantStatus">● COMPLIANT (ILLUSTRATIVE)</strong>
               </div>
               <div class="receipt-row">
                 <span>WEIGHT ACCRUAL</span>
-                <strong>ACTIVE (1&times; RATE)</strong>
+                <strong id="consoleAccrualStatus">ACTIVE (1&times; RATE) (ILLUSTRATIVE)</strong>
               </div>
             </div>
           </div>
@@ -403,10 +422,13 @@ function home() {
             </button>
 
             <div class="actions-pill-group" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line);">
-              <button class="btn-pill-action" id="deposit" data-action="deposit" type="button">+ Deposit 150 ETH</button>
+              <button class="btn-pill-action" id="deposit" data-action="deposit" type="button">TESTNET DEMO DEPOSIT (+150)</button>
               <button class="btn-pill-action" id="breach" data-action="breach" type="button">Withdraw (Test Breach)</button>
               <button class="btn-pill-action" id="recover" data-action="recovery" type="button">Deposit (Recover)</button>
             </div>
+            <p style="font-size:11px; color:var(--muted); margin-top:12px;" id="consoleDemoNote">
+              TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.
+            </p>
           </div>
         </div>
 
@@ -626,18 +648,18 @@ function commitmentPage() {
         <!-- Balance Card -->
         <div class="product-card product-card-mint with-corner-marks">
           ${cornerMarks()}
-          <div class="eyebrow eyebrow-green">CONFIDENTIAL BALANCE</div>
-          <h3 style="font-size:26px; margin: 8px 0 4px;">$ 150.00 <span style="font-size:14px; font-weight:500;">cETH</span></h3>
-          <p style="font-size:13px; margin-bottom: 20px;">Encrypted balance held inside the confidential vault.</p>
+          <div class="eyebrow eyebrow-green">CONFIDENTIAL BALANCE &middot; <span id="commitmentStateTag">ILLUSTRATIVE</span></div>
+          <h3 style="font-size:26px; margin: 8px 0 4px;"><span id="commitmentBalanceAmount">150.00</span> <span style="font-size:14px; font-weight:500;">cETH</span></h3>
+          <p style="font-size:13px; margin-bottom: 20px;">Illustrative demo state. Connect a wallet to view only your real encrypted chain state &mdash; a connected account never inherits a hardcoded balance.</p>
 
           <div class="receipt-card" style="background:rgba(255,255,255,0.7); margin-top:0;">
             <div class="receipt-row">
               <span>COVENANT STATUS</span>
-              <strong style="color:var(--surface-forest);">● COMPLIANT</strong>
+              <strong style="color:var(--surface-forest);" id="commitmentCovenantStatus">● COMPLIANT (ILLUSTRATIVE)</strong>
             </div>
             <div class="receipt-row">
               <span>WEIGHT ACCRUAL</span>
-              <strong>ACTIVE (1&times; RATE)</strong>
+              <strong id="commitmentAccrualStatus">ACTIVE (1&times; RATE) (ILLUSTRATIVE)</strong>
             </div>
           </div>
         </div>
@@ -664,10 +686,13 @@ function commitmentPage() {
           </p>
 
           <div class="actions-pill-group" style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line);">
-            <button class="btn-pill-action" id="deposit" data-action="deposit" type="button">+ Deposit 150 ETH</button>
+            <button class="btn-pill-action" id="deposit" data-action="deposit" type="button">TESTNET DEMO DEPOSIT (+150)</button>
             <button class="btn-pill-action" id="breach" data-action="breach" type="button">Withdraw (Test Breach)</button>
             <button class="btn-pill-action" id="recover" data-action="recovery" type="button">Deposit (Recover)</button>
           </div>
+          <p style="font-size:11px; color:var(--muted); margin-top:12px;" id="commitmentDemoNote">
+            TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.
+          </p>
         </div>
       </div>
 
@@ -870,6 +895,89 @@ async function hydrateDraw() {
     setButton(openBtn, false, 'CHECK CHAIN STATE');
     setButton(claimBtn, false, 'CHECK CHAIN STATE');
     if (hint) hint.textContent = 'Could not read on-chain draw state: ' + (error.shortMessage || error.message) + '. Actions are disabled to prevent blind reverts.';
+  }
+}
+
+async function hydratePortfolio() {
+  const connected = Boolean(state.wallet?.connected && state.wallet?.account);
+  if (!connected) {
+    setText('#heroStateTag', 'ILLUSTRATIVE');
+    setText('#heroBalance', state.revealBalance ? '150.00' : '████████');
+    setText('#heroSubInfo', '150.0000 cETH | illustrative example | connect a wallet to view your encrypted chain state');
+    setText('#heroCovenantLabel', '● COMPLIANT (ILLUSTRATIVE)');
+    setText('#heroCW', '136,800 unit-sec (ILLUSTRATIVE)');
+    setText('#consoleStateTag', 'ILLUSTRATIVE');
+    setText('#consoleBalanceAmount', '150.00');
+    setText('#consoleCovenantStatus', '● COMPLIANT (ILLUSTRATIVE)');
+    setText('#consoleAccrualStatus', 'ACTIVE (1x RATE) (ILLUSTRATIVE)');
+    setText('#consoleDemoNote', 'TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.');
+    setText('#commitmentStateTag', 'ILLUSTRATIVE');
+    setText('#commitmentBalanceAmount', '150.00');
+    setText('#commitmentCovenantStatus', '● COMPLIANT (ILLUSTRATIVE)');
+    setText('#commitmentAccrualStatus', 'ACTIVE (1x RATE) (ILLUSTRATIVE)');
+    setText('#commitmentDemoNote', 'TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.');
+    return;
+  }
+
+  const user = state.wallet.account;
+  try {
+    const provider = rpcProvider();
+    const pool = new Contract(live.pool, poolViewAbi, provider);
+    const [balanceHandle, floorHandle, weightHandle] = await Promise.all([
+      pool.balanceOf(user),
+      pool.floorOf(user),
+      pool.weightOf(user)
+    ]);
+    const hasBalance = isActiveHandle(balanceHandle);
+    const hasFloor = isActiveHandle(floorHandle);
+    const hasWeight = isActiveHandle(weightHandle);
+
+    const stateTag = 'CONNECTED - CHAIN STATE';
+    const amount = hasBalance ? 'ENCRYPTED' : '0.00';
+    let covenant;
+    let accrual;
+    if (!hasFloor && !hasBalance) {
+      covenant = 'NOT STARTED';
+      accrual = 'NOT STARTED - use the wallet-signed TESTNET DEMO DEPOSIT';
+    } else if (!hasFloor) {
+      covenant = 'NO COMMITMENT SET';
+      accrual = 'NOT STARTED';
+    } else if (!hasBalance) {
+      covenant = 'COMMITMENT SET - NO BALANCE';
+      accrual = 'NOT STARTED';
+    } else {
+      covenant = 'ENCRYPTED - EVALUATED PRIVATELY ON CHAIN';
+      accrual = hasWeight ? 'ENCRYPTED - WEIGHT ACCUMULATOR PRESENT' : 'ENCRYPTED - WEIGHT ACCRUES ON CHAIN';
+    }
+
+    const subInfo = hasBalance
+      ? 'Encrypted vault present on live-demo pool | no plaintext exposed'
+      : 'No protocol record for this wallet on the live-demo pool';
+    const cw = hasWeight ? 'ENCRYPTED - ACCUMULATOR PRESENT' : 'NOT STARTED';
+
+    setText('#heroStateTag', stateTag);
+    setText('#heroBalance', amount);
+    setText('#heroSubInfo', subInfo);
+    setText('#heroCovenantLabel', covenant);
+    setText('#heroCW', cw);
+
+    setText('#consoleStateTag', stateTag);
+    setText('#consoleBalanceAmount', amount);
+    setText('#consoleCovenantStatus', covenant);
+    setText('#consoleAccrualStatus', accrual);
+    setText('#consoleDemoNote', 'Connected: this TESTNET DEMO DEPOSIT is the only way to credit the demo vault, it requires your wallet signature, and it is recorded on Sepolia with a real receipt.');
+
+    setText('#commitmentStateTag', stateTag);
+    setText('#commitmentBalanceAmount', amount);
+    setText('#commitmentCovenantStatus', covenant);
+    setText('#commitmentAccrualStatus', accrual);
+    setText('#commitmentDemoNote', 'Connected: this TESTNET DEMO DEPOSIT is the only way to credit the demo vault, it requires your wallet signature, and it is recorded on Sepolia with a real receipt.');
+  } catch (error) {
+    const message = 'STATE UNREADABLE: ' + (error.shortMessage || error.message);
+    setText('#heroStateTag', 'CONNECTED - STATE UNREADABLE');
+    setText('#heroSubInfo', message);
+    setText('#consoleStateTag', 'CONNECTED - STATE UNREADABLE');
+    setText('#commitmentStateTag', 'CONNECTED - STATE UNREADABLE');
   }
 }
 
@@ -1162,6 +1270,7 @@ async function render() {
   document.querySelector('#app').innerHTML = html;
   bind();
   if (path === '/draw') hydrateDraw();
+  if (path === '/' || path === '/commitment') hydratePortfolio();
 }
 
 function bind() {
@@ -1191,7 +1300,7 @@ function bind() {
   toggleEye?.addEventListener('click', () => {
     state.revealBalance = !state.revealBalance;
     const b = document.querySelector('#heroBalance');
-    if (b) b.textContent = state.revealBalance ? '$150.00' : '████████';
+    if (b) b.textContent = state.wallet?.connected ? 'ENCRYPTED' : (state.revealBalance ? '150.00' : '████████');
   });
 
   document.querySelectorAll('[data-action]').forEach((el) => {
@@ -1214,7 +1323,9 @@ import('./appkit-entry.js').then(async ({ walletService }) => {
     if (label) {
       label.textContent = s.connected ? `${s.account.slice(0,6)}...${s.account.slice(-4)}` : 'Connect wallet';
     }
-    if (location.pathname.replace(/\/+$/, '') === '/draw') hydrateDraw();
+    const route = location.pathname.replace(/\/+$/, '') || '/';
+    if (route === '/draw') hydrateDraw();
+    if (route === '/' || route === '/commitment') hydratePortfolio();
   });
 }).catch(() => {});
 

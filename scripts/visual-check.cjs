@@ -4,7 +4,7 @@ const path = require('node:path');
 
 const executablePath = 'C:/Users/hp/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe';
 const baseURL = process.env.VOTRA_TEST_URL || 'http://127.0.0.1:4173/';
-const outputDir = path.join(process.cwd(), 'evidence', 'screenshots');
+const outputDir = path.join(process.cwd(), 'evidence', 'screenshots', 'qa');
 const uiDir = path.join(process.cwd(), 'evidence', 'ui');
 
 fs.mkdirSync(outputDir, { recursive: true });

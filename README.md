@@ -50,6 +50,12 @@ the brand-new-wallet full lifecycle smoke is
 [`evidence/live/live-demo-new-wallet.json`](evidence/live/live-demo-new-wallet.json).
 The canonical contracts and campaign above remain the primary proof.
 
+Connected panels never show a hardcoded balance. They read the live-demo pool and show
+chain-derived encrypted state (`ENCRYPTED` vault record, `0.00`/no record, commitment set
+or not). Disconnected panels show clearly labelled illustrative values only. The demo
+ledger credit comes from the wallet-signed `TESTNET DEMO DEPOSIT` action; nothing is ever
+auto-granted to a newly connected wallet.
+
 ---
 
 <table>
@@ -84,13 +90,15 @@ The canonical contracts and campaign above remain the primary proof.
 # Try It in 30 Seconds
 
 1. Open the app.
-2. Set a private savings floor.
-3. Deposit confidential savings.
-4. Stay compliant and watch prize weight accrue.
-5. Trigger a breach. Future accrual stops, but earned history remains.
-6. Recover. A new compliant segment begins immediately.
-7. Run the encrypted draw.
-8. Inspect the proof surface and canonical Sepolia campaign.
+2. Connect your wallet. Disconnected panels are clearly labelled illustrative state only.
+3. Set a private savings floor.
+4. Credit the demo vault with the wallet-signed `TESTNET DEMO DEPOSIT (+150)` action
+   (Sepolia testnet only, real transaction receipt, never automatic).
+5. Stay compliant and watch prize weight accrue.
+6. Trigger a breach. Future accrual stops, but earned history remains.
+7. Recover. A new compliant segment begins immediately.
+8. Run the encrypted draw.
+9. Inspect the proof surface and canonical Sepolia campaign.
 
 **The interface is the surface. The covenant is the protocol.**
 

@@ -4,7 +4,7 @@ const path = require('node:path');
 
 const executablePath = 'C:/Users/hp/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe';
 const baseURL = process.env.VOTRA_TEST_URL || 'http://127.0.0.1:4173/';
-const outputDir = path.join(process.cwd(), 'evidence', 'screenshots');
+const outputDir = path.join(process.cwd(), 'evidence', 'screenshots', 'qa');
 fs.mkdirSync(outputDir, { recursive: true });
 
 function assert(condition, message) {
@@ -28,6 +28,9 @@ function assert(condition, message) {
   await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
   await page.locator('h1').first().waitFor({ timeout: 15000 });
   assert((await page.title()) === 'VOTRA | Private commitment. Fair chance.', 'landing page title renders');
+  const homeBodyText = (await page.locator('body').innerText()) || '';
+  assert(homeBodyText.includes('ILLUSTRATIVE'), 'landing balance panels are explicitly labelled illustrative while disconnected');
+  assert(homeBodyText.includes('TESTNET DEMO DEPOSIT'), 'landing exposes the wallet-signed testnet demo deposit action');
   assert((await page.evaluate(() => typeof window.relayerSDK)) === 'object', 'window.relayerSDK global is loaded from the vendored UMD');
   assert((await page.evaluate(() => typeof window.relayerSDK.initSDK)) === 'function', 'window.relayerSDK.initSDK exists');
 
@@ -79,6 +82,12 @@ function assert(condition, message) {
     const p = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await p.goto(baseURL + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await p.locator('h1').first().waitFor({ timeout: 15000 });
+    const routeBody = (await p.locator('body').innerText()) || '';
+    if (route === 'commitment') {
+      assert(routeBody.includes('ILLUSTRATIVE'), 'commitment page labels its example state as illustrative while disconnected');
+      assert(routeBody.includes('TESTNET DEMO DEPOSIT'), 'commitment page exposes the explicit testnet demo funding action');
+      assert(!routeBody.includes('$150'), 'no dollar-denominated hardcoded balance is shown on the commitment page');
+    }
     const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     assert(!overflow, route + ' has no horizontal overflow');
     await p.close();
