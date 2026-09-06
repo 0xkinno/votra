@@ -490,8 +490,11 @@ The canonical encrypted campaign includes:
 ```
 
 The complete generated record is [evidence/live/canonical-yield-campaign.json](evidence/live/canonical-yield-campaign.json).
-The explicit full-principal withdrawal transaction (same `withdraw` ABI and contract
-semantics) is recorded separately on a fresh identical disposable live-demo deployment:
+The canonical deployment's verified `VotraCommitmentPool` itself allows withdrawal:
+the same permissionless `withdraw(bytes32, bytes)` call is available at any time on the
+frozen contracts. The explicit full-principal withdrawal transaction was recorded
+separately on a fresh identical disposable live-demo deployment (same verified bytecode
+semantics) so the recorded canonical round stays untouched:
 [`evidence/live/withdrawal-proof.json`](evidence/live/withdrawal-proof.json). Withdrawal
 closes the route after claim and is available at any time.
 
@@ -524,12 +527,15 @@ mined Sepolia transactions.
 | Withdraw | Full encrypted principal withdrawal: `150 deposited = 0 remaining + 150 withdrawn` | [`evidence/live/withdrawal-proof.json`](evidence/live/withdrawal-proof.json) |
 
 - The frozen canonical deployment proves deposit → draw → winner → confidential
-  settlement → claim end-to-end.
-- `withdraw` is available at any time from the pool, independent of draw entry,
-  opening, or claim; completing a draw does not lock saver funds.
+  settlement → claim end-to-end, and its verified
+  [`VotraCommitmentPool`](https://sepolia.etherscan.io/address/0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c#code)
+  exposes the same permissionless `withdraw(bytes32, bytes)` call: the canonical
+  contracts allow withdrawal at any time.
+- `withdraw` is available from the pool independent of draw entry, opening, or
+  claim; completing a draw does not lock saver funds.
 - The explicit full-principal withdrawal transaction ran on a fresh identical
-  disposable live-demo instance so the canonical round stays frozen. Conservation
-  accounting is in
+  disposable live-demo instance (same verified bytecode semantics as the canonical
+  pool) so the recorded canonical round stays frozen. Conservation accounting is in
   [`evidence/yield/principal-conservation-live.json`](evidence/yield/principal-conservation-live.json).
 - The public UI exposes the same wallet-signed action as `WITHDRAW PRINCIPAL` with a
   real receipt and chain-derived state refresh.

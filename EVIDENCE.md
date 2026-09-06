@@ -70,7 +70,9 @@ executed on a fresh identical disposable live-demo deployment (manifest:
 `evidence/deployments/votra-withdrawal-demo.json`) so the frozen canonical round stays
 untouched: 150 deposited = 0 remaining + 150 withdrawn, with the round still open for
 the interactive draw/claim demonstration. The canonical frozen deployment proves
-deposit -> draw -> winner -> confidential settlement -> claim; the demo instance
-proves the same `withdraw` ABI moves principal back to the saver at any time.
+deposit -> draw -> winner -> confidential settlement -> claim, and its verified
+`VotraCommitmentPool` allows the same permissionless `withdraw(bytes32, bytes)` call at
+any time; the demo instance proves that ABI moves principal back to the saver at any
+time with a mined receipt.
 
 The dedicated history experiment is separate from the positive-winner canonical campaign. It gives A, B, and C equal final balances of `150` but derives distinct commitment-weighted histories of `136800`, `39600`, and `131400`; the source transactions and zero-divergence comparison are preserved in `evidence/history-sensitivity/live-campaign.json` and `evidence/live/model-chain-crosscheck.json`.
