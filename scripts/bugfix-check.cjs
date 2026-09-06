@@ -31,6 +31,7 @@ function assert(condition, message) {
   const homeBodyText = (await page.locator('body').innerText()) || '';
   assert(homeBodyText.includes('ILLUSTRATIVE'), 'landing balance panels are explicitly labelled illustrative while disconnected');
   assert(homeBodyText.includes('TESTNET DEMO DEPOSIT'), 'landing exposes the wallet-signed testnet demo deposit action');
+  assert((await page.locator('[data-action="withdraw-principal"]').count()) >= 1, 'landing exposes the WITHDRAW PRINCIPAL wallet-signed action');
   assert((await page.locator('[data-eye-toggle]').count()) >= 2, 'home renders an eye toggle for the hero and console balance displays');
   const heroBalanceBefore = await page.locator('#heroBalance').textContent();
   await page.locator('[data-eye-toggle]').first().click();
@@ -92,6 +93,7 @@ function assert(condition, message) {
     if (route === 'commitment') {
       assert(routeBody.includes('ILLUSTRATIVE'), 'commitment page labels its example state as illustrative while disconnected');
       assert(routeBody.includes('TESTNET DEMO DEPOSIT'), 'commitment page exposes the explicit testnet demo funding action');
+      assert((await p.locator('[data-action="withdraw-principal"]').count()) === 1, 'commitment page exposes the WITHDRAW PRINCIPAL action');
       assert(!routeBody.includes('$150'), 'no dollar-denominated hardcoded balance is shown on the commitment page');
       assert((await p.locator('[data-eye-toggle]').count()) === 1, 'commitment page renders one eye toggle beside the balance');
     }

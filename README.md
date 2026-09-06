@@ -43,10 +43,13 @@ The two economic quantities remain separate: **yield funds the prize; private co
 ---
 
 **Interactive demo round.** Wallet actions in the deployed app (commitment, deposit,
-breach, recovery, entry, claim) execute against a fresh identical live-demo instance so
-the recorded canonical round stays frozen as evidence. The interactive deployment is
-[`evidence/deployments/votra-live-ui-deployment.json`](evidence/deployments/votra-live-ui-deployment.json);
-the brand-new-wallet full lifecycle smoke is
+breach, recovery, entry, claim, `WITHDRAW PRINCIPAL`) execute against a fresh identical
+live-demo instance so the recorded canonical round stays frozen as evidence. The current
+interactive deployment is
+[`evidence/deployments/votra-withdrawal-demo.json`](evidence/deployments/votra-withdrawal-demo.json);
+its encrypted deposit + full principal withdrawal proof is
+[`evidence/live/withdrawal-proof.json`](evidence/live/withdrawal-proof.json).
+The brand-new-wallet full lifecycle smoke from the prior interactive round is
 [`evidence/live/live-demo-new-wallet.json`](evidence/live/live-demo-new-wallet.json).
 The canonical contracts and campaign above remain the primary proof.
 
@@ -493,6 +496,31 @@ with its machine-readable model comparison at
 All three participants finish with the same encrypted balance of `150`, while the
 timestamp-derived reference weights are `136800`, `39600`, and `131400`. The
 experiment isolates covenant history as the cause of the different draw weights.
+
+---
+
+# Full Live Cycle
+
+The Season 4 brief cycle — deposit, draw, claim, withdraw — resolves to real,
+mined Sepolia transactions.
+
+| Step | What is proven | Evidence |
+|---|---|---|
+| Deposit | Encrypted deposits into the commitment pool, principal accounted separately | [`evidence/live/canonical-yield-campaign.json`](evidence/live/canonical-yield-campaign.json) |
+| Draw | ExactDraw opening, encrypted winner computation, authorized decryption, positive winner | [`evidence/live/canonical-yield-campaign.json`](evidence/live/canonical-yield-campaign.json) |
+| Claim | Confidential prize settlement/claim funded only from realized yield; principal untouched | [`evidence/live/canonical-yield-campaign.json`](evidence/live/canonical-yield-campaign.json) |
+| Withdraw | Full encrypted principal withdrawal: `150 deposited = 0 remaining + 150 withdrawn` | [`evidence/live/withdrawal-proof.json`](evidence/live/withdrawal-proof.json) |
+
+- The frozen canonical deployment proves deposit → draw → winner → confidential
+  settlement → claim end-to-end.
+- `withdraw` is available at any time from the pool, independent of draw entry,
+  opening, or claim; completing a draw does not lock saver funds.
+- The explicit full-principal withdrawal transaction ran on a fresh identical
+  disposable live-demo instance so the canonical round stays frozen. Conservation
+  accounting is in
+  [`evidence/yield/principal-conservation-live.json`](evidence/yield/principal-conservation-live.json).
+- The public UI exposes the same wallet-signed action as `WITHDRAW PRINCIPAL` with a
+  real receipt and chain-derived state refresh.
 
 ---
 

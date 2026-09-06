@@ -382,13 +382,14 @@ async function protocolAction(kind) {
   try {
     const { signer } = await providerAndSigner();
     const user = await signer.getAddress();
-    if (kind === 'commitment' || kind === 'deposit' || kind === 'breach' || kind === 'recovery') {
-      const value = kind === 'commitment' ? Number(document.querySelector('#goal')?.value || 100) : kind === 'deposit' ? 150 : 60;
-      setTx(kind === 'commitment' ? 'set commitment' : kind, 'ENCRYPTING VIA ZAMA RELAYER (10-20 SECONDS)');
+    if (kind === 'commitment' || kind === 'deposit' || kind === 'breach' || kind === 'recovery' || kind === 'withdraw-principal') {
+      const value = kind === 'commitment' ? Number(document.querySelector('#goal')?.value || 100) : kind === 'deposit' ? 150 : kind === 'withdraw-principal' ? 150 : 60;
+      const actionLabel = kind === 'withdraw-principal' ? 'withdraw principal' : kind;
+      setTx(kind === 'commitment' ? 'set commitment' : actionLabel, 'ENCRYPTING VIA ZAMA RELAYER (10-20 SECONDS)');
       const [handle, proof] = await encrypted(value, live.pool, user);
       const pool = new Contract(live.pool, poolAbi, signer);
-      const fn = kind === 'commitment' ? 'setCommitment' : kind === 'breach' ? 'withdraw' : 'deposit';
-      await send(kind, () => pool[fn](handle, proof));
+      const fn = kind === 'commitment' ? 'setCommitment' : (kind === 'breach' || kind === 'withdraw-principal') ? 'withdraw' : 'deposit';
+      await send(actionLabel, () => pool[fn](handle, proof));
       invalidateBalanceReveal();
       state.revealBalance = false;
       hydratePortfolio();
@@ -544,6 +545,7 @@ function home() {
               <button class="btn-pill-action" id="deposit" data-action="deposit" type="button">TESTNET DEMO DEPOSIT (+150)</button>
               <button class="btn-pill-action" id="breach" data-action="breach" type="button">Withdraw (Test Breach)</button>
               <button class="btn-pill-action" id="recover" data-action="recovery" type="button">Deposit (Recover)</button>
+              <button class="btn-pill-action" data-action="withdraw-principal" type="button">WITHDRAW PRINCIPAL</button>
             </div>
             <p style="font-size:11px; color:var(--muted); margin-top:12px;" id="consoleDemoNote">
               TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.
@@ -814,6 +816,7 @@ function commitmentPage() {
             <button class="btn-pill-action" id="deposit" data-action="deposit" type="button">TESTNET DEMO DEPOSIT (+150)</button>
             <button class="btn-pill-action" id="breach" data-action="breach" type="button">Withdraw (Test Breach)</button>
             <button class="btn-pill-action" id="recover" data-action="recovery" type="button">Deposit (Recover)</button>
+            <button class="btn-pill-action" data-action="withdraw-principal" type="button">WITHDRAW PRINCIPAL</button>
           </div>
           <p style="font-size:11px; color:var(--muted); margin-top:12px;" id="commitmentDemoNote">
             TESTNET ONLY: this wallet-signed action credits the encrypted demo ledger with 150 units. It does not transfer or mint any live asset, and it never happens automatically for a new wallet.

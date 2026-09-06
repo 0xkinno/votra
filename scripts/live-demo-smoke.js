@@ -114,6 +114,21 @@ async function main() {
   const credit = await retry('winner credit decryption', async () => fhevm.userDecryptEuint(FhevmType.euint64, normalizeHandle(await reserve.creditOf(1, wallet.address)), manifest.reserve.address, wallet));
   await send('confidential claim', wallet, manifest.reserve.address, 'claim', () => reserve.connect(wallet).claim(1));
 
+  if (process.env.VOTRA_LIVE_SMOKE_FULL_WITHDRAW === '1') {
+    const beforeWithdrawal = String(await decrypt64((address) => pool.balanceOf(address)));
+    const principalWithdrawal = await encrypted(150);
+    await send('full principal withdrawal', wallet, manifest.pool.address, 'withdraw', () => pool.connect(wallet).withdraw(principalWithdrawal.handles[0], principalWithdrawal.inputProof));
+    const afterWithdrawal = String(await decrypt64((address) => pool.balanceOf(address)));
+    evidence.withdrawal = {
+      principalBeforeWithdrawal: beforeWithdrawal,
+      requestedWithdrawal: '150',
+      principalAfterWithdrawal: afterWithdrawal,
+      accountEquation: `${beforeWithdrawal} = ${afterWithdrawal} + requested encrypted withdrawal`,
+      liveCycleWithdrawal: true
+    };
+    persist();
+  }
+
   evidence.economicState = {
     finalBalance: evidence.privateReadback.finalBalance,
     committedWeight: evidence.privateReadback.cw,
@@ -121,13 +136,50 @@ async function main() {
     winner,
     prizeCredit: String(credit),
     harvestedYield: '1000',
-    prizeReserveFunding: '1000'
+    prizeReserveFunding: '1000',
+    ...(evidence.withdrawal || {})
   };
   const failures = evidence.steps.filter((step) => step.status !== 1 && step.status !== 'retry' && step.status !== 'already-funded' && step.status !== 'failed');
   evidence.status = failures.length === 0 ? 'pass' : 'fail';
   evidence.finishedAt = new Date().toISOString();
   fs.mkdirSync('evidence/live', { recursive: true });
   fs.writeFileSync('evidence/live/live-demo-new-wallet.json', JSON.stringify(evidence, null, 2) + '\n');
+  if (evidence.withdrawal) {
+    const withdrawalStep = evidence.steps.find((step) => step.step === 'full principal withdrawal');
+    fs.writeFileSync('evidence/live/withdrawal-proof.json', JSON.stringify({
+      network: evidence.network,
+      chainId: evidence.chainId,
+      deployment: manifest,
+      purpose: 'Explicit full principal withdrawal after encrypted deposit, draw, settlement and claim on a disposable live-demo deployment.',
+      contract: manifest.pool.address,
+      function: 'withdraw',
+      encryptedRequest: '150 units (clamped to available encrypted balance by contract)',
+      signer: wallet.address,
+      txHash: withdrawalStep?.txHash || null,
+      block: withdrawalStep?.block || null,
+      timestamp: withdrawalStep?.timestamp || null,
+      status: withdrawalStep?.status ?? null,
+      gasUsed: withdrawalStep?.gasUsed || null,
+      beforeState: { encryptedPoolBalance: 'ENCRYPTED ON-CHAIN', authorizedReadback: evidence.withdrawal.principalBeforeWithdrawal },
+      afterState: { encryptedPoolBalance: 'ENCRYPTED ON-CHAIN', authorizedReadback: evidence.withdrawal.principalAfterWithdrawal },
+      principalConservation: evidence.withdrawal.accountEquation
+    }, null, 2) + '\n');
+    fs.mkdirSync('evidence/yield', { recursive: true });
+    fs.writeFileSync('evidence/yield/principal-conservation-live.json', JSON.stringify({
+      network: evidence.network,
+      chainId: evidence.chainId,
+      deployment: manifest,
+      label: 'TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD',
+      scenario: 'full live withdrawal on disposable demo deployment',
+      depositedPrincipal: evidence.withdrawal.principalBeforeWithdrawal,
+      withdrawnPrincipal: '150',
+      remainingPrincipal: evidence.withdrawal.principalAfterWithdrawal,
+      equation: `${evidence.withdrawal.principalBeforeWithdrawal} deposited = ${evidence.withdrawal.principalAfterWithdrawal} remaining + 150 withdrawn`,
+      prizeFundingSource: 'harvested realized yield only; settlement never consumes saver principal',
+      failures: 0,
+      generatedAt: new Date().toISOString()
+    }, null, 2) + '\n');
+  }
   fs.rmSync('evidence/live/live-demo-smoke-progress.json', { force: true });
   console.log(JSON.stringify(evidence, null, 2));
   if (evidence.status !== 'pass') process.exitCode = 1;

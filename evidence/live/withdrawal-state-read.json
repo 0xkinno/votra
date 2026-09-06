@@ -1,0 +1,12 @@
+{
+  "manifest": "evidence/deployments/votra-withdrawal-demo.json",
+  "pool": "0x6ABC144f0235d8414840B520E4D161b249f6BdFe",
+  "draw": "0x46F5e0435FBE8c5f51f2A25D7AD85265873C27e4",
+  "opened": false,
+  "exhausted": false,
+  "participantCount": 0,
+  "participants": [],
+  "reserve": "0x3eb07D6c912f43f89bbddfaEA17f3F5C687b02B4",
+  "adapterPrincipal": "450",
+  "adapterAvailableYield": "0"
+}

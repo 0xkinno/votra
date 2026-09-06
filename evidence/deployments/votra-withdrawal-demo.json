@@ -1,0 +1,62 @@
+{
+  "canonical": false,
+  "promotionRule": "Promote only after canonical-yield-campaign.json passes the yield release gate.",
+  "label": "TESTNET YIELD ADAPTER - NOT LIVE MARKET YIELD",
+  "drawAlgorithm": "VotraExactDraw",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0x44be5240559880f39ba5604D33486Da4d8A48527",
+  "deployedAt": "2026-09-06T07:21:24.960Z",
+  "pool": {
+    "address": "0x6ABC144f0235d8414840B520E4D161b249f6BdFe",
+    "transactionHash": "0x1487595de39b03d783b1b1307aaad3a1e60570b7c4f267f2ef5f6cb41a9a7182",
+    "blockNumber": 11645767,
+    "bytecodeHash": "0x461ad551c8f7d9300af6324c5105a0940f5d6c6b31be18373039dcfd57096c89",
+    "codeBytes": 5477,
+    "sourceVerification": "pending"
+  },
+  "draw": {
+    "address": "0x46F5e0435FBE8c5f51f2A25D7AD85265873C27e4",
+    "transactionHash": "0x78e600a4669aaaef08afe3a111e729d65ed1bcfaa678f1915b4bb7596271f3cb",
+    "blockNumber": 11645769,
+    "bytecodeHash": "0xd66fba460606813e56f826ab803f50e8f3cbc35c99951fe438b96ebbfe250ab4",
+    "codeBytes": 5040,
+    "sourceVerification": "pending",
+    "maxTotalWeight": "1048576",
+    "attempts": 32
+  },
+  "asset": {
+    "address": "0xE6e57A36da3C21074B518BFC29fe7C927E993c5D",
+    "transactionHash": "0x5ff5868371dc7ecd9037059506434a3ef20ee83763a5cc8a76cee71368a86093",
+    "blockNumber": 11645770,
+    "bytecodeHash": "0xe097e692f41dc3d4847562d45460a9a081134bd69612ff04dd42266ca5dbd36a",
+    "codeBytes": 7795,
+    "sourceVerification": "pending"
+  },
+  "yieldAdapter": {
+    "address": "0x57c4bBc88ae38b0b3d7E77e24Bb40Bb6488a5b8b",
+    "transactionHash": "0xc7e456a6517edbebecc461a29caca1cb94a7329a0d9524776cee0b4e3260256e",
+    "blockNumber": 11645772,
+    "bytecodeHash": "0x28611955f127213d0c248eb932059e6373c4babafc97d4a62c7e03c6614fa575",
+    "codeBytes": 1963,
+    "sourceVerification": "pending"
+  },
+  "reserve": {
+    "address": "0x3eb07D6c912f43f89bbddfaEA17f3F5C687b02B4",
+    "transactionHash": "0x451ff9e3a69501efe73fde9a1ac120b03512a1279276289e5179786afde6ec2e",
+    "blockNumber": 11645771,
+    "bytecodeHash": "0xf580cf7ced835ee3c7348991fb9420c684127672f46ac44b59c1bebe36db4808",
+    "codeBytes": 2805,
+    "sourceVerification": "pending"
+  },
+  "wiring": {
+    "authorizedDraw": {
+      "transactionHash": "0xbcc4527d1deff0926f2ac6ed8ea246f3ab0de97fc2784b0b76ee66e929854999",
+      "blockNumber": 11645773
+    },
+    "reserve": {
+      "transactionHash": "0x7e1f33d6f939aa67749243f5009b1b8c62cc3f8d29596681d07439a18960d28f",
+      "blockNumber": 11645774
+    }
+  }
+}
