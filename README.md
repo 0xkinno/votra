@@ -101,7 +101,10 @@ auto-granted to a newly connected wallet.
 6. Trigger a breach. Future accrual stops, but earned history remains.
 7. Recover. A new compliant segment begins immediately.
 8. Run the encrypted draw.
-9. Inspect the proof surface and canonical Sepolia campaign.
+9. Claim the confidential prize if you win.
+10. Withdraw principal with the wallet-signed `WITHDRAW PRINCIPAL` action and confirm
+    the encrypted balance drop with a real Sepolia receipt.
+11. Inspect the proof surface and canonical Sepolia campaign.
 
 **The interface is the surface. The covenant is the protocol.**
 
@@ -345,9 +348,12 @@ sequenceDiagram
     D->>D: Exact encrypted weighted selection
     D->>R: Confidential settlement
     R-->>U: Private claim
+    U->>P: Withdraw principal
 ```
 
 Economic provenance is explicit: `principal → yield source → realized yield → prize reserve`, while `deposit + private commitment → compliant balance-time → CW`. Those streams meet only at the encrypted draw.
+Withdrawal closes the saver route: `principal → wallet` at any time, before or after
+the draw, and it never touches the prize reserve.
 
 ---
 
@@ -407,6 +413,7 @@ VOTRA treats verification as part of the protocol, not as an appendix.
 | Winner-bit decryption | Live proven |
 | Confidential settlement | Live proven |
 | Confidential claims | Live proven |
+| Principal withdrawal | Live proven (fresh disposable demo deployment; `150 deposited = 0 remaining + 150 withdrawn`) |
 | Canonical Sepolia deployment | Live |
 | Canonical source verification | Complete |
 | Relayer smoke test | Passing |
@@ -479,9 +486,14 @@ The canonical encrypted campaign includes:
 → authorized winner decryption
 → confidential prize settlement
 → confidential claims
+→ principal withdrawal
 ```
 
 The complete generated record is [evidence/live/canonical-yield-campaign.json](evidence/live/canonical-yield-campaign.json).
+The explicit full-principal withdrawal transaction (same `withdraw` ABI and contract
+semantics) is recorded separately on a fresh identical disposable live-demo deployment:
+[`evidence/live/withdrawal-proof.json`](evidence/live/withdrawal-proof.json). Withdrawal
+closes the route after claim and is available at any time.
 
 The live campaign produced equal final balances of `150` for all three participants with distinct private histories and distinct CW values of `34200`, `118800`, and `142200`. Participant C won the positive encrypted draw and received the full `1000` realized-yield prize. Principal remained `450` and was never used as prize funding.
 
@@ -598,6 +610,11 @@ Canonical live campaign:
 
 [`evidence/live/canonical-yield-campaign.json`](evidence/live/canonical-yield-campaign.json)
 
+Live principal withdrawal (fresh identical disposable demo deployment):
+
+[`evidence/live/withdrawal-proof.json`](evidence/live/withdrawal-proof.json) ·
+[`evidence/yield/principal-conservation-live.json`](evidence/yield/principal-conservation-live.json)
+
 Historical reserve-funded campaign (archived evidence, not the primary canonical
 deployment): [`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json)
 
@@ -657,6 +674,9 @@ See [`EVIDENCE.md`](EVIDENCE.md) for the generated benchmark artifacts.
 The canonical exact encrypted lifecycle is live-proven on Sepolia through the
 fresh five-contract stack, including principal / realized-yield separation,
 yield-only reserve funding, a positive encrypted winner, settlement and claim.
+An explicit full principal withdrawal (`150 deposited = 0 remaining + 150 withdrawn`)
+is separately live-proven on a fresh identical disposable demo deployment so the
+frozen canonical round remains untouched.
 The previous reserve-funded campaign remains archived as historical evidence
 under [`evidence/live/canonical-campaign.json`](evidence/live/canonical-campaign.json).
 
@@ -669,7 +689,8 @@ Public-chain metadata remains observable, and the exact draw's finite rejection
 budget can theoretically exhaust without resolving a winner. These are explicit
 properties of the privacy and liveness model, not unrecorded implementation gaps.
 Real extension-wallet approval and rejection remain a user-controlled browser QA
-step; the application uses one Reown AppKit connection and signing pipeline.
+step for commitment, deposit, draw, claim, and `WITHDRAW PRINCIPAL`; the application
+uses one Reown AppKit connection and signing pipeline.
 
 Mock HCU and live gas are separated in [`evidence/benchmarks/final-cost-summary.json`](evidence/benchmarks/final-cost-summary.json).
 

@@ -84,11 +84,14 @@ function assert(condition, message) {
   assert(claimDisabled === true || /CLAIM/.test(claimLabel), 'claim action reflects reserve state');
   await draw.screenshot({ path: path.join(outputDir, 'bugfix-draw.png') });
 
-  const routes = ['commitment', 'proof', 'proof/contracts'];
+  const routes = ['commitment', 'proof', 'proof/contracts', 'proof/live'];
   for (const route of routes) {
     const p = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await p.goto(baseURL + route, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await p.locator('h1').first().waitFor({ timeout: 15000 });
+    if (route === 'proof/live') {
+      await p.waitForFunction(() => document.body.innerText.includes('PRINCIPAL WITHDRAWAL'), { timeout: 15000 }).catch(() => {});
+    }
     const routeBody = (await p.locator('body').innerText()) || '';
     if (route === 'commitment') {
       assert(routeBody.includes('ILLUSTRATIVE'), 'commitment page labels its example state as illustrative while disconnected');
@@ -96,6 +99,10 @@ function assert(condition, message) {
       assert((await p.locator('[data-action="withdraw-principal"]').count()) === 1, 'commitment page exposes the WITHDRAW PRINCIPAL action');
       assert(!routeBody.includes('$150'), 'no dollar-denominated hardcoded balance is shown on the commitment page');
       assert((await p.locator('[data-eye-toggle]').count()) === 1, 'commitment page renders one eye toggle beside the balance');
+    }
+    if (route === 'proof/live') {
+      assert(routeBody.includes('PRINCIPAL WITHDRAWAL'), 'live proof page renders the principal withdrawal receipt after claim');
+      assert(routeBody.includes('CONSERVATION'), 'live proof page shows the withdrawal conservation equation');
     }
     const overflow = await p.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     assert(!overflow, route + ' has no horizontal overflow');

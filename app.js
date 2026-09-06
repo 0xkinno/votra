@@ -1134,6 +1134,7 @@ async function artifactPage(key) {
   const meta = artifacts[key] || artifacts.live;
   const data = await fetch(meta.file).then((r) => r.json()).catch(() => ({}));
   const crosscheck = key === 'history' ? await fetch('/evidence/live/model-chain-crosscheck.json').then((r) => r.json()).catch(() => null) : null;
+  const withdrawalProof = key === 'live' ? await fetch('/evidence/live/withdrawal-proof.json').then((r) => r.json()).catch(() => null) : null;
 
   const rows = key === 'history' ? ['A','B','C'].map((participant, index) => `
     <tr>
@@ -1283,9 +1284,20 @@ async function artifactPage(key) {
               <div class="receipt-row"><span>VERIFIED SOURCE</span><strong><a href="https://sepolia.etherscan.io/address/${esc(data.deployment?.yieldAdapter?.address || addresses.adapter)}#code" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">Etherscan ${icons.external}</a></strong></div>
               <div class="receipt-row"><span>MODEL/CHAIN</span><strong style="color:var(--surface-forest);">Zero semantic divergence</strong></div>
             </div>
+            ${withdrawalProof ? `
+              <div class="receipt-card with-corner-marks">
+                ${cornerMarks()}
+                <div class="receipt-row"><span>PRINCIPAL WITHDRAWAL</span><strong style="color:var(--surface-forest);">LIVE-PROVEN</strong></div>
+                <div class="receipt-row"><span>FUNCTION</span><strong>VotraCommitmentPool.withdraw</strong></div>
+                <div class="receipt-row"><span>TX HASH</span><strong class="mono" style="font-size:11px;"><a href="https://sepolia.etherscan.io/tx/${esc(withdrawalProof.txHash || '')}" target="_blank" rel="noreferrer" style="color:var(--surface-forest);">${esc((withdrawalProof.txHash || '').slice(0, 18) + '...')} ${icons.external}</a></strong></div>
+                <div class="receipt-row"><span>BLOCK</span><strong class="mono">${esc(withdrawalProof.block ?? '')}</strong></div>
+                <div class="receipt-row"><span>CONSERVATION</span><strong>${esc(withdrawalProof.principalConservation || '')}</strong></div>
+              </div>
+            ` : ''}
           </div>
           <p style="margin-top:14px; font-size:13px; color:var(--muted);">
             The deployed reserve received only harvested realized yield. Participant principal remained at <strong class="mono">${esc(data.economicState?.principal ?? '')}</strong> and was never used as prize funding. This campaign uses the deterministic testnet adapter, not an external live market yield source.
+            After the private claim, principal withdrawal closes the route on an identical disposable live-demo deployment with the same contract semantics; the frozen canonical round remains untouched.
           </p>
         </div>
       ` : ''}

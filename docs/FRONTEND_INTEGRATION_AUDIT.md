@@ -10,6 +10,7 @@ This audit records the functional surface after the routing pass. Canonical addr
 | Commitment panel | Deposit | Encrypts amount, signs, waits for receipt | `VotraCommitmentPool.deposit` | `/` | Pass |
 | Commitment panel | Breach | Encrypts withdrawal amount, signs, waits for receipt | `VotraCommitmentPool.withdraw` | `/` | Pass |
 | Commitment panel | Recovery | Encrypts redeposit amount, signs, waits for receipt | `VotraCommitmentPool.deposit` | `/` | Pass |
+| Commitment panel | Withdraw principal | Encrypts full principal withdrawal, signs, waits for receipt | `VotraCommitmentPool.withdraw` | `/` | Pass |
 | Draw panel | Enter draw | Signs and waits for receipt | `VotraExactDraw.enter` | `/` | Pass |
 | Draw panel | Open draw | Signs and waits for receipt | `VotraExactDraw.open` | `/` | Pass |
 | Draw panel | Claim | Signs and waits for receipt | `VotraPrizeReserve.claim` | `/` | Pass |

@@ -36,3 +36,23 @@
 - **EVIDENCE:** `evidence/live/canonical-yield-campaign.json`, `evidence/model/full-economic-model.json`, `evidence/release/yield-gate.json`.
 - **TRADEOFF:** Deterministic testnet yield rather than a live external market strategy.
 - **REVISIT CONDITION:** A trusted testnet market-yield source becomes available without weakening principal conservation.
+
+## D-005
+
+- **DATE:** 2026-09-06
+- **QUESTION:** When can a saver withdraw principal?
+- **DECISION:** `VotraCommitmentPool.withdraw` is permissionless and available at any
+  time — before entry, after draw opening, or after settlement and claim. Completing a
+  draw never locks saver funds.
+- **WHY:** Prize settlement is funded only from realized yield in the reserve, so
+  principal withdrawal is independent of the round lifecycle and cannot consume the
+  prize pool.
+- **EVIDENCE:** Live full-principal withdrawal receipt
+  `evidence/live/withdrawal-proof.json`
+  (`0xf1e4965c10cd06390497528bfed9c22bc2bb35fcc2525d96bb79abb9c3b4ce0c`, block
+  11645806) with conservation in `evidence/yield/principal-conservation-live.json`;
+  the canonical deposit-to-claim route is `evidence/live/canonical-yield-campaign.json`.
+- **TRADEOFF:** The explicit full-withdrawal receipt runs on a fresh identical
+  disposable demo deployment so the frozen canonical round stays untouched.
+- **REVISIT CONDITION:** A protocol change that binds principal to the round would
+  require a new principal-conservation proof.

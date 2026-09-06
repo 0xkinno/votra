@@ -46,6 +46,11 @@ evidence only: evidence/deployments/votra-exact-canonical.json and evidence/live
 
 - Fresh history-sensitive live campaign: `evidence/history-sensitivity/live-campaign.json`.
 - Fresh history model/chain cross-check: `evidence/live/model-chain-crosscheck.json`.
+- Live full-principal withdrawal: `evidence/live/withdrawal-proof.json` (deposit 150 ->
+  full encrypted withdrawal 150; tx
+  `0xf1e4965c10cd06390497528bfed9c22bc2bb35fcc2525d96bb79abb9c3b4ce0c`, block
+  11645806), with conservation accounting in
+  `evidence/yield/principal-conservation-live.json`.
 - Receipt-backed deployed guard attempts: `evidence/adversarial/executable-receipts.json` (8 independently mined Sepolia status-0 receipts, 8 expected reverts, 0 failures).
 - Final cost classification: `evidence/benchmarks/final-cost-summary.json`.
 - Final machine-enforced release gate: `evidence/release/final-gate.json`.
@@ -59,5 +64,13 @@ evidence only: evidence/deployments/votra-exact-canonical.json and evidence/live
 - Covenant-history fairness: `evidence/fairness/covenant-weighted.json` (12,000 scenarios, 0 mismatches, 0 invariant failures)
 
 The canonical live yield campaign is proven through three funded participants, encrypted commitments and deposits, breach/recovery transitions, separate principal accounting, deterministic testnet yield realization, yield-only reserve funding, encrypted exact-draw opening, authorized winner-bit decryption, a positive winner, confidential settlement, and claims in evidence/live/canonical-yield-campaign.json. Final balances were equal at 150; CW values were 34200, 118800, and 142200; participant C won and claimed the 1000 realized-yield prize while principal remained 450.
+
+Withdrawal closes the full saver cycle. The explicit principal-withdrawal receipt was
+executed on a fresh identical disposable live-demo deployment (manifest:
+`evidence/deployments/votra-withdrawal-demo.json`) so the frozen canonical round stays
+untouched: 150 deposited = 0 remaining + 150 withdrawn, with the round still open for
+the interactive draw/claim demonstration. The canonical frozen deployment proves
+deposit -> draw -> winner -> confidential settlement -> claim; the demo instance
+proves the same `withdraw` ABI moves principal back to the saver at any time.
 
 The dedicated history experiment is separate from the positive-winner canonical campaign. It gives A, B, and C equal final balances of `150` but derives distinct commitment-weighted histories of `136800`, `39600`, and `131400`; the source transactions and zero-divergence comparison are preserved in `evidence/history-sensitivity/live-campaign.json` and `evidence/live/model-chain-crosscheck.json`.

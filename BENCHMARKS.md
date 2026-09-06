@@ -22,6 +22,7 @@ from mined receipts in `evidence/live/canonical-yield-campaign.json`:
 | `setCommitment` | ~578,541 |
 | `deposit` | ~660,213 |
 | `withdraw` (breach) | ~679,654 |
+| `withdraw` (full principal, live demo) | 344,227 |
 | `depositPrincipal` | ~45,214 |
 | `accrueYield` | ~45,118 |
 | `harvestYield` | ~1,033,172 |
@@ -33,3 +34,6 @@ Deployment manifests, bytecode hashes, and source verification are recorded
 under `evidence/deployments/votra-yield-canonical.json`,
 `evidence/live/final-yield-deployment.json`, and
 `evidence/live/canonical-yield-verification.json`.
+The full-principal `withdraw` gas is the mined receipt from
+`evidence/live/withdrawal-proof.json` (fresh disposable demo deployment, identical
+contract semantics; `150 deposited = 0 remaining + 150 withdrawn`).

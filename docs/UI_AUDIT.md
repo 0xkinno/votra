@@ -12,10 +12,11 @@ This document records the architectural and interface audit of the existing VOTR
   - Exact encrypted draw visualization: Encrypted CW -> Encrypted Total Weight -> Random Sample -> Uniform Selection.
   - Live protocol metrics and proof signal section.
 - **`/commitment` (Your Commitment / Private Covenant Controls)**:
-  - Interactive console for setting private commitment floor, depositing, withdrawing (breach simulation), and recovering.
+  - Interactive console for setting private commitment floor, depositing, withdrawing (breach simulation), recovering, and the explicit wallet-signed `WITHDRAW PRINCIPAL` full-withdrawal action.
   - Direct binding to `VotraCommitmentPool.sol` (`setCommitment`, `deposit`, `withdraw`).
   - Real-time transaction state banner (`READY`, `SIGN IN WALLET`, `SUBMITTING`, `PENDING`, `CONFIRMING`, `CONFIRMED`, `USER REJECTED`, `FAILED`).
   - Receipt derivation panels with Etherscan verification links.
+  - Live withdrawal proof artifact: `evidence/live/withdrawal-proof.json` (fresh disposable demo deployment, `150 deposited = 0 remaining + 150 withdrawn`).
 - **`/draw` (Exact Encrypted Draw)**:
   - Interactive console for entering rounds, triggering `VotraExactDraw.sol` (`enter`, `open`, `settleParticipant`), and claiming prizes via `VotraPrizeReserve.sol` (`claim`).
   - Canonical draw state metrics, privacy status indicators, and proof verification links.
@@ -76,5 +77,5 @@ This document records the architectural and interface audit of the existing VOTR
 
 ## 6. Redesign Requirements & Non-Negotiables
 - Maintain 100% compatibility with all above action handlers, ABIs, wallet subscribers, and evidence links.
-- Preserve DOM selectors and action keys (`data-action="commitment"`, `data-action="deposit"`, `data-action="breach"`, `data-action="recovery"`, `data-action="enter"`, `data-action="open"`, `data-action="claim"`, `#goal`, `#setGoal`, `#breach`, `#recover`, `#txState`, `#txMetric`).
+- Preserve DOM selectors and action keys (`data-action="commitment"`, `data-action="deposit"`, `data-action="breach"`, `data-action="recovery"`, `data-action="withdraw-principal"`, `data-action="enter"`, `data-action="open"`, `data-action="claim"`, `#goal`, `#setGoal`, `#breach`, `#recover`, `#txState`, `#txMetric`).
 - Apply Talise-inspired fintech aesthetic: warm ash/paper canvas (`#eef2ed`), deep forest green cards (`#143a22`), vibrant mint cards (`#cbf5bf`), refined corner registration marks, modern Geist/Inter typography, precision Zama-yellow accents, smooth spring transitions, and responsive multi-viewport resilience (1440px, 1280px, 390px, 430px).
