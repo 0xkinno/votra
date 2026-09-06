@@ -32,6 +32,7 @@ The two economic quantities remain separate: **yield funds the prize; private co
 |---|---|
 | Live app | [votra-phi.vercel.app](https://votra-phi.vercel.app) |
 | GitHub | [github.com/0xkinno/votra](https://github.com/0xkinno/votra) |
+| Demo Video | [Watch on Youtube](https://youtu.be/8_DR4ntMX08?si=8jru_yZjgGozd9xX) |
 | Proof | [Live technical proof](https://votra-phi.vercel.app/proof/) |
 | Pool | [`0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c`](https://sepolia.etherscan.io/address/0x2E47C272baaEfb584593d61d8Aee6E81CDF1463c#code) |
 | ExactDraw | [`0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0`](https://sepolia.etherscan.io/address/0x237FcAE817ce2F67912BA9cd26ecA85bff4f22B0#code) |
